@@ -1,4 +1,4 @@
-## Do I Know This Already?
+## **Do I Know This Already?**
 
 -   Which of the follow are levels of accreditation for Cisco certification?  (Three)
     -  Associate
@@ -40,6 +40,8 @@
     -  CCT
     -  Expert-level written exam
     -  Concentration exam
+    -  **Answer:**
+       -  Cisco DevNet Professional requires a technology core exam and a single concentration exam.
 
 &nbsp;
 
@@ -57,12 +59,20 @@
     -   Events
     -   Cisco Automation Platform
     -   Support
+    -   **Answer:**
+        -   Discover
+        -   Technologies
+        -   Community
+        -   Support
+        -   Events
 
 &nbsp;
 
 ---
 
 &nbsp;
+
+## **Why Get Certified**
 
 For over thirty years, the industry has thoguht of a network as a collection of devices such as routers, switches, and wireless components.  The shift in mindset to look at at a network as a holistic system is a more recent concept that stems from the advent of network controllers, which split role and functionality from one another.  This is often referred to as separating the control plane from the data plane.
 
@@ -80,6 +90,8 @@ It is important from a career and skills perspective to adapt to the changes wit
 -   Enabling career advancement
 -   Increasing salary
 
+## **Cisco Career Certification Overview**
+
 There are five levels of accreditation for Cisco career certifications.  The following are thet five levels of accreditation in Cisco certifications:
 -   Architect
 -   Expert
@@ -95,3 +107,39 @@ The CCNP has changed significantly as well.  Previously, for example, the CCNP R
 -   300-101 ROUTE
 -   300-115 SWITCH
 -   300-135 TSHOOT
+
+A candidate would have to successfully pass all three of these exams as well as the CCNA in the same track in order to become CCNP Routing and Switching certified.  Today, only two exams are required in order to become CCNP Enterprise certified.  Candidates can now start wherever they want; there are no prerequisites, and a candidate can start earning any level of certification - even Associate, Specialist, Professional, or Expert level certification.
+
+##  **Cisco DevNet Certifications**
+
+### **Cisco certified DevNet Associate Certification (DEVASC)**
+
+Much like the CCNA, the DevNet Associate certification requires only a single exam.  The DevNet Associate certification covers multiple knowledge domains, as shown below:
+-   (20%)   Understanding and Using APIs
+-   (20%)   Infrastructure and Automation 
+-   (15%)   Application Deployment and Security
+-   (15%)   Cisco Platforms and Development
+-   (15%)   Network Fundamentals
+-   (15%)   Software Development and Design
+
+### **Cisco Certified DevNet Professional Certification**
+
+Below are the requirements for this certification and their associated topic domains:
+-   (20%)   Software Development and Design
+-   (20%)   Understanding and Using APIs
+-   (20%)   Cisco Platforms and Development
+-   (20%)   Application Deployment and Security
+-   (20%)   Infrastructure and Automation
+
+Cisco DevNet Professional requires a technology core exam and concentration exam.
+
+##  **Cisco DevNet Overview**
+
+The home for the Cisco DevNet is http://developer.cisco.com.  
+
+Across the top of the main DevNet page, you can see the following menu options:
+-   Discover
+-   Technologies
+-   Community
+-   Support
+-   Events
