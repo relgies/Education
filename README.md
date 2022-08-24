@@ -1,7 +1,7 @@
 [02 - Software Development and Design](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md)
 
 -   Software Development Lifecycle (SDLC)
-    -   Waterfall
+    -   [Waterfall](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md###Waterfall)
     -   Lean
     -   Agile
 -   Common Design Patterns
@@ -13,3 +13,5 @@
         -   man
         -   cat
     -   Directory Navigation
+
+[Git](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md##Git)
