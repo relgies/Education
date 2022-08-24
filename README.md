@@ -1,17 +1,25 @@
-[02 - Software Development and Design](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md)
-
--   Software Development Lifecycle (SDLC)
-    -   [Waterfall](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md#Waterfall)
-    -   [Lean](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md#Lean)
-    -   [Agile](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md#Agile)
--   [Common Design Patterns](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md#Common-Design-Patterns)
-    -   Model-View-Controller (MVC) Pattern
-    -   Observer Pattern
--   Linux Bash
-    -   Getting to Know Bash
-        -   piping
-        -   man
-        -   cat
-    -   Directory Navigation
-
-[Git](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md##Git)
+-   [02 - Software Development and Design](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md)
+    -   [Software Development Lifecycle (SDLC)](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md#software-development-lifecycle)
+        -   [Waterfall](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md#Waterfall)
+        -   [Lean](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md#Lean)
+        -   [Agile](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md#Agile)
+    -   [Common Design Patterns](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md#Common-Design-Patterns)
+        -   [Model-View-Controller (MVC) Pattern](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md#model-view-controller-mvc-pattern)
+        -   [Observer Pattern](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md#observer-pattern)
+    -   [Linux Bash](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md#linux-bash)
+        -   [Getting to Know Bash](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md#getting-to-know-bash)
+        -   [Directory Navigation](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md#directory-navigation)
+        -   [File Management](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md#file-management)
+        -   [Environment Variables](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md#environment-variables)
+    -   [Software Version Control](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md#software-version-control)
+    -   [Git](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md#git)
+        -   [Understanding Git](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md#understanding-git)
+        -   [Using Git](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md#using-git)
+        -   [Cloning/Initiating Repositories](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md#cloninginitiating-repositories)
+        -   [Adding and Removing Files](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md#adding-and-removing-files)
+        -   [Pushing and Pulling Files](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md#pushing-and-pulling-files)
+        -   [Working with Branches](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md#working-with-branches)
+        -   [Merging Branches](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md#merging-branches)
+        -   [Handling Conflicts](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md#handling-conflicts)
+        -   [Comparing Commits with diff](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md#comparing-commits-with-diff)
+    -   [Conducting Code Review](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md#conducting-code-review)
