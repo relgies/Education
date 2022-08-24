@@ -109,7 +109,7 @@ These are the stages of the SDLC:
 -   **Stage 3 - Designing**:  In this phase, you turn the software specifications into a design specification.  This is a critical stage as stakeholders need to be in agreement in order to build the software appropriately; if they arne't, users won't be happy, and the project will not be successful.
 -   **Stage 4 - Building**:  Once the software design specification is complete, the programmers get to work on making it a reality.  If the previous stages are completed successfully, this stage is often considered the easy part.
 -   **Stage 5 - Testing**:  Does the software work as expected?  In this stage, the programmers check for bugs and defects.  The software is continually examined and tested until it successfully meets the original software specifications.
--   **Stage 6 - Deployment**t:  During this stage, the software is put into production for the end users to put it through its paces.  Deployment is often initially done in a limited way to do any final tweaking or detect any missed bugs.  Once the user has accepted the software and it is in full production, this stage morphs into maintenance, where bug fixes and software tweaks or smaller changes are made at the request of the business user.
+-   **Stage 6 - Deployment**:  During this stage, the software is put into production for the end users to put it through its paces.  Deployment is often initially done in a limited way to do any final tweaking or detect any missed bugs.  Once the user has accepted the software and it is in full production, this stage morphs into maintenance, where bug fixes and software tweaks or smaller changes are made at the request of the business user.
 
 &nbsp;
 
