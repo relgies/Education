@@ -524,4 +524,616 @@ Git is a distributed version control system built with scalability in mind.  It 
 
 Another very important concept with Git is the file lifecycle.  Each file that you add to your working directory has a status attributed to it.  This status determines how Git handles the file.  Git file status lifecycle includes the following statuses:
 
--   Untracked:  When you first create a file in a directory that Git is managing, it is given an untracked status.  Git sees this file but does not perform any type of version control operation on it.  For all intents and purposes, the file is invisible to the rest of the world.  Some files, such as those containing settings or passwords or temporary files, may be stored in the working directory, but you may not want to include them in version control.  If you want Git to start tracking a file, you have to explicitly tell it to do so with the **git add** command; once you do this, the status of the file changes to tracked.
+-   **Untracked**:  When you first create a file in a directory that Git is managing, it is given an untracked status.  Git sees this file but does not perform any type of version control operation on it.  For all intents and purposes, the file is invisible to the rest of the world.  Some files, such as those containing settings or passwords or temporary files, may be stored in the working directory, but you may not want to include them in version control.  If you want Git to start tracking a file, you have to explicitly tell it to do so with the **git add** command; once you do this, the status of the file changes to tracked.
+-   **Unmodified**:  A tracked file in Git is included as part of the repository, and changes are watched.  This status means Git is watching for any file changes that are made, but it doesn't see any yet.
+-   **Modified**:  Whenever you add some code or make a change to the file, Git changes the status of the file to modified.  Modified status is where Git sees that you are working on the file but you are not finished.  You have to tell Git that you are ready to add a change (modified) file to the index or staging area by issuing the **git add** command again.
+-   **Staged**:  Once a changed file is added to the index, Git needs to be able to bundle up your changes and update the local repository.  This process is called staging and is accomplished through **git commit**.  At this point, your file status is moved back to the tracked status, and it stays there until you make changes to the file in the future and kick off the whole process over again.
+
+If at any point you want to see the status of a file from your repository, you can use the extremely useful command **git status** to learn the status of each file in your local directory.
+
+You can pull files and populate your working directory for a project that already exists by making a clone.  Once you have done this, your working directory will be an exact match of what is stored in the repository.  When you make changes to any source code or files, you can add your changes to the index, where they will sit in staging, waiting for you to finish all your changes or additions.  The next step is to perform a commit and package up the changes for submission (or pushing) to the remote repository (usually a server somewhere local or on the Internet).  This high-level process uses numerous commands that are covered in the next section.
+
+&nbsp;
+
+### **Using Git**
+
+&nbsp;
+
+Git may not come natively with your operating system.  If you are running a Linux variation, you probably already have it.  For Mac and Windows you need to install it.  You can go to the main distribution website (https://git-scm.com) and download builds for your operating system directly.  You can install the command-line version of Git and start using it.  There are GUI-based Git clients, but for the purposes of the DEVASC exam, you should focus your efforts on the command line.  Git commands come in two different flavors.  
+
+-   The standard user-friendly commands are called "porcelain." 
+-   The more complicated inner workings of Git manipulating commands are called "plumbing."
+
+At its core, Git is a content-addressable file system.  The version control system part was layered on top to make it easier to use.  For the DEVASC exam, you need to know your way around Git at a functional level (by using the porcelain).  Most of the plumbing commands and tools are not ones you will be using on a regular basis and are not covered on the exam.
+
+&nbsp;
+
+### **Cloning/Initiating Repositories**
+
+&nbsp;
+
+Git operates on a number of processes that enable it to do its magic.  The first of these processes involves defining a local repository by using either **git clone** or **git init**.  The **git clone** command has the follow syntax:
+
+&nbsp;
+
+```
+git clone (url to repository) (directory to clone to)
+```
+
+&nbsp;
+
+If there is an existing repository you are planning to start working on, like one from GitHub that you like, you use **git clone**.  This command duplicates an existing Git project from the URL provided into your current directory with the name of the repository as the directory name.  You can also specify a different name with a command-line option.
+
+&nbsp;
+
+To create a completely new repository, you need to create a directory.  Luckily, **git init** can be supplied with a directory name as an option to do this all in one command:
+
+&nbsp;
+
+```
+#git init newrepo
+Initialized emtpy Git repository in /Users/chrijack/Documents/GitHub/newrepo/.git/
+
+#newrepo git:(master)
+```
+
+&nbsp;
+
+What you just created is an empty repository, and you need to add some files to it.  By using the **touch** command, you can create an empty file.  The following example shows how to view the new file in the repository with the directory (**ls**) command:
+
+&nbsp;
+
+```
+#newrepo git:(master) touch newfile
+
+#newrepo git:)master) ls
+
+newfile
+```
+
+&nbsp;
+
+Once the file is added, Git sees that there is something new, but it doesn't do anything with it at this point.  If you type **git status**, you can see that Git identified the new file, but you have to issue another command to add it to index for Git to perform version control on it.  Here's an example:
+
+&nbsp;
+
+```
+# git status
+
+On branch master
+
+No commits yet
+
+Untracked files:
+    (use "git add <file>..." to include in what will be committed)
+
+    newfile
+
+nothing added to commit but tracked files present (use "git add" to track)
+```
+
+&nbsp;
+
+Git is helpful and tells you that it sees the new file, but you need to do something else to enable version control and let Git know to start tracking it.
+
+&nbsp;
+
+### **Adding and Removing Files**
+
+&nbsp;
+
+When you are finished making changes to files, you can add them to the index.  Git knows to then start tracking changes for the files you identified.  You can use the following commands to add files to an index:
+
+-   **git add . or -A**:  Adds everything in the entire local workspace.
+-   **git add (*filename*)**:  Adds a single file.
+
+The **git add** command adds all new or deleted files and directories to the index.  Why select an individual file instead of everything with the **.** or **-A** option?  It comes down to being specific about what you are changing and adding to the index.  If you accidentally make a change to another file and commit everything, you might unintentionally make a change to your code and then have to do a rollback.  Being specific is always safest.  You can use the following commands to add the file newfile to the Git index (in a process known as *staging*):
+
+&nbsp;
+
+```
+# git add newfile
+
+# git status
+
+On branch master
+
+No commits yet
+
+Changes to be committed:
+    (use "git rm --cached file>..." to unstage)
+
+    new file: newfile
+```
+
+&nbsp;
+
+Removing files and directories from Git is not as simple as just deleting them from the directory itself.  If you just use file system commands to remove files, you may create headaches as the index can become confused.  You can remove files and directories from Git, but it requires an extra step of adding the file deletion to the index (which sounds counterintuitive, right?).  The best way is to use the **git rm** command, which has the follow syntax:
+
+&nbsp;
+
+```
+git rm (-r) (-f) (folder/file.py)
+```
+
+&nbsp;
+
+This command removes a file or directory and syncs it with the index in one step.  If you want to remove a directory that is not empty or has subdirectories you can use the **-r** option to remove recursively.  In addition, if you add a file to Git and then decide later that you want to remove it, you need to use the **-f** option to force removal from the index.  This is required only if you haven't committed the changes to the local repository.  Here is an example:
+
+&nbsp;
+
+```
+# touch removeme.py
+# git add .
+# ls 
+
+newfile   removeme.py
+
+# git rm -f removeme.py
+
+rm 'removeme.py'
+```
+
+&nbsp;
+
+**git mv** is the command you use to move or rename a file, directory, or symbolic link.  It has the follow syntax:
+
+&nbsp;
+
+```
+git mv (-f) (source) (destination)
+```
+
+&nbsp;
+
+For this command you supply a source argument and a destination argument to indicate which file or directory you want to change and where you want to move it.  (Moving in this case is considered the same as renaming.)  Keep in mind that when you use this command, it also updates the index at the same time, so there is no need to issue **git add** to add teh change to Git.  You can use the **-f** argument if you are trying to overwrite an existing file or directory where the same target exists.  The following example shows how to change a filename in the same directory:
+
+&nbsp;
+
+```
+# ls
+
+oldfile.py
+
+# git mv oldfile.py newfile.py
+# ls
+
+newfile.py
+```
+
+&nbsp;
+
+### **Committing Files**
+
+&nbsp;
+
+When you commit a file, you move it from the index or staging area to the local copy of the repository.  Git doesn't send entire updates; it sens just changes.  The **commit** command is used to bundle up those changes to be synchronized with the local repository.  The command is simple, but you can specify a lot of options and tweaks.  In its simplest form, you just need to type **git commit**.  This command has the following syntax:
+
+&nbsp;
+
+```
+git commit [-a] [-m] <"your commit message">
+```
+
+&nbsp;
+
+The **-a** option tells Git to add any changes you make to your files to the index.  It's a quick shortcut instead of using **git add -A**, *but it works only for files that have already been added at some point before in their history; new files need to be explicitly added to Git tracking*.  For every commit, you will need to enter some text about what changed.  If you omit the **-m** option, Git automatically launches a text editor to allow you to type in the text for your commit message.
+
+Here is an example of the **commit** command in action:
+
+&nbsp;
+
+```
+# git commit -a -m "bug fix 21324 and 23421"
+
+[master e1fec3d] bug fix 21324 and 23421
+
+1 file changed, 0 insertions(+), 0 deletions(-)
+
+delete mode 100644 newfile
+```
+
+&nbsp;
+
+> **Note**
+> As a good practice, use the first 50 characters of the commit message as a title for the commit followed by a blank line and a more detailed explanation of the commit.  This title can be used through Git to automate notifications such as sending an email update on a new commit with the title as the subject line and the detailed message as the body.
+
+&nbsp;
+
+### **Pushing and Pulling Files**
+
+&nbsp;
+
+Up until this point you have seen how Git operates on your local computer.  Many people use Git in just this way, as a local version control system to track documents and files.  Its real power, however, is in its distributed architecture, which enables teams from around the globe to collaborate on projects.
+
+In order to allow Git to use a remote repository, you have to configure Git with some information so that it can find it.  When you use the command **git clone** on a repository, Git automatically adds the remote repository connection information via the URL entered with the **clone** command.
+
+When using the **git init** command, however, you need to make sure that you enter information to find the remote location for the server with the **git remove add** command, which has the following syntax:
+
+&nbsp;
+
+```
+git remote add (name) (url)
+```
+
+&nbsp;
+
+**git remote -v** cna be used to show which remote repository is configured.  The following example shows how to add a remote repository and then display what is configured.
+
+&nbsp;
+
+```
+# git remove add origin https://github.com/chrijack/devnetccna.git
+
+# git remote -v
+
+origin  https://github.com/chrijack/devnetccna.git  (fetch)
+origin  https://github.com/chrijack/devnetccna.git  (push)
+```
+
+&nbsp;
+
+What if you make a mistake or want to remove remote tracking of your repository?  This can easily be done with the **git remote rm** command, which has the follow syntax:
+
+&nbsp;
+
+```
+git remote rm (name)
+```
+
+&nbsp;
+
+Here is an example of this command in action:
+
+&nbsp;
+
+```
+# git remote rm origin
+
+# git remote -v
+```
+
+&nbsp;
+
+In order for your code to be shared with the rest of your team or with the rest of the world, you have to tell Git to sync your local repository with the remote repository (on a shared server or service like GitHub).  The command **git push**, which has the following syntax, is useful in this case:
+
+&nbsp;
+
+```
+git push (remotename) (branchname)
+```
+
+&nbsp;
+
+This command needs a remote name, which is an alias used to identify the remote repository.  It is common to use the name origin, which is the default if a different name is not supplied.  In addition, you can reference a branch name with **git push** in order to store your files in a separately tracked branch from the main repository.  (You can think of this as a repository within a repository.)  The sole purpose of the **git push** command is to transfer your files and any updates to your Git server.  This following is an example of the **git push** command in use:
+
+&nbsp;
+
+```
+# git push origin master
+
+Enumerating objects: 3, done.
+
+Counting objects: 100% (3/3), done.
+
+Writing objects: 100% (3/3), 210 bytes | 210.00 KiB/s, done.
+
+Total 3 (delta 0), reused 0 (delta 0)
+
+To https://github.com/chrijack/devnetccna.git
+
+ * [new branch]      master -> master
+
+Branch 'master' set up to track remote branch 'master' from 'ori-
+gin'.
+```
+
+&nbsp;
+
+The command **git pull** syncs any changes that are on the remote repository and brings your local repository up to the same level as teh remove one.  It has the following syntax:
+
+&nbsp;
+
+```
+git pull (remotename) (branchname)
+```
+
+&nbsp;
+
+Whenever you begin to work with Git, one of the first commands you want to issue is **pull** so you can get the latest code from the remote repository and work with the latest version fo the code from the master repository.  **git pull** does two things:  
+
+-   fetches the latest version of the remote master repository
+-   merges it into the local repository
+
+If there are any conflicts, they are handled just as they would be if you issued the **git merge** command, which is covered shortly.
+
+Example of using the **git pull** command:
+
+```
+# git pull origin master
+remote: Enumerating objects: 9, done.
+remote: Counting objects: 100% (9/9), done.
+remote: Compressing objects: 100% (8/8), done.
+remote: Total 8 (delta 1), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (8/8), done.
+From https://github.com/chrijack/devnetccna
+ * branch            master     -> FETCH_HEAD
+   8eb16e3..40aaf1a  master     -> origin/master
+Updating 8eb16e3..40aaf1a
+Fast-forward
+2README.md                            |   3 +++
+Picture1.png                          | Bin 0 -> 83650 bytes
+Picture2.jpg                          | Bin 0 -> 25895 bytes
+Picture3.png                          | Bin 0 -> 44064 bytes
+ 4 files changed, 3 insertions(+)
+ create mode 100644 2README.md
+ create mode 100644 Picture1.png
+ create mode 100644 Picture2.jpg
+ create mode 100644 Picture3.png
+ ```
+
+ &nbsp;
+
+ ### **Working with Branches**
+
+&nbsp;
+
+ Branches are an important workflow in software development.  Say you want to add a new feature to your software or want to fix a bug.  You can create a branch in order to add a separate development workspace for your project and prevent changes from destabilizing the main project (the master branch in Git).  Remember that Git keeps a running history of every commit you to make.  This history (called a ***snapshot*** in Git terminology) details all the changes to the software over time and ensures the integrity of this record by applying an SHA-1 hash.  This hash is a 40-character string that is tied to each and every commit.  The following is an example of three commits with a hash displayed using the **git log** command:
+
+&nbsp;
+
+ ```
+ #git log
+
+commit 40aaf1af65ae7226311a01209b62ddf7f4ef88c2 (HEAD -> master, origin/master)
+Author: Chris Jackson <chrijack@cisco.com>
+Date:   Sat Oct 19 00:00:34 2019 -0500
+
+    Add files via upload
+
+commit 1a9db03479a69209bf722b21d8ec50f94d727e7d
+Author: Chris Jackson <chrijack@cisco.com>
+Date:   Fri Oct 18 23:59:55 2019 -0500
+
+    Rename README.md to 2README.md
+
+commit 8eb16e3b9122182592815fa1cc029493967c3bca
+Author: Chris Jackson <chrijack@me.com>
+Date:   Fri Oct 18 20:03:32 2019 -0500
+
+    first commit
+```
+
+&nbsp;
+
+Notice that the first entry is the current commit state, as it is referenced by HEAD.  The other entries show the chronological history of the commits.  
+
+&nbsp;
+
+To add a Git branch, you simply issue the **git branch** command and supply the new branch with a name, using the following syntax:
+
+&nbsp;
+
+```
+git branch (-d) <branchname> [commit]
+```
+
+&nbsp;
+
+You can alternatively specify a commit identified by a tag or commit hash if you want to access a previous commit from the branch history.  By default, Git selects the latest commit.  In addition, you can delete a branch when you no longer need it by using the **-d** argument.  The following example shows how to create a branch and display the current branches with the **git branch** command with no arguments:
+
+&nbsp;
+
+```
+# git branch newfeature
+# git branch
+
+* master
+
+newfeature
+```
+
+&nbsp;
+
+The * next to **master** shows that the branch you are currently in is still master, buy ou now have a new branch named **newfeature**.  Git simply creates a pointer to the latest commit and uses that commit as the start of the new branch
+
+In order to move to the new branch and change your working directory, you have to use the **git checkout** command, which has the following syntax:
+
+&nbsp;
+
+```
+git checkout [-b] (branchname or commit)
+```
+
+&nbsp;
+
+The **-b** argument is useful for combining the **git branch** command with the checkout function and saves a bit of typing by creating the branch and checking it out (switching to it) all at the same time.  This example moves HEAD on your local machine to the new branch:
+
+&nbsp;
+
+```
+# git checkout newfeature
+
+Switched to branch 'newfeature'
+```
+
+&nbsp;
+
+Now you have a separate workspace where you can build your feature.  At this point, you will want to perform a **git push** to sync your changes to the remote repository.  When the work is finished on the branch, you can merge it back into the main code base and then delete the branch by using the command **git branch -d (branchname)**.
+
+&nbsp;
+
+### **Merging Branches**
+
+&nbsp;
+
+The merge process in Git is used to handle the combining of multiple branches into one.  The **git merge** command is used to make this easier on the user and provide a simple way to manage the changes.  It has the following syntax:
+
+&nbsp;
+
+```
+git merge (branch to merge with current)
+```
+
+&nbsp;
+
+In order to get the two branches merged, Git has to compare all the changes that have occurred in the two branches.
+
+On the newfeature branch, you can issue the following commands to add the change to the index and then commit the change:
+
+&nbsp;
+
+```
+git add .
+git commit -a -m "new feature"
+```
+
+&nbsp;
+
+Now the branch is synced with the new changes, and you can switch back to the master branch with the following command:
+
+&nbsp;
+
+```
+# git checkout master
+
+Switched to branch 'master'
+```
+
+&nbsp;
+
+From the master branch, you can then issue the **git merge** command and identify the branch to merge with (in this case, the newfeature branch):
+
+&nbsp;
+
+```
+# git merge newfeature
+
+Updating 77f786a..dd6bce5
+
+Fast-forward
+
+    text1 | 1 +
+
+    1 file changed, 1 insertion(+)
+```
+
+&nbsp;
+
+Notice that the output above says "Fast-forward"; this refers to updating past the changes in the branch, which is much like fast-forwarding through the boring parts of a movie.
+
+&nbsp;
+
+### **Handling Conflicts**
+
+&nbsp;
+
+Merging branches is a very useful capability, but what happens if the same file is edited by two different developers?  You can have a conflict in terms of which change takes precedence.  Git attempts to handle merging automatically, but where there is conflict, Git relies on human intervention to decide what to keep.  In the previous example, if there had been changes made to text1 in both the master branch and the newfeature branch, you would have seen the following message after using the command **git merge**:
+
+&nbsp;
+
+```
+# git merge newfeature 
+
+Auto-merging text1
+
+CONFLICT (content):  Merge conflict in text1
+
+Automatic merge failed; fix conflicts and then commit the result.
+```
+
+&nbsp;
+
+Git would show that a line was added to text1 on the master branch and a line was added to text1 on the newfeature branch.  Git is letting you delete one or keep both.  You can simply edit the file, remove the parts that Git added to highlight the differences, and save the file.  Then you can use **git add** to index your changes and ***git commit** to save the local repository, as in the following example:
+
+&nbsp;
+
+```
+# git add .
+# git commit -m "merge conflict fixed"
+
+[master fe8f42d] merge conflict fixed
+```
+
+&nbsp;
+
+### **Comparing Commits with diff**
+
+&nbsp;
+
+The **diff** command is one of the most powerful Git tools.  It allows you to compare files and text to see which you want to use if there are multiple options.  The ability to compare specific commits in Git makes it easier to know what to keep and what to discard between two similar version of code.
+
+The **diff** command takes two sets of inputs and outputs the differences or changes between them.  This is the syntax:
+
+&nbsp;
+
+```
+git diff [--stat] [branchname or commit]
+```
+
+&nbsp;
+
+**git diff** looks at the history of your commits, individual files, branches, and other Git resources.  It's a very useful tool for troubleshooting issues as well as comparing code between commits.  It has a lot of options and command-line parameters, which makes it a bit of a Swiss Army knife in terms of functionality.  One of the most useful functions of **diff** is to be able to see the differences between the three Git tree structures.  The following are variations of the **git diff** command that you can use:
+
+-   **git diff**:  This command highlights the difference between your working directory and the index (that is, what isn't yet stage).
+-   **git diff --cached**:  This command shows any changes between the index and your last commit.
+-   **git diff HEAD**:  This command shows the difference between your most recent commit and your current working directory.  It is very useful for seeing what will happen with your next commit.
+
+*Personal note:  Use ONLY **q+enter** to exit.*
+
+The following is an example of executing **git diff --cached** after text2 is added to the index:
+
+&nbsp;
+
+```
+#git diff --cached
+diff --git a/text2 b/text2
+new file mode 100644
+index 0000000..b9997e5
+--- /dev/null
++++ b/text2
+@@ -0,0 +1 @@
++new bit of code
+```
+
+&nbsp;
+
+**git diff** identified the new file addition and shows the a/b comparison.  Since this is a new file, there is nothing to compare it with, so you see **--- /dev/null** as the *a* comparison.  In the *b* comparison, you see **+++ b/text2**, which shows the addition of the new file, followed by stacks on what was different.  Since there was no file before, you see **-0,0** and **+1**.  (The + and - simply denote which of the two versions you are comparing.  It is not actually a **-0**, which would be impossible.)  The last line shows the text that was added to the new file.
+
+Another very useful capability of **git diff** is to compare branches.  By using **git diff (branchname)**, you can see the differences between a file in the branch you are currently in and one that you supply as an argument.  The following compares text1 between the branches master and newfeature, where you can see that line 3 is present on newfeature branch's text1 file:
+
+&nbsp;
+
+```
+#git diff newfeature text1
+ diff --git a/text1 b/text1
+index 45c2489..ba0a07d 100644
+--- a/text1
++++ b/text1
+@@ -1,3 +1,4 @@
+ line 1
+ line 2
++line 3
+ new feature code
+ ```
+
+ &nbsp;
+
+ ## **Conducting Code Review**
+
+ &nbsp;
+
+***The intent behind a code review process is to take good code and make it better by showing it to others and having them critique it and look for potential errors.***
+
+Beyond the aspects mentioned above, why should you conduct code reviews?  The following are a few common benefits of code review:
+
+-   It helps you create higher-quality software.
+-   It enables your team to be more cohesive and deliver software projects on time.
+-   It can help you find more defects and inefficient code that unit tests and functional tests might miss, making your software more reliable.
+
+The following are some good practices to help make your code review effective:
+
+-   Use a code review checklist that includes organization-specific practices (naming conventions, security, class structure, and so on) and any areas that need special consideration.  The goal is to have a repeatable process that is followed by everyone.
+-   Review the code, not the person who wrote it.  Avoid being robotic and harsh so you don't hurt people's feeling and discourage them.  The goal is better code, not disgruntled employees.
+-   Keep in mind that ode review is a gift.  No one is calling your baby ugly.  Check your ego at the door and listen; the feedback you receive will make you a batter code in the long run.
+-   Make sure the changes recommended are committed back into the code base.  You should also share findings back to the organization so that everyone can learn from mistakes and improve their techniques.
