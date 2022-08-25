@@ -1349,6 +1349,8 @@ Type "done to quite> done
 Done!
 ```
 
+&nbsp;
+
 Notice the condition this example is checking with the **while** statement.  Because **True** will always be **True** from an evaluation perspective, the **while** condition is automatically met.  Without that **if** statement looking for the string **'done'**, your loop would keep asking for input and printing what you typed forever.
 
 &nbsp;
