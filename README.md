@@ -25,3 +25,4 @@
     -   [Conducting Code Review](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/02%20-%20Software%20Development%20and%20Design.md#conducting-code-review)
 -   [03 - Introduction to Python](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/03%20-%20Introduction%20to%20Python.md)
 -   [04 - Python Functions, Classes, and Modules](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/04%20-%20Python%20Functions,%20Classes,%20and%20Modules.md)
+-   [05 - Working with Data in Python](Cisco/DevNet%20Associate/DEVASC-200-901/Notes/05%20-%20Working%20with%20data%20in%20Python.md)
