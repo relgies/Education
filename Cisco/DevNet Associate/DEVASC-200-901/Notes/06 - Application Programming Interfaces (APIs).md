@@ -389,7 +389,7 @@ The fault message shown in Example 6-5 was generated because the Detail value wa
 
 &nbsp;
 
-### Remote-Procedure Calls (RPCs)
+### **Remote-Procedure Calls (RPCs)**
 
 &nbsp;
 
