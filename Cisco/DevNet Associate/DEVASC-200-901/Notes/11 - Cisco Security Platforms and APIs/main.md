@@ -785,3 +785,800 @@ With Cisco AMP for Endpoints, security teams leverage an integrated solution to 
 -   **By streamlining incident response processes**:  AMP for Endpoints allows security operations teams to have complete visibility into the location and trajectory of malware and automates remediation actions.  It eliminates the arduous incident response processes that were necessary in the past.  The incident response typically involves length forensics to check all systems for compromises and to reimage those that have been affected.  Due to resource requirements, many companies have to hire third-party specialists to manage incident response.  AMP for Endpoints can reduce the time and effort required for incident response and can help companies avoid those engagements.
 -   **By consolidating endpoint security tools into a single solution that makes it possible to visualize the environment, patch vulnerabilities, and proactively hunt for malware**:  AMP for Endpoints makes it possible to manage reputation filter, behavior analytics, antivirus engine, exploit prevention, traffic analytics, and more from a single platform.  The AMP for Endpoints management tool also integrates with AMP for Networks.  This integration helps facilitate threat information sharing across network security appliances, resulting in comprehensive malware protection and enabling a "see once, block everywhere" architecture.
 -   **By automating threat detection and remediation processes**:  Customers can efficiently allocate time and resources and avoid the need to hire additional high-cost employees or sign expensive outsourcing contracts.  This automation also promotes increased job satisfaction on security operations teams, as less time is spent on mundane research tasks.
+
+&nbsp;
+
+Automation can be achieved by using the AMP for Endpoints API, which allows users to exploit their investigations by identifying which endpoints have seen a file, create custom file lists, and move endpoints in and out of triage groups.  The API also makes it possible to collect and archive all events generated in an environment, which in turn makes possible extended historical data correlation.  The AMP for Endpoints API enables developer and security teams to do the following:
+
+-   **Ingest events**:  The API stores events in third-party tool,s archives extended event histories, and correlates against other logs.
+-   **Search**:  The API can find where a file has been, determine if a file has been executed, and capture command-line arguments.
+-   **Basic management**:  The API allows you to create groups, move desktop or computers, and manage file lists.
+
+&nbsp;
+
+## AMP for Endpoints API Credentials and Authorization
+
+&nbsp;
+
+The AMP for Endpoints API requires administrators to first set up an API credential.  You can do this via the AMP Console by navigating to Accounts > API Credentials and then completing the dialog shown in Figure 11-8.
+
+&nbsp;
+
+**Figure 11-8** *AMP Console: Creating API Credentials*
+
+![Figure 11-8 AMP Console: Creating API Credentials](assets/images/Figure%2011-8%20AMP%20Console%20Creating%20API%20Credentials.jpeg)
+
+&nbsp;
+
+Once this is done, an API client ID/key pair is generated.  It looks something like this:
+
+-   **Client ID**:  deadbeef123448ccc00d
+-   **Client key**:  XXXXXXXX-YYYY-ZZZZ-0000-e384ef2dxxxx
+
+&nbsp;
+
+Using the API client ID and key, you can now make the API calls as follows:
+
+`https://<clientID>:<clientKEY>@<api_endpoint>`
+
+&nbsp;
+
+Also, you can use basic HTTP authentication encoding for the client ID and key and the Authorization header.  For the client ID and key generated, the credential is Base64 encoded as "ZGVhZGJlZWYxMjM0NDhjY2MwMGQ6WFhYWFhYWFgtWVlZWS1aWlpaLTAwMDAtZTM4NGVmMmR4eHh4", and the header looks as follows:
+
+`Authorization: Basic ZGVhZGJlZWYxMjM0NDhjY2MwMGQ6WFhYWFhYWFgt
+WVlZWS1aWlpaLTAwMDAtZTM4NGVmMmR4eHh4`
+
+&nbsp;
+
+Now let's look at a couple of examples of the AMP for Endpoints API.
+
+&nbsp;
+
+## Listing All Computers
+
+&nbsp;
+
+The API `https://api.amp.cisco.com/v1/computers` fetches the list of all computers.  It requires basic authentication headers and uses the GET method.  example 11-12 shows a Python **requests** command that uses this API.
+
+&nbsp;
+
+**Example 11-12** *Python Code to Get a List of All Computers via API*
+
+```python
+"""  GET list of all computers via API """
+
+import requests
+
+url = "https://api.amp.cisco.com/v1/computers"
+headers = {
+    'authorization': "Basic ZGVhZGJlZWYxMjM0NDhjY2MwMGQ6WFhYWFhYWFgtWVlZWS1aWlpaLTAwMDAtZTM4NGVmMmR4eHh4",
+    'cache-control': "no-cache",
+    }
+
+response = requests.request("GET", url, headers=headers)
+print(response.text)
+```
+
+&nbsp;
+
+## Listing All Vulnerabilities
+
+&nbsp;
+
+The API `https://api.amp.cisco.com/v1/vulnerabilities` fetches a list of all vulnerabilities.  The list can be filtered to show only the vulnerable programs detected for a specific time range.  The **start_time** and **end_time** parameters accept the date and time expressed according to ISO 8601.
+
+&nbsp;
+
+The list contains a summary of information such as the following on a vulnerability:
+
+-   Application name and version
+-   SHA-256 value for the executable file
+-   Connectors on which the vulnerable application was observed
+-   The most recent CVSS score
+
+&nbsp;
+
+This API requires the basic authentication headers and uses the GET method.  Example 11-13 shows a Python **requests** command that uses this API.
+
+&nbsp;
+
+**Example 11-13** *Python Code to Get a List of All Vulnerabilities via API*
+
+```python
+"""  GET list of all vulnerabilities via API """
+
+import requests
+
+url = "https://api.amp.cisco.com/v1/vulnerabilities"
+querystring = {"offset":"0","limit":"1"}
+headers = {
+    'authorization': "Basic ZGVhZGJlZWYxMjM0NDhjY2MwMGQ6WFhYWFhYWFgtWVlZWS1aWlpaLTAwMDAtZTM4NGVmMmR4eHh4",
+    'cache-control': "no-cache",
+    }
+
+response = requests.request("GET", url, headers=headers, params=querystring)
+print(response.text)
+```
+
+&nbsp;
+
+Example 11-14 shows a sample response to the request in Example 11-13
+
+&nbsp;
+
+**Example 11-14** *JSON Response Showing Vulnerabilities*
+
+```
+{
+  "version": "v1.2.0",
+  "metadata": {
+    "links": {
+      "self": "https://api.amp.cisco.com/v1/vulnerabilities?offset=0&limit=1"
+    },
+    "results": {
+      "total": 1,
+      "current_item_count": 1,
+      "index": 0,
+      "items_per_page": 1
+    }
+  },
+  "data": [
+    {
+      "application": "Adobe Flash Player",
+      "version": "11.5.502.146",
+      "file": {
+        "filename": "FlashPlayerApp.exe",
+        "identity": {
+          "sha256": "c1219f0799e60ff48a9705b63c14168684aed911610fec68548ea08f
+          605cc42b"
+        }
+      },
+      "cves": [
+        {
+          "id": "CVE-2013-3333",
+          "link": "https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2013-3333",
+          "cvss": 10
+        },
+        {
+          "id": "CVE-2014-0502",
+          "link": "https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-0502",
+          "cvss": 10
+        }
+      ],
+      "latest_timestamp": 1574442349,
+      "latest_date": "2019-11-22T17:05:49+00:00",
+      "groups": [
+        {
+          "name": "Triage",
+          "description": "Triage Group for FireAMP API Docs",
+          "guid": "68665863-74d5-4bc1-ac7f-5477b2b6406e"
+        }
+      ],
+      "computers_total_count": 1,
+      "computers": [
+        {
+          "connector_guid": "17d71471-805b-4183-9121-3924b8982fac",
+          "hostname": "Demo_ZAccess",
+          "active": true,
+          "links": {
+            "computer": "https://api.amp.cisco.com/v1/
+            computers/17d71471-805b-4183-9121-3924b8982fac",
+            "trajectory": "https://api.amp.cisco.com/v1/
+            computers/17d71471-805b-4183-9121-3924b8982fac/trajectory",
+            "group": "https://api.amp.cisco.com/v1/
+            groups/68665863-74d5-4bc1-ac7f-5477b2b6406e"
+          }
+        }
+      ]
+    }
+```
+
+&nbsp;
+
+Table 11-6 shows all other APIs that AMP for Endpoints has to offer.
+
+&nbsp;
+
+**Table 11-6** AMP for Endpoints API
+
+| Method | API | Description |
+| -- | -- | -- |
+| GET | `https://api.amp.cisco.com/v1/audit_logs` | Provide audit logs based on the filters specified in the query parameters |
+| GET | `https://api.amp.cisco.com/v1/audit_log_types` | Provide a list of all the audit log types supported by the API |
+| GET | `https://api.amp.cisco.com/v1/computers` | Fetch the list of computers |
+| GET | `https://api.cmp.cisco.com/v1/computers/user_activity` | Fetch the list of computers that have observed activity by a given username |
+| GET | `https://api.amp.cisco.com/v1/computers/activity` | Search all computers across the organization for any events or activities associated with a file or network operation |
+| GET | `https://api.amp.cisco.com/v1/events` | Provide a general query interface for events |
+| GET | `https://api.amp.cisoc.com/v1/event_types` | Identify and filter events by a unique ID |
+| POST | `https://api.amp.cisco.com/v1/event_streams` | Create a new ***Advanced Messaging Queue Protocol (AMQP)*** messaging resource for events information |
+| GET | `https://api.amp.cisoc.com/v1/file_lists/application_blocking` | Return a list of application-blocking file lists |
+| GET/POST | `https://api.amp.cisco.com/v1/groups` | Provide basic information about groups in the organization |
+| GET | `https://api.amp.cisco.com/v1/policies` | Return a list of policies |
+| GET | `https://api.amp.cisco.com/v1/version` | Fetch the list of versions |
+| GET | `https://api.amp.cisco.com/v1/vulnerabilities` | Provide a general query interface for vulnerabilities |
+
+&nbsp;
+
+# Cisco Identity Services Engine (ISE)
+
+&nbsp;
+
+>   ***`Key Topic`***
+
+&nbsp;
+
+Cisco ***Identity Services Engine (ISE)*** is a network access control and policy enforcement platform.  Cisco ISE simplifies the delivery of secure access control across wired and wireless multivendor networks and remote VPN connections.  With intelligent sensor and profiling capabilities, ISE penetrates deep to deliver visibility into who and what is accessing your networks and resources.
+
+&nbsp;
+
+Cisco ISE provides the following benefits:
+
+-   It identifies every device and every user ID across the network.
+-   It enables simple provisioning for devices.
+-   It is a simple policy management engine that is centralized and can grant user access.
+-   It enables flexible integration with other solutions to spend threat detection, containment, and remediation.
+
+&nbsp;
+
+Identification is required in order to access any network resources.  Identification involves using credentials.  Credentials are of the form passwords, certificates, tokens, or at the least the endpoint's MAC address.
+
+&nbsp;
+
+Credentials reach Cisco ISE in a process called authentication.  An enterprise can use various authentication protocols, depending on the type of network and the type of endpoints.  With authentication, you basically tell Cisco ISE who you are.
+
+&nbsp;
+
+Authentication typically results in authorization.  After you reveal your identity to Cisco ISE, Cisco ISE determines your level of access. The moment an endpoint accesses the network access, the network devices generate a session ID and share it with Cisco ISE.  Cisco ISE centrally knows what all the endpoints in the network are and where they are connected.
+
+&nbsp;
+
+Today, enterprises already have some kind of identity services such as Microsoft Active Directory or LDAP; in addition, there could be other ODBC servers hosting some user and device accounts.  A PKI infrastructure may already exist to manage certificates, and there might be some mobile device managements and identity providers for single sign-on.  ISE can seamlessly integrate with all such external identity stores and deliver network access control.
+
+Figure 11-9 shows how Cisco ISE integrates with endpoints, networking devices, and external services.
+
+&nbsp;
+
+**Figure 11-9** *ISE: Components and Deployment*
+
+![Figure 11-9 ISE: Components and Deployment](assets/images/Figure%2011-9%20ISE%20Components%20and%20Deployment.jpeg)
+
+&nbsp;
+
+Once a profile gets associate, various policies can be enforce.  These policies could be the following:
+
+-   **Time-based**:  Policies can allow specific devices only at particular times.
+-   **Location-based**:  Each network element has a piece of location information, and devices connected have specific policies attached.
+-   **Compliance based**:  Policies can ensure that endpoints have all software patches before they are granted full access.
+
+&nbsp;
+
+## ISE REST APIs
+
+&nbsp;
+
+The Cisco DevNet site https://developer.cisco.com/site/security/ provides details of all API docs located at https://developer.cisco.com/docs/identity-services-engine/.  In addition, you can find other resources within the DevNet Sandbox, and you can reserve and use Cisco ISE there.
+
+&nbsp;
+
+Cisco ISE has two APIs:
+
+-   **Session API**:  This API allows developers to gather session- and node-specific information by using Cisco ISE to monitor nodes.
+-   ***External RESTful Services (ERS)* API**:  This API enables developers to perform operations on the following types of ISE resources:
+    -   Endpoints
+    -   Endpoint identity groups
+    -   Guest users and internal users
+    -   Identity groups
+    -   Portals
+    -   Profiler policies
+    -   Network devices
+    -   Network device groups
+    -   Security groups
+
+&nbsp;
+
+The cisco ISE administrator must assign special privileges to a user to perform operations using the ERS API.  The Cisco ISE administrator can assign the following two roles to deliver services using the ERS API (see Figure 11-10):
+
+-   External RESTful Services Admin:  For full access to all ERS methods (GET, POST, DELETE, PUT).
+-   External RESTful Services Operator:  For read-only access (GET requests only).
+
+&nbsp;
+
+**Figure 11-10** *ISE ERS: Enabling API Access*
+
+![Figure 11-10 ISE ERS: Enabling API Access](assets/images/Figure%2011-10%20ISE%20ERS%20Enabling%20API%20Access.jpeg)
+
+&nbsp;
+
+## ERS API Authentication
+
+&nbsp;
+
+The ISE ERS API uses HTTP basic authentication, which requires the credentials to be sent in the Authorization header.  The credentials are the username and password, separated by a colon (**:**), within a Base64-encoded string.  For example, the Authorization header would contain the following string:
+
+`"Basic ZGV2YXNjOnN0cm9uZ3Bhc3N3b3Jk"`
+
+&nbsp;
+
+In this case, **ZGV2YXNjOnN0cm9uZ3Bhc3N3b3Jk** is the Base64-encoded string *devasc:strongpassword* (where *devasc* is the username and *strongpassword* is the password).  Example 11-15 shows three lines of code that do Base64 encoding to plug the value into the Authorization headers.
+
+&nbsp;
+
+**Example 11-15** *Python Code to Generate Base64 Encoding*
+
+```python
+import base64
+
+encoded = base64.b64encode('devasc:strongpassword'.encode('UTF-8')).decode('ASCII')
+
+print(encoded)
+```
+
+&nbsp;
+
+All ERS API calls are made to the URL `https://<IP-of-ISE>:9060/`.
+
+&nbsp;
+
+## Creating an Endpoint Group 
+
+&nbsp;
+
+The API posts the data to create a new endpoint group.  It uses the POST method and requires basic authentication headers.  The following shows the payload that is needed to create an Endpoint Group called 'DevNet Associate Group':
+
+&nbsp;
+
+```
+Data - {
+
+    "EndPointGroup" : {
+
+    "name" : "DevNet Associate Group",
+    "description" : "DevNet Associate Group"  
+
+  }
+
+}
+```
+
+&nbsp;
+
+Example 11-16 shows a Python **requests** command using this API.
+
+&nbsp;
+
+**Example 11-16** *Python POST Code to Create a New Endpoint Group*
+
+```python
+""" create a new endpointgroup """
+
+import json
+import requests
+
+url = "https://ise.devnetsandbox.com/ers/config/endpointgroup"
+payload = {
+    "EndPointGroup": {
+        "name": "DevNet Associate Group",
+        "description": "DevNet Associate Group"
+    }
+}
+headers = {
+    'content-type': "application/json",
+    'accept': "application/json",
+    'authorization': "Basic ZGV2YXNjOnN0cm9uZ3Bhc3N3b3JkJw==",
+    'cache-control': "no-cache",
+}
+response = requests.request(
+    "POST",
+    url,
+    data=json.dumps(payload),
+    headers=headers
+)
+print(response.text)
+```
+
+&nbsp;
+
+The response header contains the newly created group ID:
+
+`Location: https://ise.devnetsandbox.com:9060/ers/config/endpoint
+group/00000000-1111-2222-3333-444444444444`
+
+&nbsp;
+
+## Creating an Endpoint and Adding it to a Group
+
+&nbsp;
+
+The API `https://ise.devnetsandbox.com:9060/ers/config/endpoint` posts the data to create a new endpoint.  It uses the POSt method.  the following shows the payload that is needed to create an Endpoint called 'DevNet Endpoint' with a specified groupId.
+
+&nbsp;
+
+Method: POST
+
+URL: 
+
+```
+
+Data - {
+  "ERSEndPoint" : {
+    "name" : "DevNet_Endpoint",
+    "description" : "DevNet Endpoint-1",
+    "mac" : "FF:EE:DD:03:04:05",
+    "groupId" : " 00000000-1111-2222-3333-444444444444",
+    "staticGroupAssignment" : true
+  }
+}
+```
+
+&nbsp;
+
+This API uses the group ID from the header and requires basic authentication headers.  Example 11-17 shows a Python **request** script.
+
+&nbsp;
+
+**Example 11-17** *Python POST Code to Create a New Endpoint*
+
+```python
+""" create a new endpoint """
+import json
+import requests
+url = "https://ise.devnetsandbox.com/ers/config/endpoint"
+payload = {
+    "ERSEndPoint": {
+        "name": "DevNet_Endpoint",
+        "description": "DevNet Endpoint-1",
+        "mac": "FF:EE:DD:03:04:05",
+        "groupId": " 00000000-1111-2222-3333-444444444444",
+        "staticGroupAssignment": True
+    }
+}
+headers = {
+    'content-type': "application/json",
+    'accept': "application/json",
+    'authorization': "Basic ZGV2YXNjOnN0cm9uZ3Bhc3N3b3JkJw==",
+    'cache-control': "no-cache",
+}
+response = requests.request(
+    "POST",
+    url,
+    data=json.dumps(payload),
+    headers=headers
+)
+print(response.text)
+```
+
+&nbsp;
+
+The response header contains the newly created endpoint ID:
+
+`Location: https://ise.devnetsandbox.com:9060/ers/config/endpoint/
+deadbeef-1111-2222-3333-444444444444`
+
+&nbsp;
+
+## Other ISE APIs
+
+&nbsp;
+
+For a complete list of all Cisco ISE APIs, see https://developer.cisco.com/docs/identity-services-engine/.
+
+&nbsp;
+
+# Cisco Threat Grid
+
+&nbsp;
+
+>   ***`Key Topic`***
+
+&nbsp;
+
+Threat Grid is Cisco's unified malware analysis and threat intelligence platform.  The idea behind Threat Grid is to present a combined analysis engine that can leverage and unify multiple capabilities and multiple infrastructures within an organization.  It does this by performing static and dynamic analysis and producing reports and indicators that are human readable.  File records are uploaded typically via the portal or API, and the output or results are usually consumed also via content-rich threat intelligence feeds.  Figure 11-11 shows the various functions that Cisco Threat Grid performs.
+
+&nbsp;
+
+**Figure 11-11** *Threat Grid in a Nutshell*
+
+![Figure 11-11 Threat Grid in a Nutshell](assets/images/Figure%2011-11%20Threat%20Grid%20in%20a%20Nutshell.jpeg)
+
+&nbsp;
+
+Threat Grid integrates real-time behavioral analysis and up-to-the-minute threat intelligence feeds with existing security technologies to protect a network from both known and unknown attacks.  Threat Grid analyzes suspicious files against more than 1000 behavioral indicators and a malware knowledge base sourced from around the world to provide more accurate, context-rich threat analytics than ever before.
+
+&nbsp;
+
+Figure 11-12 shows the Cisco Threat Grid solution architecture.
+
+&nbsp;
+
+Figure 11-12 Threat Grid Solution Architecture
+
+![Figure 11-12 Threat Grid Solution Architecture](assets/images/Figure%2011-12%20Threat%20Grid%20Solution%20Architecture.jpeg)
+
+&nbsp;
+
+On the left side of Figure 11-12 is the Cisco portfolio, and on the right are the non-Cisco or integration partners.  The numbers in the figure correspond with the following details:
+
+1.  The solution can be integrates across the Cisco security portfolio, including AMP for Endpoints, AMP for Networks, ASA with Firepower, ESA, WSA, and Meraki.
+2.  Threat Grid can be deployed as either a cloud-based software-as-a-service product or an on-premises appliance.
+3.  A subscription to Threat Grid provides threat intelligence through the API.
+4.  Threat intelligence is automatically delivered to security-monitoring platforms.
+5.  Third-party integrations automatically submit samples and consume threat intelligence.
+6.  Context-rich analysis empowers junior analysts to make more accurate decisions more quickly.
+
+&nbsp;
+
+## Threat Grid APIs
+
+&nbsp;
+
+The Threat Grid APIs offer a broad range of functionality, including user and organization account management, samples (file/malware/signature management), sample analysis data collection, and threat intelligence harvesting.  The Cisco DevNet site https://developer.cisco.com/treat-grid/ provides details, API documentation, and a lot of other information.  You can sign up for a free trial account at https://www.cisco.com/c/en/us/products/security/promotions-free-trials.html#~trials.  Once oyu have access, you can download all the APIs.
+
+&nbsp;
+
+## Threat Grid API Format
+
+&nbsp;
+
+All Threat Grid API calls are made to the URL `https://panacea.threatgrid.com/api/`.  The format of the API is as follows:
+
+`https://panacea.threatgrid.com/api/<ver>/<api-endpoint>?q=<query>&api_key=apikey`
+
+where \<ver> could be "v2" or "v3", \<api-endpoint> is the actual API and the apikey is the key associated with the account.
+
+&nbsp;
+
+## API Keys
+
+&nbsp;
+
+To get the API key from the Threat Grid portal UI, follow these steps:
+
+-   **Step 1.**  Go to the Threat Grid portal UI.
+-   **Step 2.**  From the Welcome menu in the upper-right corner of the navigation bar, select Manage Users
+-   **Step 3.**  Navigate (use Search if necessary) to the User Details page for the integration's user account and copy the API key.
+
+&nbsp;
+
+This API key is used in every API call that is made to Threat Grid.
+
+&nbsp;
+
+The following sections provide some examples of working with the Threat Grid APIs.
+
+&nbsp;
+
+## Who Am I 
+
+&nbsp;
+
+To see if the API key is working, you can use the GET method and the API `https://panacea.threatgrid.com/api/v3/session/whoami`.  You need to pass the API key as a query parameter, as shown in Example 11-18.
+
+&nbsp;
+
+**Example 11-18** *Threat Grid: Who Am I*
+
+```python
+""" Threat Grid - who am I """
+import requests
+url = "https://panacea.threatgrid.com/api/v3/session/whoami"
+querystring = {"api_key":"deadbeefelcpgib9ec0909"}
+headers = {
+    'cache-control': "no-cache",
+}
+response = requests.request(
+    "GET",
+    url,
+    headers=headers,
+    params=querystring
+)
+print(response.text)
+```
+
+&nbsp;
+
+Example 11-19 shows the JSON response to the request in Example 11-18
+
+&nbsp;
+
+**Example 11-19** *Threat Grid Response*
+
+&nbsp;
+
+```
+{
+    "api_version": 3,
+    "id": 1234567,
+    "data": {
+        "role": "user",
+        "properties": {},
+        "integration_id": "z1ci",
+       "email": "devasc@student.com",
+        "organization_id": 666777,
+        "name": "devasc",
+        "login": "devasc",
+        "title": "DevNet Associate",
+        "api_key": " deadbeefelcpgib9ec0909",
+        "device": false
+    }
+}
+```
+
+&nbsp;
+
+## The Data, SAmple, and IOC APIs
+
+&nbsp;
+
+The DATA API allows developers to search observables by specific criteria.  You can do an entity search by using the /search/ endpoint.  You can pivot the Threat Grid data by using the entity lookups /domains/, /urls/, /paths/, and so on.
+
+&nbsp;
+
+The Sample API allows developers to submit and retrieve data for analysis.  You can get the raw observable feeds by using the /samples/feeds/ endpoint.  The data is usually harvested from all sample activity, suspicious or not, and therefore has a very large footprint.  You can use this API to query feeds to look at the sample for your organization only.
+
+&nbsp;
+
+The ***Indicator of Compromise (IOC)*** API feeds can be accessed via the /iocs/feeds endpoint.  With this API, you can see observables in conjunction with behavior indicators.  Usually, if an item shows up in this feed, it means that there is at least some degree of suspicious behavior associated with the item.  Also, filters can be applied to see only samples from your organization.
+
+&nbsp;
+
+Let's look at an example.  In this example, we will search for all records that have a sha1 value equal to **"8fbb3bd96b80e28ea41107728ce8c073cbadb0dd"**.  To do so, we use the GET method and the API `https://panacea.threatgrid.com/api/v2/search/submissions`, and we need to pass the API key as a query parameter.  Example 11-20 shows the Python **requests** scripts to use in this case.
+
+&nbsp;
+
+**Example 11-20** *Threat Grid: Searching Submissions*
+
+```python
+""" Threat Grid - search submissions API """
+import requests
+
+url = "https://panacea.threatgrid.com/api/v2/search/submissions"
+querystring = {
+    "q": "8fbb3bd96b80e28ea41107728ce8c073cbadb0dd",
+    "api_key": "deadbeefelcpgib9ec0909"
+}
+headers = {
+    'cache-control': "no-cache",
+}
+response = requests.request(
+         "GET",
+         url,
+         headers=headers,
+         params=querystring
+)
+print(response.text)
+```
+
+&nbsp;
+
+Example 11-21 shows the JSON response to the request in Example 11-20.
+
+&nbsp;
+
+**Example 11-21** *Threat Grid Search Response*
+
+```
+{
+    "api_version": 2,
+    "id": 4482656,
+    "data": {
+        "index": 0,
+        "total": 1,
+        "took": 3956,
+        "timed_out": false,
+        "items_per_page": 100,
+        "current_item_count": 1,
+        "items": [
+            {
+                "item": {
+                    "properties": {
+                        "metadata": null
+                    },
+                    "tags": [],
+                    "vm_runtime": 300,
+                    "md5": "b5c26cab57c41208bd6bf92d495ee1f0",
+                    "state": "succ",
+                    "sha1": "8fbb3bd96b80e28ea41107728ce8c073cbadb0dd",
+                    "sample": "b7d3dd2a6d47ea640f719cc76c2122f8",
+                    "filename": "FlashPlayer.exe",
+....cut
+```
+
+&nbsp;
+
+## Feeds
+
+&nbsp;
+
+Threat Grid supports three different types of feeds:
+
+-   **Sample feeds**:  These are all observables seen.
+-   ***Indicator of Compromise (IOC)* feeds**:  These are observables seen via business intelligence.  IOCs are used to indicate that the system has been affected by some form of malware.
+-   **Curated feeds**:  These are highly accurate and high-confidence feeds.
+
+&nbsp;
+
+Table 11-7 shows the difference between these feeds.
+
+&nbsp;
+
+**Table 11-7** Threat Grid Feeds
+
+| | Sample Feeds | IOC Feeds | Curated Feeds |
+| -- | -- | -- | -- |
+| Version | /v2 | /v2 | /v3 |
+| Endpoint | /samples/feeds/ | /iocs/feeds/ | /feeds/ |
+| Content | All observables are seen | Observables are seen in all BIs | Observables are seen as part of a trusted high-confidence BI triggering |
+| Pre-whitelisted | No | No | Yes |
+| Filterable to only you/org? | Yes | Yes | No |
+| Output Formats | JSON | JSON | JSON/CSV/Snort/STIX |
+
+&nbsp;
+
+Say that you want to retrieve all the curated feeds via API.  The curated feed types are shown in Table 11-8.
+
+&nbsp;
+
+**Table 11-8** Curated Feed Types
+
+| Feed Name | Description |
+| -- | -- |
+| autorun-registry | Registry entry data derived from querying registry changes known for persistence |
+| banking-dns | Banking Trojan network communications |
+| dga-dns | DGA domains with pseudo-randomly generated names |
+| dll-hijacking-dns | Domains communicated to by samples leveraging DLL sideloading and hijacking techniques |
+| doc-net-com-dns | Document (PDF, Office) network communications |
+| downloaded-pe-dns | Samples downloading executables network communications |
+| dynamic-dns | Samples leveraging dynamic DNS providers |
+| irc-dns | Internet Relay Chat (IRC) network communications |
+| modified-hosts-dns | Modified Windows hosts file network communications |
+| parked-dns | Parked domains resolving to RFC 1918 localhost and broadcast addresses |
+| public-ip-check-dns | Public IP address network communications |
+| ransomware-dns | Samples communicating with ransomware servers |
+| rat-dns | Remote Access Trojan (RAT) network communications |
+| scheduled-tasks | Scheduled task data observed during sample execution |
+| sinkholed-ip-dns | DNS entries for samples communicating with a known DNS sinkhole |
+| stolen-cert-dns | DNS entries observed from samples signed with a stolen certificate |
+
+&nbsp;
+
+Now let's look at an example of going through all the feed types and printing out the feed if any data exists.  In this case, you can use the GET method and the API `https://panacea.threatgrid.com/api/v2/search/submissions`.  the API key must be passed as a query parameter.  Example 11-22 shows the Python **requests** script you use in this case.
+
+&nbsp;
+
+**Example 11-22** *Threat Grid: Listing Details for Each Curated Feed Type*
+
+```python
+""" Threat Grid - List details for each curated feed type """
+import requests
+FEED_URL = "https://panacea.threatgrid.com/api/v3/feeds"
+FEEDS_NAME = {
+    "autorun-registry": "Autorun Registry Malware",
+    "banking-dns": "Banking Trojans",
+    "dga-dns": "Domain Generation Algorithm Destinations",
+    "dll-hijacking-dns": "DLL Hijackers / Sideloaders",
+    "doc-net-com-dns": "Document File Network Communication",
+    "downloaded-pe-dns": "Dropper Communication",
+    "dynamic-dns": "Dynamic DNS Communication",
+    "irc-dns": "IRC Communication",
+    "modified-hosts-dns": "Modified HOSTS File Communication",
+    "public-ip-check-dns": "Public IP Checkers",
+    "ransomware-dns": "Ransomware Communication",
+    "rat-dns": "Remote Access Trojans",
+    "scheduled-tasks": "Scheduled Task Communication",
+    "sinkholed-ip-dns": "Sinkholed IPs",
+    "stolen-cert-dns": "Stolen Certificates",
+}
+for name, desc in FEEDS_NAME.items():
+    url = "{}/{}.json".format(FEED_URL, name)
+    querystring = {"api_key":"2kdn3muq7uafelcpgib9eccua7"}
+
+    headers = {
+        'cache-control': "no-cache",
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
+        }
+
+    response = requests.request("GET", url, headers=headers, params=querystring)
+
+    print(response.text)
+```
