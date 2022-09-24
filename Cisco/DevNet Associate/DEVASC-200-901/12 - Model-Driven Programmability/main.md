@@ -86,3 +86,176 @@ As previously mentioned, the first version of NETCONF was defined in 2006, but Y
 &nbsp;
 
 NETCONF provides a set of operations to manage device configurations and retrieve status information.  These operations include retrieving, configuring, copying, and deleting configuration data stores and retrieving operational data.  Depending on the NETCONF capabilities that are advertised by a device, additional operations can be supported.  Table 12-2 shows a common set of NETCONF operations.
+
+&nbsp;
+
+>   ***`Key Topic`***
+
+&nbsp;
+
+**Table 12-2** NETCONF Operations
+
+| Operation | Description |
+| -- | -- |
+| \<get> | Retrieve running configuration and device state information |
+| \<get-config> | Retrieve all or part of the specified configuration data store |
+| \<edit-config> | Load all or part of a configuration to the specified configuration data store |
+| \<copy-config> | Replace an entire configuration data store with another |
+| \<delete-config> | Delete a configuration data store |
+| \<commit> | Copy the candidate data store to the running data store |
+| \<lock> / \<unlock> | Lock or unlock the entire configuration data store system |
+| \<close-session> | Gracefully terminate the NETCONF session |
+| \<kill-session> | Forcibly terminate the NETCONF session |
+
+&nbsp;
+
+The NETCONF \<edit-config> operation supports several attributes:
+
+-   **merge**:  When this attribute is specified, the configuration data is merged with the configuration at the corresponding level in the configuration data store.  This is the default behavior.
+-   **replace**:  The configuration data replaces any related configuration in the configuration data store.  Only the configuration that is present in the config parameter is affected.
+-   **create**:  The configuration data is added to the configuration only if the configuration data does not exist on the device.  If the configuration already exists, an \<rpc-error> message is returned with the \<error-tag> value data-exists.
+-   **delete**:  When this attribute is specified, the configuration data is deleted from the configuration data store.
+
+&nbsp;
+
+>   ***`Key Topic`***
+
+&nbsp;
+
+NETCONF defines the existence of one or more configuration data stores and allows configuration operations on these data stores.  A configuration data store is a set of configuration data that is needed to get the device from its default initial state into a desired operational state.  The configuration data stores do not contain operational data.  
+
+&nbsp;
+
+Three types of configuration data stores are defined in NETCONF:
+
+-   **running**:  This data store holds the complete configuration currently active on the network device.  Only one running data store can exist on a device, and it is always present.  NETCONF protocol operations refer to this data store with the \<running> XML element.
+-   **candidate**:  This data store acts as a workplace for creating and manipulating configuration data.  A \<commit> operation causes the configuration data contained in it to be applied to the running data store.
+-   **startup**:  This data store contains the configuration data that is loaded when the device boots up and comes online.  An explicit \<copy-config> operation from the \<running> data store into the \<startup> data store is needed to update the startup configuration with the contents of the running configuration.
+
+&nbsp;
+
+The existence of these data stores is advertised by the NETCONF device through capabilities.  When opening a new session with a NETCONF server, the first message that is sent by the server contains a list of all the capabilities that the server supports.
+
+&nbsp;
+
+The information that can be retrieved from a NETCONF server is separated into two classes:  configuration data and state data or operational data.  Configuration data is the set of writable data that starts in the system operations; operational data, also known as the read-only status data, is the non-configuration data of the system (for example, interface traffic statistics, power supply status, etc).
+
+&nbsp;
+
+# YANG
+
+&nbsp;
+As mentioned in RFC 6020, YANG is "a data modeling language used to model configuration and state data manipulated by the Network Configuration Protocol (NETCONF), NETCONF remote procedure calls, and NETCONF notifications."  The main motivation behind YANG was to provide a standard way to model configuration and operational data so that the network devices can be configured and monitored in a standard and common way.  While CLI configuration and monitoring of network devices is user friendly, it is not necessarily network automation friendly.  Different network vendors have different CLIs with different features and capabilities.  Trying to find a standard way to automate the configuration and monitoring of a heterogenous network with devices from different vendors was almost impossible before NETCONF and YANG data models were created.
+
+&nbsp;
+
+>   ***`Key Topic`***
+
+&nbsp;
+
+YANG is a language used to model data for the NETCONF protocol.  A YANG module defines a hierarchy of data that can be used for NETCONF-based operations.  It allows a complete description of all data sent between a NETCONF client and server.  YANG models the hierarchical organization of data as a tree in which each node has a name and either a value or a set of child nodes.  YANG provides a clear and concise descriptions of the nodes, as well as the interaction between those nodes.
+
+&nbsp;
+
+YANG strikes a balance between high-level data modeling and low-level bits-on-the-wire encoding.  The reader of a YANG module can see the high-level view of the data model and understand how the data will be encoded in NETCONF operations.
+
+&nbsp;
+
+YANG structures data models into modules and submodules.  A module can import data from external modules, and it can include data from submodules.  The hierarchy can be augmented, allowing one module to add data nodes to the hierarchy defined in another module.
+
+&nbsp;
+
+A YANG module contains three types of statements:
+
+-   Module-header statements describe the module and give information about it.
+-   Revision statements provide information about the history of the module.
+-   Definition statements are the body of the module, where the data model is defined.
+
+&nbsp;
+
+A NETCONF server may implement a number of modules, which is the most common implementation for the Cisco devices that support NETCONF, or it might implement only one module that defines all the available data.
+
+&nbsp;
+
+YANG is expressed in XML, meaning that an instance of a YANG model is an XML document.
+
+&nbsp;
+
+YANG defines a set of built-in types and has a mechanism through which additional types can be defined.  There are more than 20 base types fot start with, including the ones in Table 12-3.
+
+&nbsp;
+
+**Table 12-3** YANG Built-in Data Types
+
+| Data Type | Description |
+| -- | -- |
+| binary | Binary data |
+| bits | Set of bits |
+| boolean | True or false |
+| decimal64 | 64-bit signed decimal number |
+| empty | No value |
+| enumeration | Enumerated strings |
+| int8/16/32/64 | Integer |
+| uint8/16/32/64 | Unsigned integer |
+| string | Unicode string |
+
+&nbsp;
+
+The **typedef** YANG statement can be used to define derived types from base types.  In the following example, a new data type called **percent** is created by limiting a 16-bit unsigned integer value to a range from 0 to 100:
+
+```
+typedef percent {
+     type uint16 {
+          range "0 .. 100";
+}
+Description "Percentage":
+}
+```
+
+&nbsp;
+
+This new type of data can then be used when building the YANG models.  It is common practice to have definitions of new types of data contained in a YANG submodule that will then be imported in the main YANG module.  IETF has also defined in RFC 6021 a large number of YANG types that are commonly used in networking.  These data types are organized in the **inet-yang-types** module.  The following are some of the many data types defined in this RFC:
+
+-   ipv4-address
+-   ipv6-address
+-   ip-prefix
+-   domain-name
+-   uri
+-   mac-address
+-   port-number
+-   ip-version
+-   phys-address
+-   timestamp
+-   date-and-time
+-   flow-label
+-   counter32/64
+-   gauge32/64
+
+&nbsp;
+
+When building YANG modules, the **import** statement can be used to make all these data types available in the new model:
+
+```
+import "ietf-yang-types" {
+    prefix yang;
+}
+```
+
+&nbsp;
+
+When importing an external YANg module, the **prefix** statement defines the prefix that will be used when accessing definitions inside the imported module.  for example, in order to reference the IPv4 address data type from the newly imported **ietf-yang-types** module, you can use the following statement:
+
+`type yang:ipv4-address;`
+
+&nbsp;
+
+>   ***`Key Topic`***
+
+&nbsp;
+
+YANG defines four types of nodes for data modeling:
+
+-   Leaf nodes
+-   Leaf-list nodes
+-   Container nodes
+-   List nodes
