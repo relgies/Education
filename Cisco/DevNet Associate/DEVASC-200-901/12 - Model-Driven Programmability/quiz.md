@@ -36,7 +36,7 @@
     -   Prefix
     -   Notification
     -   Namespace
-    -   ORganization name
+    -   Organization name
 
 &nbsp;
 
