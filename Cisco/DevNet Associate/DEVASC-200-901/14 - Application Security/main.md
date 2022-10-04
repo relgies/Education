@@ -416,7 +416,7 @@ You cannot prevent the data from being altered by someone on the network, so the
 
 &nbsp;
 
-You can use a private key for encryption and your public key for decryption.  Rather than encrypting the data itself, you can create a one-way hash of the data and then use the private key to encrypt the hash.  The encrypted hash, along with other information, such as the hashing algorithm, is known as a *digital signature*.  Figure 14-4 illustrates the use of a digital signature to validate teh integrity of signed data.  The data and the digital signature are sent across the network.  On the receiving end, two hashes are calculated: one from the received data and the other by decrypting the digital signature using the public key.  If the two hashes match, you know that the private and public keys match, and the identity of the sender is verified.
+You can use a private key for encryption and your public key for decryption.  Rather than encrypting the data itself, you can create a one-way hash of the data and then use the private key to encrypt the hash.  The encrypted hash, along with other information, such as the hashing algorithm, is known as a *digital signature*.  Figure 14-4 illustrates the use of a digital signature to validate the integrity of signed data.  The data and the digital signature are sent across the network.  On the receiving end, two hashes are calculated: one from the received data and the other by decrypting the digital signature using the public key.  If the two hashes match, you know that the private and public keys match, and the identity of the sender is verified.
 
 &nbsp;
 

@@ -127,7 +127,7 @@ Continuous integration is a software development practice in which developers co
 
 &nbsp;
 
-As new code is written, it is critically important to run code base tests against the new changes in the code base in a fast, automated fashion.  Continuous integration tools accomplish exactly this task.  As the code gets committed to a central repository - in most cases, to a Git-style version control system - a webhook gets triggered that starts the whole automated testing phase of the pipeline.  Common triggers at this stage include automatic integrations with tools such as Cisco Webex Teams for immediate notifications on the status of the tests.  In the event that a test fails, the developer is notified and can correct the issues that caused the test to fail very early in the development process.  If all the tests pass, teh code moves on to the next state of the pipeline.
+As new code is written, it is critically important to run code base tests against the new changes in the code base in a fast, automated fashion.  Continuous integration tools accomplish exactly this task.  As the code gets committed to a central repository - in most cases, to a Git-style version control system - a webhook gets triggered that starts the whole automated testing phase of the pipeline.  Common triggers at this stage include automatic integrations with tools such as Cisco Webex Teams for immediate notifications on the status of the tests.  In the event that a test fails, the developer is notified and can correct the issues that caused the test to fail very early in the development process.  If all the tests pass, the code moves on to the next state of the pipeline.
 
 &nbsp;
 

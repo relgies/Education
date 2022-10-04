@@ -875,7 +875,7 @@ root@a583eac3cadb:/#
 
 &nbsp;
 
-Since this container hasn't been loaded locally before, Docker pulls the image from Docker Hub, layer by layer.  It executes a Dockerfile hosted on the repository and pulls the very latest version of a base Ubuntu container.  Once it is pulled down, the container is started, and the bash shell is executed.  The terminal now shows that you are connected to the container as root (in the container's namespace).  If you execute teh bash **ps** command, you can see that there are only two things: the bash shell and the **ps** command that you just ran.  This highlights the container's isolation from the host OS:
+Since this container hasn't been loaded locally before, Docker pulls the image from Docker Hub, layer by layer.  It executes a Dockerfile hosted on the repository and pulls the very latest version of a base Ubuntu container.  Once it is pulled down, the container is started, and the bash shell is executed.  The terminal now shows that you are connected to the container as root (in the container's namespace).  If you execute the bash **ps** command, you can see that there are only two things: the bash shell and the **ps** command that you just ran.  This highlights the container's isolation from the host OS:
 
 ```
 root@a583eac3cadb:/# ps

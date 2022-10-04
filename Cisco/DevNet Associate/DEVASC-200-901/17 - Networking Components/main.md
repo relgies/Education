@@ -275,7 +275,7 @@ As discussed earlier in this chapter, routers participate in route discovery, pa
 
 &nbsp;
 
--   **Fast switching**:  Fast switching is the next-level evolution of process switching.  The CPU is involved for only the first packet that is routed.  It determines the outgoing interface required for the packet and updates the route cache, which typically resides in the kernel.  Once the route cache is populated, the input interfaces driver does a route-cache lookup and fast switches the packet to the outgoing interface.  Figure 17-14 shows fast switching, in which teh processor essentially updates the route cache after it learns the next hop.  All subsequent packets are fast switched.
+-   **Fast switching**:  Fast switching is the next-level evolution of process switching.  The CPU is involved for only the first packet that is routed.  It determines the outgoing interface required for the packet and updates the route cache, which typically resides in the kernel.  Once the route cache is populated, the input interfaces driver does a route-cache lookup and fast switches the packet to the outgoing interface.  Figure 17-14 shows fast switching, in which the processor essentially updates the route cache after it learns the next hop.  All subsequent packets are fast switched.
 
 &nbsp;
 
@@ -381,7 +381,7 @@ SDN essentially decouples network configuration and data flow engineering, regar
 
 Networks are often shown using three-level architecture, as shown in Figure 17-20, which consists of hardware and two planes:
 
--   **Data plane**:  As described in this chapter, a router can route packets faster by using techniques such as fast switching or CEF switching.  These techniques for punting packets from the incoming interface to the outgoing interface operate on what is traditionally known as the data plane.  The main objective of the data plane is to determine how the incoming packet on the a port must be forwarded to an outgoing port, based on specific values in teh packet headers.
+-   **Data plane**:  As described in this chapter, a router can route packets faster by using techniques such as fast switching or CEF switching.  These techniques for punting packets from the incoming interface to the outgoing interface operate on what is traditionally known as the data plane.  The main objective of the data plane is to determine how the incoming packet on the a port must be forwarded to an outgoing port, based on specific values in the packet headers.
 -   **Control plane**:  Routing protocols and other protocols make up the control plane.  the control plane determines how a packet is routed among routers or other network elements as the packet traverses end-to-end from source host to destination host.  The control plane also deals with packets that are destined for the router itself.  Device and network management are also part of the control plane.  Management functions include initializing interfaces with default configurations, IP addresses, policies, user accounts, and so on.
 
 &nbsp;

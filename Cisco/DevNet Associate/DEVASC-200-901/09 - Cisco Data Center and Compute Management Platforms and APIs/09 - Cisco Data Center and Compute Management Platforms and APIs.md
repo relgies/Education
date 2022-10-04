@@ -915,7 +915,7 @@ Automation delivers the essential scale, speed, and repeatable accuracy needed t
 
 &nbsp;
 
-This open private-cloud platform delivers on-premises infrastructure as a service (IaaS) from the core to the edge of teh data center.  Automated workflows configure, deploy, and manage infrastructure resources across Cisco and third-party computing, network, and storage resources and converged and hyperconverged infrastructure solutions.  Cisco UCS Director supports the industry's leading converged infrastructure solutions, including NetApp FlexPod and FlexPod Express, EMC VSPEX, EMC VPLEX, and VCE Block.  It delivers unified management and orchestration for a variety of hypervisors across bare-metal and virtualized environments.
+This open private-cloud platform delivers on-premises infrastructure as a service (IaaS) from the core to the edge of the data center.  Automated workflows configure, deploy, and manage infrastructure resources across Cisco and third-party computing, network, and storage resources and converged and hyperconverged infrastructure solutions.  Cisco UCS Director supports the industry's leading converged infrastructure solutions, including NetApp FlexPod and FlexPod Express, EMC VSPEX, EMC VPLEX, and VCE Block.  It delivers unified management and orchestration for a variety of hypervisors across bare-metal and virtualized environments.
 
 &nbsp;
 
