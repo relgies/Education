@@ -1,6 +1,23 @@
 [comment]: <> (This is the start of the CSS styling)
 
-<link rel="stylesheet" href="styles.css" type="text/css">
+<style>
+ol {
+    font-weight: bold;
+}
+
+ol.a {
+    list-style-type: lower-alpha;
+}
+
+li span.n {
+    font-weight: normal;
+}
+
+span.answer {
+    font-weight: bold;
+    font-style: italic;
+}
+</style>
 
 [comment]: <> (This is the end of the CSS styling)
 
