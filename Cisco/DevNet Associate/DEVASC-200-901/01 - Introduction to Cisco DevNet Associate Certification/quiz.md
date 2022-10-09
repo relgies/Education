@@ -14,10 +14,10 @@
         <br />
         <details>
             <summary>
-            <strong><em>Answer</em></strong>
+            <strong><em>Answer
             </summary>
             <br />
-                A, B, D.  The five levels of Cisco accreditation are Entry, Associate, Professional, Expert, and Architect.
+                A, B, D.  The five levels of Cisco accreditation are Entry, Associate, Professional, Expert, and Architect.</em></strong>
             <br />
         </details>
     <br />
@@ -32,10 +32,10 @@
         <br />
         <details>
             <summary>
-                <strong><em>Answer</em></strong>
+                <strong><em>Answer
             </summary>
             <br />
-                A, B, E.  Highlighting skills to employers and peers, increasing confidence, improving credibility, providing value to employers, providing a baseline of understanding, career advancement, and increased salary are some of the most common reasons candidates want to get certified.
+                A, B, E.  Highlighting skills to employers and peers, increasing confidence, improving credibility, providing value to employers, providing a baseline of understanding, career advancement, and increased salary are some of the most common reasons candidates want to get certified.</em></strong>
             <br />
         </details>
     <br />
@@ -50,10 +50,10 @@
         <br />
         <details>
             <summary>
-                <strong><em>Answer</em></strong>
+                <strong><em>Answer
             </summary>
             <br />
-                A, E.  Only two types of exams are necessary to obtain the DevNet Professional certification: the Technology Core exam and a single concentration exam.
+                A, E.  Only two types of exams are necessary to obtain the DevNet Professional certification: the Technology Core exam and a single concentration exam.</em></strong>
             <br />
         </details>
     <br />
@@ -65,10 +65,10 @@
         <br />
         <details>
             <summary>
-                <strong><em>Answer</em></strong>
+                <strong><em>Answer
             </summary>
             <br />
-                A.  A single exam is all that is required for the new CCNA certification.
+                A.  A single exam is all that is required for the new CCNA certification.</em></strong>
             <br />
         </details>
     <br />
@@ -83,10 +83,10 @@
         <br />
         <details>
             <summary>
-                <strong><em>Answer</em></strong>
+                <strong><em>Answer
             </summary>
             <br />
-                A, B, C, E.  Cisco Automation Platform doesn't exist.  The DevNet Automation Exchange is a place on DevNet to download fully tested and working use case-driven code-based examples.
+                A, B, C, E.  Cisco Automation Platform doesn't exist.  The DevNet Automation Exchange is a place on DevNet to download fully tested and working use case-driven code-based examples.</em></strong>
             <br />
         </details>
 </ol>
