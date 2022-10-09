@@ -1,0 +1,16 @@
+ol {
+    font-weight: bold;
+}
+
+ol.a {
+    list-style-type: lower-alpha;
+}
+
+li span.n {
+    font-weight: normal;
+}
+
+span.answer {
+    font-weight: bold;
+    font-style: italic;
+}
