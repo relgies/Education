@@ -1,6 +1,6 @@
 [comment]: <> (This is the start of the CSS styling)
 
-<link rel="stylesheet" href="assets/styles.css">
+<link rel="stylesheet" href="..\styles.css">
 
 [comment]: <> (This is the end of the CSS styling)
 
