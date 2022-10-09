@@ -73,7 +73,7 @@
         </details>
     <br />
     <li>Which of the following are part of DevNet?  (Choose all that apply.)
-        <ol class='a'>
+        <ol type='a'>
             <li>Community
             <li>Technologies
             <li>Events
