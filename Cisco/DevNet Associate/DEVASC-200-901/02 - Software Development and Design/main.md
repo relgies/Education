@@ -124,7 +124,7 @@ There are quite a few SDLC models that further refine the generic process just d
 -   Big Bang model
 -   Prototyping models
 
-You don't need to know all of these for the 200-901 DevNet ASsociate DEVASC exam.  The following sections cover the ones you should know most about:  Waterfall, Lean, and Agile.
+You don't need to know all of these for the 200-901 DevNet Associate DEVASC exam.  The following sections cover the ones you should know most about:  Waterfall, Lean, and Agile.
 
 &nbsp;
 
@@ -221,7 +221,7 @@ When creating software, you will often run into the same problem over and over a
 &nbsp;
 
 >  **Note**
-> Numerous web frameworks use MVC concepts across many programming languages.  Angular, Express, and Backbone are all written in JAvaScript.  Django and Flask are two very popular examples written in Python.
+> Numerous web frameworks use MVC concepts across many programming languages.  Angular, Express, and Backbone are all written in JavaScript.  Django and Flask are two very popular examples written in Python.
 
 &nbsp;
 
@@ -369,7 +369,7 @@ The purpose of the **cp** command is to copy a file or folder someplace.  It doe
 
 | Command | Use |
 | -- | -- |
-| **$ cp sydney.text sydney2.txt** | Copies a file called sydney.txt from teh current directory and names the copy sydney2.txt |
+| **$ cp sydney.txt sydney2.txt** | Copies a file called sydney.txt from the current directory and names the copy sydney2.txt |
 | **$ cp /home/username/sydney.txt ~/sydney2.txt** | Copies a file as described above but using the full path and the home directory path |
 | **$ cp -r folder folder.old** | Copies a folder |
 
@@ -377,7 +377,7 @@ The purpose of the **cp** command is to copy a file or folder someplace.  It doe
 
 **mv**
 
-The **mv** command allows you to move a file or folder from one directory to another, and it is also used to rename files or folders from teh command line, as BASH does not have a dedicated renaming function.  The **mv** command takes a source and destination, just as **cp** does.  You can use the **-i** flag to create an interactive option prompt when moving files that exist at the destination.  The **-f** flag forces the move and overwrites any files at the destination.  Wildcards also work to select multiple source files or directories.  You can use the **mv** command as follows:
+The **mv** command allows you to move a file or folder from one directory to another, and it is also used to rename files or folders from the command line, as BASH does not have a dedicated renaming function.  The **mv** command takes a source and destination, just as **cp** does.  You can use the **-i** flag to create an interactive option prompt when moving files that exist at the destination.  The **-f** flag forces the move and overwrites any files at the destination.  Wildcards also work to select multiple source files or directories.  You can use the **mv** command as follows:
 
 | Command | Use |
 | -- | -- |
@@ -417,7 +417,7 @@ The **cat** (which stands for *concatenate*) command allows you to view or creat
 | -- | -- |
 | **$ cat file1.txt** | Displays the contents of file1.txt |
 | **$ cat file1.txt \| more** | Displays the contents of file1.txt and pipes the output to **more** to add page breaks |
-| **$ cat >file2.txt** | Sends a user's typed or copied content from the command line to ifile2.txt |
+| **$ cat >file2.txt** | Sends a user's typed or copied content from the command line to file2.txt |
 
 &nbsp;
 
@@ -431,7 +431,7 @@ BASH environment variables contain information about the current session.  Envir
 | -- | -- |
 | **$ env \| more** | Shows all environment variables with page breaks |
 
-If you execute this command, you are likely to notice a lot of keywords with the = sign tied to values.  One environment variable that you use every time you execute a command is the PATH variable.  This is where your shell looks for executable files.  If you add a new command and can't execute it, more than likely the place where the command was copied is not listed in your PATH.  To view any variable value, you can use the **echo** command and the variable you want to view.  You also need to tell bASH that it's a variable by using the **$** in front of it.  Here's an example:
+If you execute this command, you are likely to notice a lot of keywords with the = sign tied to values.  One environment variable that you use every time you execute a command is the PATH variable.  This is where your shell looks for executable files.  If you add a new command and can't execute it, more than likely the place where the command was copied is not listed in your PATH.  To view any variable value, you can use the **echo** command and the variable you want to view.  You also need to tell BASH that it's a variable by using the **$** in front of it.  Here's an example:
 
 &nbsp;
 
@@ -686,7 +686,7 @@ git mv (-f) (source) (destination)
 
 &nbsp;
 
-For this command you supply a source argument and a destination argument to indicate which file or directory you want to change and where you want to move it.  (Moving in this case is considered the same as renaming.)  Keep in mind that when you use this command, it also updates the index at the same time, so there is no need to issue **git add** to add teh change to Git.  You can use the **-f** argument if you are trying to overwrite an existing file or directory where the same target exists.  The following example shows how to change a filename in the same directory:
+For this command you supply a source argument and a destination argument to indicate which file or directory you want to change and where you want to move it.  (Moving in this case is considered the same as renaming.)  Keep in mind that when you use this command, it also updates the index at the same time, so there is no need to issue **git add** to add the change to Git.  You can use the **-f** argument if you are trying to overwrite an existing file or directory where the same target exists.  The following example shows how to change a filename in the same directory:
 
 &nbsp;
 
@@ -707,7 +707,7 @@ newfile.py
 
 &nbsp;
 
-When you commit a file, you move it from the index or staging area to the local copy of the repository.  Git doesn't send entire updates; it sens just changes.  The **commit** command is used to bundle up those changes to be synchronized with the local repository.  The command is simple, but you can specify a lot of options and tweaks.  In its simplest form, you just need to type **git commit**.  This command has the following syntax:
+When you commit a file, you move it from the index or staging area to the local copy of the repository.  Git doesn't send entire updates; it sends just changes.  The **commit** command is used to bundle up those changes to be synchronized with the local repository.  The command is simple, but you can specify a lot of options and tweaks.  In its simplest form, you just need to type **git commit**.  This command has the following syntax:
 
 &nbsp;
 
@@ -748,7 +748,7 @@ Up until this point you have seen how Git operates on your local computer.  Many
 
 In order to allow Git to use a remote repository, you have to configure Git with some information so that it can find it.  When you use the command **git clone** on a repository, Git automatically adds the remote repository connection information via the URL entered with the **clone** command.
 
-When using the **git init** command, however, you need to make sure that you enter information to find the remote location for the server with the **git remove add** command, which has the following syntax:
+When using the **git init** command, however, you need to make sure that you enter information to find the remote location for the server with the **git remote add** command, which has the following syntax:
 
 &nbsp;
 
@@ -763,7 +763,7 @@ git remote add (name) (url)
 &nbsp;
 
 ```
-# git remove add origin https://github.com/chrijack/devnetccna.git
+# git remote add origin https://github.com/chrijack/devnetccna.git
 
 # git remote -v
 
@@ -830,7 +830,7 @@ gin'.
 
 &nbsp;
 
-The command **git pull** syncs any changes that are on the remote repository and brings your local repository up to the same level as teh remove one.  It has the following syntax:
+The command **git pull** syncs any changes that are on the remote repository and brings your local repository up to the same level as the remote one.  It has the following syntax:
 
 &nbsp;
 
@@ -935,7 +935,7 @@ newfeature
 
 &nbsp;
 
-The * next to **master** shows that the branch you are currently in is still master, buy ou now have a new branch named **newfeature**.  Git simply creates a pointer to the latest commit and uses that commit as the start of the new branch
+The * next to **master** shows that the branch you are currently in is still master, but you now have a new branch named **newfeature**.  Git simply creates a pointer to the latest commit and uses that commit as the start of the new branch
 
 In order to move to the new branch and change your working directory, you have to use the **git checkout** command, which has the following syntax:
 

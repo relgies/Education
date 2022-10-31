@@ -74,14 +74,14 @@
 
 ## **Why Get Certified**
 
-For over thirty years, the industry has thoguht of a network as a collection of devices such as routers, switches, and wireless components.  The shift in mindset to look at at a network as a holistic system is a more recent concept that stems from the advent of network controllers, which split role and functionality from one another.  This is often referred to as separating the control plane from the data plane.
+For over thirty years, the industry has thought of a network as a collection of devices such as routers, switches, and wireless components.  The shift in mindset to look at at a network as a holistic system is a more recent concept that stems from the advent of network controllers, which split role and functionality from one another.  This is often referred to as separating the control plane from the data plane.
 
-At a high level, thte control plane is where all the instructions on a device live (for example, the routing protocols that exchange routing updates).  The data plane is where all the user or data traffic flowers (for example, the traffic between users on a network).  Having a controller that sitso n top of the rest of the devices makes it possible to operate the network as a whole from a centralized management point.
+At a high level, the control plane is where all the instructions on a device live (for example, the routing protocols that exchange routing updates).  The data plane is where all the user or data traffic flowers (for example, the traffic between users on a network).  Having a controller that sits on top of the rest of the devices makes it possible to operate the network as a whole from a centralized management point.
 
 To put this in more familiar terms, think of the command-line interface (CLI).  The CLI was not designed to make massive-scale configuration changes to multiple devices at the same time.  Software-defined networking (SDN) and controller capabilities are becoming areas of focus in the industry.  Controllers offer the ability to manage a network as a system, which means the policy management can be automated and abstracted.  They provide the capability of supporting dynamic policy changes rather than requiring manual policy changes and device-by-device configurations when something requires a change within the environment.
 
-It is important from a career and skills perspective to adapt to the changes within the industry.  Keeping on top of new skillsets iscritical to maintaining relevance in the industry or job market.  Becoming Cisco certified helps with this for multiple reasons, including the following:
--   Highlighting skills to eployers
+It is important from a career and skills perspective to adapt to the changes within the industry.  Keeping on top of new skillsets is critical to maintaining relevance in the industry or job market.  Becoming Cisco certified helps with this for multiple reasons, including the following:
+-   Highlighting skills to employers
 -   Highlighting skills to industry peers
 -   Providing value to employers
 -   Providing credibility
@@ -92,7 +92,7 @@ It is important from a career and skills perspective to adapt to the changes wit
 
 ## **Cisco Career Certification Overview**
 
-There are five levels of accreditation for Cisco career certifications.  The following are thet five levels of accreditation in Cisco certifications:
+There are five levels of accreditation for Cisco career certifications.  The following are the five levels of accreditation in Cisco certifications:
 -   Architect
 -   Expert
 -   Professional
@@ -101,7 +101,7 @@ There are five levels of accreditation for Cisco career certifications.  The fol
 
 Each level of accreditation has multiple certifications and exams that pertain to that specific level.  In addition to the five tiers of the pyramid, there are also specialist certifications that candidates can achieve in specific technologies to showcase their knowledge and base level of understanding.
 
-Now with the new CCNA, a candidate need pass only a single exam to become CCNA certified.  An additional certification that wtas removed was the CCENT.  Now that the CCNA is a broader exam and covers many introductory-level topics, the CCENT topics have been absorded into the new CCNA.
+Now with the new CCNA, a candidate need pass only a single exam to become CCNA certified.  An additional certification that was removed was the CCENT.  Now that the CCNA is a broader exam and covers many introductory-level topics, the CCENT topics have been absorbed into the new CCNA.
 
 The CCNP has changed significantly as well.  Previously, for example, the CCNP Routing and Switching exam consisted of three exams:
 -   300-101 ROUTE
