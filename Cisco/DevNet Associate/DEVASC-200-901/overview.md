@@ -560,3 +560,607 @@ Benefits of code review:
 -   It enables team cohesion and helps delivery software projects on time.
 -   It helps find defects and inefficient code that unit tests and functional tests might miss, making software more reliable.
 
+&nbsp;
+
+#   03 - Introduction to Python
+
+&nbsp;
+
+##  **Getting Started with Python**
+
+Python virtual environments fix the issue of different module version compatibility by making sure the right modules are loaded for the application you're working with.
+
+To use a virtual environment, launch Python 3 with the **-m** argument to run the **venv** module.  You must supply a name for your virtual environment, which will also be the directory name.
+
+Next you activate the virtual environment by using the **source** command.
+
+```bash
+#   MacOS or Linux
+
+python -m venv myvenv
+
+source myvenv/bin/activate
+```
+
+```bash
+#   Windows
+
+C:\py -3 -m venv myvenv
+
+C:\myvenv\Scripts\activate.bat
+```
+
+You will see your virtual environment name in parentheses at the beginning of your command prompt:
+
+```(myvenv)$```
+
+This indicates you are running Python in your virtual environment.  
+
+&nbsp;
+
+To turn off the virtual environment, type **deactivate**.
+
+&nbsp;
+
+To install new module for Python, you use **pip**, which pulls from the PyPi repository.
+
+<pre>
+pip install <i>packagename</i>
+</pre>
+
+&nbsp;
+
+The **pip** command also offers a search function that allows you to query the package index:
+
+```pip search "search value"```
+
+The output includes the name, version, and a brief description of what the package does.
+
+&nbsp;
+
+To install a specific version, you specify a version number or a minimum version:
+
+```
+pip install package=1.1.1.      To install a specific version
+pip install package>=1.0        To install a version greater than or equal to 1.0
+```
+
+&nbsp;
+
+A **requirements.txt** file included with your code gives **pip** a set of packages that need to be installed, and you can issue the following command to get them loaded:
+
+```pip install -r requirements.txt```
+
+The requirements.txt file is just a list that maps Python package names to versions.  Example:
+
+```text
+ansible=2.6.3
+xmltodict=0.2.0
+```
+
+&nbsp;
+
+The **freeze** command will automatically populate the requirements.txt file:
+
+```pip freeze > requirements.txt```
+
+&nbsp;
+
+##  **Understanding Python Syntax**
+
+&nbsp;
+
+Python core philosophy (The Zen of Python):
+
+-   Beautiful is better than ugly.
+-   Explicit is better than implicit.
+-   Simple is better than complex.
+-   Complex is better than complicated.
+-   Readability counts.
+
+Python is a scripted language. 
+
+Easiest way to start with Python code is to enter **python3**.
+
+&nbsp;
+
+Within Python code, **whitespace matters**.  Python uses indention to separate blocks of code.
+
+You can use both spaces and tabs in Python 2, but Python 3 will return a syntax error.
+
+The standard for Python from the PEP 8 style guide is to use four spaces or indention before each block of code.  One space will work, but it's hard to align.
+
+&nbsp;
+
+Comments in Python are created by **#** or a string of ***three quotation marks*** (either single or double).
+
+&nbsp;
+
+##  **Data Types and Variables**
+
+&nbsp;
+
+### ***Variables***
+
+A variable is a label that maps to a Python object stored somewhere in memory.
+
+Python auto types variables.
+
+Rules for variable names:
+
+-   A variable name must start with a letter or the underscore character.
+-   A variable name cannot start with a number.
+-   A variable name can only consist of alphanumeric characters and underscores (A-Z, 0-9), and _)
+-   A variable name is case sensitive (so Value and value are two different variable names).
+
+To assign a variable you just set the variable name equal to the value you want, as shown below:
+
+| Variable | Type |
+| -- | -- |
+| Pip = "cat" | Variable assigned to a string |
+| Age = 9 | Variable assigned to an integer |
+| Chill = True | Variable assigned to a Boolean |
+| Variable 1 = Variable 2 | Variable assigned to another Variable |
+
+&nbsp;
+
+### ***Data Types***
+
+Everything in Python is an object.
+
+When the object is created, it is assigned a type.  With these types, you are allowed to either change the object (mutable) or not allowed ot change the object (immutable) after it has been created.
+
+This doesn't mean the variables are not able to change; it means that most of the basic data types are not able to be modified but need to be replaced (or ***assigned***, in Python terms) with another value.  *For example, you can't just add a character at the end of the string, you have to reassign the whole string to change it.*
+
+Common data types:
+
+| Name | Type | Mutable | Description |
+| -- | -- | -- | -- |
+| Integer | int | No | Whole numbers, such as 6,600, and 1,589 |
+| Boolean | bool | No | Comparison value, either True or False |
+| String | str | No | Sequence of characters delimited by quotes, such as "Cisco", 'Piper', and "2000" |
+| List | list | Yes | Ordered sequence of objects, such as [10, "DNA", 19.8] |
+| Tuple | tup | No | Ordered sequence of immutable objects, such as (10, "DNA", 19.8) |
+| Dictionary | dict | Yes | Unordered key:value pairs, such as {"key1":"value1", "name":"Pip"} |
+| Set | set | Yes | Unordered collection of unique objects, such as {"a", "b"} |
+
+&nbsp;
+
+### ***Integers, Floating Point, and Complex Numbers***
+
+Integers and floating point numbers are the simplest data types:
+
+-   **Integers**:  Whole numbers without decimals
+-   **Floating point**:  Numbers with decimal points or exponents (such as 10e5, which indicates 10 to the fifth power)
+
+List of Python's numeric operators:
+
+| Operator | Description | Example | Evaluates to |
+| -- | -- | -- | -- |
+| + | Adds two expressions together | 5 + 5 | 10 |
+| - | Subtracts one expression from another | 35 - 15 | 20 |
+| * | Multiplies two expressions | 10 * 10 | 100 |
+| / | Divides one expression by another | 20 / 5 | 4 |
+| // | Performs integer division (leaving off the remainder) | 30 // 7 | 4 |
+| % | Performs modulus division (printing the remainder only) | 30 & 7 | 2 | 
+| ** | Indicates an exponent | 2 ** 8 | 258 |
+
+Order of operations - PEMDAS:
+
+-   **Parentheses**:  Parentheses are always evaluated first.
+-   **Power**:  The exponent is evaluated.
+-   **Multiplication**:  Any multiplication is performed.
+-   **Division**:  Division is evaluated.
+-   **Addition**:  Addition is performed.
+-   **Subtraction**:  Subtraction is performed.
+-   **Left to right**:  After PEMDAS, anything else (such as **sqrt()** or other math functions) is evaluated from left to right.
+
+&nbsp;
+
+### ***Booleans***
+
+| Operator | What It Does | Example | Evaluates to |
+| -- | -- | -- | -- |
+| < | Less than | 5 < 10 | True|
+| > | Greater than | 6.5 > 3.5 | True |
+| <= | Less than | 0 <= -5 | False |
+| >= | Greater than or equal to | 6 >= 6 | True |
+| == | Equal to | 5 == "5" | False |
+| != | Not equal to | 5 != "5" | True |
+
+&nbsp;
+
+### ***Strings***
+
+The string data type is a sequence of characters and use quote to determine which characters are included.
+
+&nbsp;
+
+The **int()** function converts a string value to an integer.
+
+```python
+>>> int('10') + 1
+
+11
+```
+
+&nbsp;
+
+You can separate and manipulate component values of a string by using the index value.
+
+```python
+>>> a = 'DevNet'
+>>> a[0]
+
+'D'
+```
+
+You can specify ranges with the colon operator.  The first number is the beginning slice, and the second number determines the end (up to but not including).
+
+```python
+>>> a[0:3]
+
+'Dev'
+```
+
+If you omit the first number, Python starts at 0:
+
+```python
+>>> a[:2]
+
+'De'
+```
+
+If you omit the second value, Python prints to the end of the string:
+
+```python
+>>> a[2:]
+
+'vNet'
+```
+
+You can reverse directions by using negative numbers.  If you put a negative number first, you start from the end of the first string:
+
+```python
+>>> a[-2:]
+
+'et'
+```
+
+A negative value on the other side of the color causes Python to print using the end as a reference point:
+
+```python
+>>> a[:-2]
+
+'DevN'
+```
+
+&nbsp;
+
+You can perform operations on strings as well.
+
+The + is used to add or concatenate two strings together:
+
+```python
+>>> 'DevNet' + 'Rocks'
+
+'DevNetRocks'
+```
+
+Multiplication works as well:
+
+```python
+>>> 'DevNet Rocks ' * 5
+
+'DevNet Rocks DevNet Rocks DevNet Rocks DevNet Rocks DevNet Rocks '
+```
+
+&nbsp;
+
+String manipulation methods:
+
+| Method | What It Does |
+| -- | -- |
+| str.capitalize() | Capitalize the string |
+| str.center(width[, fillchar]) | Center justify the string |
+| str.endwith(suffix[, start[, end]]) | Add an ending to the string |
+| str.find(sub[, start[, end]]) | Find the index position of the characters in a string |
+| str.lstrip([chars]) | Remove whitespace characters from the end of the string |
+| str.replace(old, new[, count]) | Replace characters in the string |
+| str.lower() | Make the string all lowercase |
+| str.rstrip([chars]) | Strip whitespace characters from the front of the string |
+| str.strip([chars]) | Remove whitespace characters from the beginning and the end of the string |
+| str.upper() | Make the string all uppercase |
+
+&nbsp;
+
+### ***Lists***
+
+To create a list you assign contents of the list to a variable with the **=** and **[]** and separate the items with commas:
+
+```python
+>>> kids = ['Caleb', 'Sydney', 'Savannah']
+>>> kids
+
+['Caleb', 'Sydney', 'Savannah']
+```
+
+A list can contain a Python object, such as integers, strings, and even other lists.  A list can also be empty and is often initialized in an empty state for programs that pull data from other sources.  To initialize a list in an empty state, you assign two brackets with nothing in them, or you use the built-in **list()** function:
+
+```python
+emptylist = []
+emptylist = list()
+```
+
+Lists are similar to strings in that each is a set of items indexed by Python that you can interact with and slice.  To pull out values, use the variable name with brackets and the index number, starting at 0:
+
+```python
+>>> print(kids[1])
+
+Sydney
+```
+
+Unlike strings lists are mutable objects:
+
+```python
+>>> kids
+
+['Caleb', 'Sidney', 'Savannah']
+
+>>> kids[1]='Sydney'
+>>> kids
+
+['Caleb', 'Sydney', 'Savannah']
+```
+
+Lists can also be concatenated together using the **+** operator.  The list items do not need to be unique.
+
+The same principles of slicing strings apply to lists, but instead of having a single string with each letter, the elements in the list are the items.
+
+&nbsp;
+
+Most common list methods:
+
+*Note:  Below you replace the word **list** before the **.** with the name of your list.*
+
+| Method | What It Does |
+| -- | -- |
+| list.append(element) | Adds an element to the end of the list |
+| list.clear() | Removes everything from the list |
+| list.copy(alist) | Returns a copy of the list |
+| list.count(element) | Shows the number of elements with the specified value |
+| list.extend(alist) | Adds the elements of a list to the end of the current list |
+| list.index() | Returns the index number of the first element with a specific value |
+| list.insert(index, element) | Adds an element at a specific index value |
+| list.pop(index) | Removes an element at a specific index position, or if no index position is provided, removes the last item from the list |
+| list.remove() | Removes a list item with a specified value |
+| list.reverse() | Reverses the list order |
+| list.sort() | Sorts the list alphabetically and/or numerically |
+
+&nbsp;
+
+### ***Tuples***
+
+Tuples are very similar to lists, with the difference between that lists are mutable and tuples are immutable.
+
+To create a tuple, you use parenthesis instead of brackets.
+
+```python
+>>> perosn = (2012, 'Mike', 'CCNA')
+```
+
+You access data in a tuple the same way as a list - using brackets and the index value of the item.
+
+```python
+>>> person[0]
+
+2012
+```
+
+You ***cannot*** make an assignment to the values:
+
+```python
+>>> person[0] = 15
+
+Traceback (most recent call last):
+
+    File "<stdin>" ,line 1, in <module>
+
+TypeError:  'tuple' object does not support item assignment
+```
+
+Tuples can be used to assign a set of variables quickly:
+
+```python
+>>> (a, b, c) = (12, 'Fred', 18)
+>>> c
+
+18
+```
+
+&nbsp;
+
+### ***Dictionaries***
+
+Dictionaries are a collection of items with key:value pairs and doesn't have a defined order; all you need is the key.
+
+Rules regarding dictionaries:
+
+-   **Keys**:  A dictionary's keys are limited to only using immutable values (int, float, bool, str, tuple, and so on)
+-   **Values**:  A value can be any Python object or any combination of objects.
+
+To create a dictionary, you use braces and your keys and value separated by a colon.  You separate multiple items with commas.
+
+```python
+>>> cabinet = { "scores": (98, 76, 95), "name":"Chris", "company":"Cisco" }
+```
+
+Instead of using an index, you use the key:
+
+```python
+>>> cabinet["scores"]
+
+(98, 76, 95)
+```
+
+To add more items to a dictionary, you can assign them with a new key.  You can even add another dictionary to an existing dictionary:
+
+```python
+>>> cabinet["address"] = {"street":"123 Anywhere Dr", "city":"Franklin", "state":"TN"}
+>>> cabinet["address"]
+
+{'street': '123 Anywhere Dr', 'city':'Franklin', 'state':'TN'}
+```
+
+&nbsp;
+
+### ***Sets***
+
+A set in Python consists of an unordered grouping of data and is defined using the curly braces of a dictionary without the key:value pairs.
+
+
+Sets are mutable, and you can add or remove items from the set, however you can create a special case of sets called a frozen set that makes teh set immutable.
+
+Defining a set:
+
+```python
+>>> numbs = {1, 2, 4, 5, 6, 8, 10}
+>>> odds = {1, 3, 5, 7, 9}
+```
+
+To join sets you can use the **|** operator to show a combined set with no duplicates:
+
+```python
+>>> numbs | odds
+{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+```
+
+You can get an intersection of two sets and show what numbers are in both by using the **&** operator:
+
+```python
+>>> numbers & odds
+{1, 5}
+```
+
+&nbsp;
+
+##  **Input and Output**
+
+&nbsp;
+
+### ***Getting Input from the User***
+
+The **input()** function gets information from the user and stores it as a string.
+
+&nbsp;
+
+### ***print() Function***
+
+The **print()** function provides output that can be displayed in the user's terminal.
+
+Every lined printed with the **print()** function includes a newline character (**\n**) at the end.
+
+By default, the **print()** function uses a separator between elements.  You can change this by changing the separator that the **print()** function uses with the **sep=''** attribute.  This removes all automatic spacing.
+
+Python 3.6 and up has the addition of f-string formatting.  These strings are easier to read, less prone to syntax errors and allow fasting formatting of code.
+
+Creating an f-string:
+
+```python
+>>> name = 'Piper'
+>>> name2 = 'Chris'
+>>> print(f'{name2} says Hi to {name}!')
+
+Chris says Hi to Piper!
+```
+
+&nbsp;
+
+##  **Flow Control with Conditionals and Loops**
+
+&nbsp;
+
+Python has three primary control statements:
+
+-   **if**:  Any **if** statement is a conditional statement that can compare values and make branching decisions.
+-   **for**:  A **for** loop is a counting loop that can iterate through data a specific number of times.
+-   **while**:  The **while** loop can iterate forever when certain conditions are met.
+
+&nbsp;
+
+### ***If Statement***
+
+An **if** statement starts with an **if** and then sets up a comparison to determine the truth of the statement it is evaluating and ending with a **:** to tell Python to expect the clause (the action if the statement is true) block of code next:
+
+```python
+>>> n = 20
+>>> if n == 20:
+...    print('The number is 20')
+...    
+The number is 20
+```
+
+The goal of an **if** statement is to determine the "truth" of the element under evaluation.
+
+An **if** statement can have as many **elif** conditions as you want to add to the condition check.
+
+Since each **if** and **elif** statement does something only if the condition identified is true, you can assign a single **else** statement as the end.
+
+&nbsp;
+
+### ***For Loops***
+
+The **for** statement iterates through the code a specific number of times.  It is also referred to as a counting loop.
+
+A **for** loop starts with the **for** statement, followed by a variable name (which is a placeholder to hold each sequence of data), the **in** keyword, some data set to iterate through, and then a closing colon:
+
+```python
+>>> dataset = (1,2,3,4,5)
+>>> for variable in dataset:
+...    print(variable)
+...    
+1
+2
+3
+4
+5
+```
+
+The **for** loop continues through each item in a data set.  You can also use the **range()** function to iterate a specific number of times.
+
+The **range()** function can take arguments that let you choose what number it starts or stops on and how it steps through each one.
+
+By default, if you just give **range()** a number, it starts at 0 and goes by 1s until it reaches the number you provided.  Zero is a valid iteration, but if you don't want it, you can start at 1.
+
+To change the increment from the default of 1, you can add a third attribute to the **range()** statement.
+
+***The ranges are up to and not including the final number specified.***
+
+&nbsp;
+
+### ***While Loops***
+
+The **while** loop is a condition loop, and the evaluation of the condition being true is what determines how many times the loop executes.
+
+You can use **else** with a while loop.  An **else** statement after a **while** loop executes when the condition for the **while** loop to continue is no longer met.
+
+You can use the **break** statement to exit the loop:
+
+```python
+while True:
+    string = input('Enter some text to print. \nType "done" to quite.')
+    if string == 'done':
+        break
+    print(string)
+print('Done!')
+
+# Example output:
+#
+# Enter some text to print.
+# Type "done" to quit.>  Good luck on the test!
+# Good luck on the test!
+# Enter some text to print.
+# Type "done" to quit.>  done
+# Done!
+```
+

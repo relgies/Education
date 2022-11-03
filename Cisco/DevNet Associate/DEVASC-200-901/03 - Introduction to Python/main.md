@@ -4,7 +4,7 @@
 
 &nbsp;
 
-The 200-901 DevNet Associate DEVASC exam is not a Python test per se.  You will not be asked to answer esoteric questions about techniques and syntax that only a Python wizard would know.  The exam ensures that you are competent enough with PYthon to know how to interact with Cisco hardware through APIs and to use Cisco software development kits and frameworks such as pyATS and Genie.  It is a very good idea to continue learning Python and spend some time in either online courses or self-study via books focused on the Python language itself; you should also spend lots of time working through examples on DevNet at [developer.cisco.com](https://developer.cisco.com).  This chapter and the several that follow provide a crash course in functional Python to get you going with the basics you need for success on the exam.
+The 200-901 DevNet Associate DEVASC exam is not a Python test per se.  You will not be asked to answer esoteric questions about techniques and syntax that only a Python wizard would know.  The exam ensures that you are competent enough with Python to know how to interact with Cisco hardware through APIs and to use Cisco software development kits and frameworks such as pyATS and Genie.  It is a very good idea to continue learning Python and spend some time in either online courses or self-study via books focused on the Python language itself; you should also spend lots of time working through examples on DevNet at [developer.cisco.com](https://developer.cisco.com).  This chapter and the several that follow provide a crash course in functional Python to get you going with the basics you need for success on the exam.
 
 &nbsp;
 
@@ -59,7 +59,7 @@ To turn off the virtual environment, just type **deactivate** at the command pro
 
 &nbsp;
 
-To install new modules for Python, you use **pip*, which pulls modules down from the PyPi repository.  The command to load new modules is as follows:
+To install new modules for Python, you use **pip**, which pulls modules down from the PyPi repository.  The command to load new modules is as follows:
 
 &nbsp;
 
@@ -214,13 +214,13 @@ Clean your room, Savannah !
 
 &nbsp;
 
-Python allows you to use space sor tabs.  You can use both spaces and tabs in Python 2, but Python 3 will return a syntax error:  however, if you use both tabs and spaces, you might end up with really weird issues that you need to troubleshoot.  The standard for Python from the PEP 8 style guide is to use four spaces or indentation before each block of code.  Why four spaces?  Won't one space work?  Yes, it will, but your code blocks will be hard to align, and you will end up having to do extra work.
+Python allows you to use spaces or tabs.  You can use both spaces and tabs in Python 2, but Python 3 will return a syntax error:  however, if you use both tabs and spaces, you might end up with really weird issues that you need to troubleshoot.  The standard for Python from the PEP 8 style guide is to use four spaces or indentation before each block of code.  Why four spaces?  Won't one space work?  Yes, it will, but your code blocks will be hard to align, and you will end up having to do extra work.
 
 The alignment issue becomes especially important when you nest loops and conditional statements, as each loop needs to correspond to another block of code, indented using spaces.  Many text editors allow you to view whitespace, and some even give you a visual indication of what is in a code block.
 
 &nbsp;
 
-Comments in PYthon are created by enter # or a string of three quotation marks (either single or double quotation marks).  One very important good practice when coding is to write a description of what is happening in code that is not obvious.  You probably will not want to write a comment for a simple **print** statement, but describing the output of a nested function would be useful for anyone who needs to make additions to your code in the future or to remind yourself why you did what you did during that late night caffeine-fueled coding session.  The # is used to comment out a single line so the Python interpreter ignores it.  Here is an example:
+Comments in Python are created by enter # or a string of three quotation marks (either single or double quotation marks).  One very important good practice when coding is to write a description of what is happening in code that is not obvious.  You probably will not want to write a comment for a simple **print** statement, but describing the output of a nested function would be useful for anyone who needs to make additions to your code in the future or to remind yourself why you did what you did during that late night caffeine-fueled coding session.  The # is used to comment out a single line so the Python interpreter ignores it.  Here is an example:
 
 &nbsp;
 
@@ -441,7 +441,7 @@ You can also convert back and forth by using the base keyword in front of the va
 
 &nbsp;
 
-A Boolean has only two possible values, **True** and **False**.  You use comparison operators to evaluate between two Boolean objects in PYthon.  This data type is the foundation for constructing condition steps and decisions within programs.  Below shows the various Boolean comparison operators and some examples of how to use them.
+A Boolean has only two possible values, **True** and **False**.  You use comparison operators to evaluate between two Boolean objects in Python.  This data type is the foundation for constructing condition steps and decisions within programs.  Below shows the various Boolean comparison operators and some examples of how to use them.
 
 &nbsp;
 
@@ -451,8 +451,8 @@ A Boolean has only two possible values, **True** and **False**.  You use compari
 | > | Greater than | 6.5 > 3.5 | True |
 | <= | Less than or equal to | 0 <= -5 | False |
 | >= | Greater than or equal to | 6 >= 6 | True |
-| == | Equal to | 5 == "5 | False |
-| != | Not equal to | 5 != "5 | True |
+| == | Equal to | 5 == "5" | False |
+| != | Not equal to | 5 != "5" | True |
 
 &nbsp;
 
@@ -460,7 +460,7 @@ A Boolean has only two possible values, **True** and **False**.  You use compari
 
 &nbsp;
 
-The string data type is a sequence of characters and use quotes to determine which characters are included.  The string '**Hello**' is just a set of characters that Python stores in order from left to right.  Even if a string containers a series of numbers, it can still be a string data type.  IF you try to add a 1 to a string value, Python gives you an error as show in this example:
+The string data type is a sequence of characters and use quotes to determine which characters are included.  The string '**Hello**' is just a set of characters that Python stores in order from left to right.  Even if a string containers a series of numbers, it can still be a string data type.  If you try to add a 1 to a string value, Python gives you an error as show in this example:
 
 &nbsp;
 
@@ -510,7 +510,7 @@ If you assign the string DevNet to a variable, you can separate and manipulate t
 
 &nbsp;
 
-You can also specify ranges to print.  The colon operator gives you control over whole sections of a string.  The first number is the beginning of the slice, and the second number determines the end.  The second number may be confusing at first because it is intended to identify "up to but not including" thte last character.  Consider this example:
+You can also specify ranges to print.  The colon operator gives you control over whole sections of a string.  The first number is the beginning of the slice, and the second number determines the end.  The second number may be confusing at first because it is intended to identify "up to but not including" the last character.  Consider this example:
 
 &nbsp;
 
@@ -547,7 +547,7 @@ If you omit a value for the first number, Python starts at 0, as in this example
 
 &nbsp;
 
-If you omit hte second value, Python prints to the end of the string, as in this example:
+If you omit the second value, Python prints to the end of the string, as in this example:
 
 &nbsp;
 
@@ -740,7 +740,7 @@ Below describes some of the most common list methods.
 | list.count(element) | Shows the number of elements with the specified value |
 | list.extend(alist) | Adds the elements of a list to the end of the current list |
 | list.index() | Returns the index number of the first element with a specified value |
-| list.insert(index, element) | Adds an element tat a specified index value |
+| list.insert(index, element) | Adds an element at a specified index value |
 | list.pop(index) | Remove an element at a specific index position, or if no index position is provided, removes the last item from the list |
 | list.remove() | Removes a list item with a specified value |
 | list.reverse() | Reverses the list order |
@@ -1016,7 +1016,7 @@ There are numerous codes like this that can control how text is displayed in a s
 
 &nbsp;
 
-You can add multiple arguments to the **print*()** function by using commas between elements.  This is very useful in creating meaningful text, and the **print()** function also handles concatenation for the different data types automatically.  Consider this example:
+You can add multiple arguments to the **print()** function by using commas between elements.  This is very useful in creating meaningful text, and the **print()** function also handles concatenation for the different data types automatically.  Consider this example:
 
 &nbsp;
 
@@ -1033,7 +1033,7 @@ By default, the **print()** function uses a separator between elements.  This is
 &nbsp;
 
 ```
->>> print('NUmbers in set ', 1, ': ', numbs, sep='')
+>>> print('Numbers in set ', 1, ': ', numbs, sep='')
 
 Numbers in set 1: {1, 2, 4, 5, 6, 8, 10}
 ```
@@ -1072,7 +1072,7 @@ So far you have been exposed to many of the building blocks of the Python langua
 
 &nbsp;
 
-An **if** statement starts with an **if** and then sets up a comparison to determine the truth of the statement it is evaluating and ending with a **:** to tell PYthon to expect the clause (the action if the the condition is true) block of code next.  As mentioned earlier in this chapter, whitespace indenting matters very much in Python.  The clause of an **if** statement must be indented (four spaces is the standard) from the beginning of the **if** statement.  The following example looks for a condition where the variable **n** is equal to **20** and prints a message to the console indicating that the number is indeed a 20:
+An **if** statement starts with an **if** and then sets up a comparison to determine the truth of the statement it is evaluating and ending with a **:** to tell Python to expect the clause (the action if the the condition is true) block of code next.  As mentioned earlier in this chapter, whitespace indenting matters very much in Python.  The clause of an **if** statement must be indented (four spaces is the standard) from the beginning of the **if** statement.  The following example looks for a condition where the variable **n** is equal to **20** and prints a message to the console indicating that the number is indeed a 20:
 
 &nbsp;
 
@@ -1160,7 +1160,7 @@ The **for** statement allows you to create a loop that continues to iterate thro
 >>> dataset = (1,2,3,4,5)
 
 >>> for variable in dataset:
-...     print(Variable)
+...     print(variable)
 ...
 1
 2
@@ -1251,17 +1251,17 @@ You can probably see similarities between this and the **for** loop.  The differ
 
 ```
 while True:
-    string = input('Enter some text to print.  \nType "done" to quite')
+    string = input('Enter some text to print.  \nType "done" to quit')
     if string == 'done':
         break
     print(string)
 print('Done!')
 
 Enter some text to print.
-Type "done" to quite>  Good luck on the test!
+Type "done" to quit>  Good luck on the test!
 Good luck on the test!
 Enter some text to print
-Type "done to quite> done
+Type "done" to quit> done
 Done!
 ```
 
