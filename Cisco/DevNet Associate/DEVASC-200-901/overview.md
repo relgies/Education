@@ -1164,3 +1164,437 @@ print('Done!')
 # Done!
 ```
 
+&nbsp;
+
+#   04 - Python Functions, Classes, and Modules
+
+&nbsp;
+
+##  **Python Functions**
+
+&nbsp;
+
+A ***function*** is a named block of code that can take a variety of input parameters (or none) and return some form of output back to the code that called the function to begin with.
+
+Python offers two types of functions: built-in functions that are part of the standard library and functions you create yourself.  **print()** is an example of a built-in function.
+
+To define a function in Python, you use the keyword **def**, a name for the function, a set of parentheses enclosing any arguments you want to pass to the function, and a colon at the end.
+
+The name of the function must follow these rules:
+
+-   Must not start with a number
+-   Must not be a reserved Python word, a built-in function (for example, **print()**, **input()**, **type()**, etc), or a name that has already been used as a function or variable.
+-   Can be any combination of A-Z, a-z, 0-9 and underscore (u) and dash (-)
+
+Example of function syntax:
+
+```python
+>>> def devnet():
+...    '''prints simple function'''
+...    print('Simple function')
+...  
+>>> devnet()
+
+Simple function
+```
+
+Three single quotation marks that appear on the first line of the indented text of the function are called a ***docstring*** and describe what the function does.
+
+&nbsp;
+
+##  **Using Arguments and Parameters**
+
+&nbsp;
+
+An ***argument*** is som value (or multiple values) that you pass to a function when you call the function within code.
+
+Arguments allow a function to produce different results and make code reuse possible.
+
+Arguments are placed within the parentheses after a function name.
+
+&nbsp;
+
+Each function must define how it will use arguments, using parameters to identify what gets passed in and how it gets used.
+
+A parameter is simply a variable that is used in a function definition that allows code within the function to use the data passed to it.
+
+To get results back from the function, you use the keyword **return** and the object you want to pass back.
+
+```python
+>>> def sub(arg1, arg2):
+...    result = arg1 - arg2
+...    return result
+...  
+
+>>> sub(10, 15)
+
+-5
+```
+
+&nbsp;
+
+The variable *result* is ***local***, meaning that it is not accessible to the main Python script, and it is used only within the function.  If you tried to call *result* directly, Python will produce an error saying that *result* is not defined.
+
+You can access global variables from within the function.  An example of why you might do this is to set certain constants or key variables that any function ca use.
+
+The difference in accessibility between a local variable and a global variable is important, because they allow your code to maintain separation and can keep your function self-contained.
+
+&nbsp;
+
+***Positional and Keyword Arguments***
+
+A ***keyword argument*** is a name/value pair that you pass to a function.  Instead of using position, you specify the argument that the function uses.
+
+With keyword arguments, it doesn't matter in what order they are passed to the function.
+
+```python
+>>> sub(arg2=15, arg1=10)
+
+-5
+```
+
+&nbsp;
+
+***\*args and \*\*kwargs***
+
+Python allows you to use * an ** (often referred to as **\*args** and **\*kwargs**) to define any number of arguments or keyword arguments.  
+
+\* and ** allow you to iterate through a list of other collations of data:
+
+```python
+>>> def hello(*args):
+...    for arg in args:
+...        print("Hello ", arg, "!", sep='')
+...   
+>>> hello('Caleb', 'Sydney', 'Savannah')
+
+Hello Caleb!
+
+Hello Sydney!
+
+Hello Savannah!
+```
+
+By using keyword arguments, you can send a list of key/value pairs to a function:
+
+```python
+>>> def hello(**kwargs):
+...    for key, value in kwargs.item():
+...        print("Hello", value, "1", sep='')
+...    
+>>> hello(kwarg1='Caleb', kwarg2='Sydney', kwarg3='Savannah')
+
+Hello Caleb!
+
+Hello Sydney!
+
+Hello Savannah!
+```
+
+Note the use of the **items()** function in the **for** statement to unpack and iterate through the values.
+
+&nbsp;
+
+You can also supply a default value argument in case of an empty value to send to a function.  By defining a function with an assigned key value, you prevent an error.  
+
+If a value is not supplied, Python uses the default, and if it is supplied when the function is called it ignores the default value.
+
+```python
+>>> def greeting(name, message="Good morning!"):
+...    print(f"Hello {name},  {message}")
+...
+>>> greeting('Caleb')
+
+Hello caleb.  Good morning!
+
+>>> greeting('Sydney', 'How are you?')
+
+Hello Sydney.  How are you?
+```
+
+&nbsp;
+
+##  **Object-Oriented Programming and Python**
+
+&nbsp;
+
+##  **Python Classes**
+
+&nbsp;
+
+### ***Creating a Class***
+
+To create a class you first have to define it.  In Python you define a class by using the **class** keyword, and then closing with a colon.  PEP 8 recommends capitalizing a class name to differentiate it from a variable:
+
+```python
+>>> class Router:
+...    pass
+```
+
+**pass** is a placeholder that allows the class to be defined and set up to be used as an object.
+
+The first value is always **self**.  The **self** value passes the object name that you select to instantiate the class.
+
+```python
+class Router:
+    '''Router Class'''
+    def __init__(self, model, swversion, ip_add):
+        ''initialize values'''
+        self.model = model
+        self.swversion = swversion
+        self.ip_add = ip_add
+
+rtr1 = Router('iosV', 15.6.7', '10.10.10.1')
+```
+
+After defining the class, you add a docstring to document what the class is for.
+
+Then you create a function that calls **init**, which is a special case that is used for teh setup of the class.  In **init**, the double underscores are called ***dunder*** or ***magic methods***.  
+
+Functions that are within the class are called ***methods*** and become actions that you can perform on the object you are creating.
+
+To store attributes, you map the name **self** and the values you pass to it become variables inside the object, which then store those values as attributes.
+
+&nbsp;
+
+You can create more attributes that aren't defined during initialization:
+
+```python
+>>> rtr1.desc = 'virtual router'
+>>> rtr1.desc
+
+'virtual router'
+```
+
+&nbsp;
+
+### ***Methods***
+
+Attributes describe an object, and methods allow you to interact with an object.
+
+Methods are functions you define as part of a class.
+
+Notice that you pass **self** to this function only, as **self** can access the attributes applied during initialization:
+
+```python
+class Router:
+    '''Router Class'''
+    def __init__(self, model, swversion, ip_add):
+        '''Initialize Values'''
+        self.model = model
+        self.swversion = swversion
+        self.ip_add = ip_add
+
+    def getdesc(self):
+        '''Return a formatted description fo the router'''
+        desc = f'Router Model              :{self.mode}\n'\
+               f'Router Version            :{self.swversion}\n'\
+               f'Router Management Address :{self.ip_add}\n'\
+        
+        return desc
+
+rtr1 = Router('iosV', '15.6.7', '10.10.10.1')
+
+rtr2 = Router('isr4221', '16.9.5', '10.10.10.5')
+
+print('Rtr1\n', rtr1.getdesc(), '\n', sep='')
+
+print('Rtr2\n', rtr2.getdesc(), sep='')
+```
+
+&nbsp;
+
+### ***Inheritance***
+
+***Inheritance in Python classes allows a class to take on attributes and methods of another class.***
+
+When you use inheritance, you can replace methods and attributes that need to be different.
+
+To inherit a class, you can create teh class as shown earlier, but before the colon, you add a parentheses that include the class from which you want to pull attributes and methods.
+
+Note, the parent class must come before the child class in the Python code.
+
+```python
+class Router:
+    '''Router Class'''
+    def __init__(self, model, swversion, ip_add):
+        '''Initialize Values'''
+        self.mode = model
+        self.swversion = swversion
+        self.ip_add = ip_add
+
+    def getdesc(self):
+        '''return a formatted description of the router'''
+        desc = f'Router Model               :{self.model}\n'\
+               f'Router Version             :{self.swversion}\n'\
+               f'Router Management Address  :{self.ip_add}\n'\
+
+        return desc
+
+class Switch(Router):
+    def getdesc(self):
+        '''return a formatted description for a switch'''
+        desc = f'Switch Model               :{self.model}\n'\
+               f'Switch Version             :{self.swversion}\n'\
+               f'Switch Management Address  :{self.ip_add}\n'\
+
+        return desc
+```
+
+More about classes, methods, and inheritance:
+
+https://docs.python.org/3/tutorial/classes.html
+
+&nbsp;
+
+##  **Working with Python Modules**
+
+&nbsp;
+
+Code can be broken up into smaller chunks that hold key structures and classes and allow them to be physically moved into other files, called ***modules***, that can be included in the main Python code with the **import** statement.
+
+Benefits of creating modular code:
+
+-   **Easier readability/maintainability**:  Modular code is inherently easier to read and follow, and modularity makes maintaining and modifying code much easier.
+-   **Low coupling/high cohesion**:  Modular code should not have interdependencies.  Each module should be self-contained so that changes to one module do not affect other modules or code.  A module should only include functions and capabilities related to what the module is supposed to do.  This paradigm is called low coupling/high cohesion modular design.
+-   **Code reusability**:  Modules allow for easy reusability of code, which saves time and makes it possible to share useful code.
+-   **Collaboration**:  Being able to split up work and have different people work on different modules speeds up the ode-production process.
+
+&nbsp;
+
+Three ways of using modules in Python
+
+-   Use one of the modules that are included in the Python standard library or install a third-party module using **pip**, saving time.
+-   Create your own module written in Python by appending .py extension to the file, adding overhead to the application.
+-   Program a module in C language and compile it which will result in faster runtime but more work.
+
+&nbsp;
+
+### ***Importing a Module***
+
+All modules are accessed the same way in Python: by using the **import** command.
+
+At the very beginning of the code - you type **import** followed by the module name you want to use.
+
+```python
+>>> import math
+>>> dir(math)
+
+['__doc__', '__file__', '__loader__', '__name__', '__package__',
+'__spec__', 'acos', 'acosh', 'asin', 'asinh', 'atan', 'atan2',
+'atanh', 'ceil', 'comb', 'copysign', 'cos', 'cosh', 'degrees',
+'dist', 'e', 'erf', 'erfc', 'exp', 'expm1', 'fabs', 'factorial',
+'floor', 'fmod', 'frexp', 'fsum', 'gamma', 'gcd', 'hypot', 'inf',
+'isclose', 'isfinite', 'isinf', 'isnan', 'isqrt', 'ldexp', 'lgam-
+ma', 'log', 'log10', 'log1p', 'log2', 'modf', 'nan', 'perm', 'pi',
+'pow', 'prod', 'radians', 'remainder', 'sin', 'sinh', 'sqrt',
+'tan', 'tanh', 'tau', 'trunc']
+```
+
+After you import a module, you can use the **dir()** function to get a list of all the methods available as part of the module.  The ones beginning with the _ are internal to Python and are not generally useful in your programs.  All the others are functions that are available for your program to access.
+
+&nbsp;
+
+You can use **help()** to look at the documentation on a specific function:
+
+```python
+>>> help(math.sqrt)
+Help on built-in function sqrt in module math:
+
+sqrt(x, /)
+    Return the square root of x.
+```
+
+&nbsp;
+
+You have to type a module's name each time you want to use one of it's capability.  
+
+Python lets you shorten the module name by adding **as** and a short version of the module name to the end of the import command:
+
+```python
+>>> import calendar as cal
+```
+
+&nbsp;
+
+Importing a whole module when you only need a specific method or function adds unneeded overheard.  Python allows you to import specific methods by using the **from** syntax.
+
+You can import more than one method by separating the methods you want with commas.
+
+```python
+>>> from math import sqrt, tan
+>>> sqrt(15)
+
+3.872983346207417
+```
+
+Notice you no longer need to use **math.sqrt** and can just call **sqrt()**.
+
+&nbsp;
+
+### ***The Python Standard Library***
+
+The Python standard library is automatically installed when you load Python and has an extensive range of prebuilt modules you can use.  Many are built in C.  To get a complete list of modules in the standard library, go to https://docs.python.org/3/library.
+
+&nbsp;
+
+### ***Importing Your Own Modules***
+
+You can import your own modules using the same methods shown previously with standard library modules.
+
+By default, Python looks for a module in the same directory as the Python program you are importing into.  If it doesn't find the file there, it looks through your operating system's **path** statements.
+
+&nbsp;
+
+### ***Useful Python Modules for Cisco Infrastructure***
+
+-   ***General purpose standard library modules***:
+    -   **pprint**:  The pretty print module is a more intelligent print function that makes it much easier to display text and data by, for example, aligning data for better readability.  Use the following command to import this module:
+        -   ```from pprint import pprint```
+    -   **sys**:  This module allows you to interact with the Python interpreter and manipulate and view values.  Use the following command to import this module:
+        -   ```import sys```
+    -   **os**:  This module gives you access to the underlying operating system environment and file system.  It allows you to open files and interact with OS variables.  Use the following command to import this module:
+        -   ```import os```
+    -   **datetime**:  This module allows you to create, format, and work with calendar dates and time.  It also enables timestamps and other useful additions to logging and data.  Use the following command to import this module.
+        -   ```import datetime```
+    -   **time**:  This module allows you to add time-based delays an clock capabilities to your Python apps.  Use the following command to import this module:
+        -   ```import time```
+-   ***Modules for working with data***:
+    -   **xmltodict**:  This module translates XML-formatted files into native Python dictionaries (key/value pairs) and back to XML, if needed.  Use the following commands to install and import this module:
+        -   ```pip install xmltodict```
+        -   ```import xmltodict```
+    -   **csv**:  This is a standard library module for understanding CSV files.  It is useful for exporting Excel spreadsheets into a format that you can then import into Python as a data source.  It can, for example, read in a CSV file and use it as a Python list data type.  Use the following command to import this module:
+        -   ```import csv```
+    -   **json**:  This is a standard library module for reading JSON-formatted data sources and easily converting them to dictionaries.  Use the following command to import this module:
+        -   ```import json```
+    -   **PyYAML**:  This module converts YAML files to Python objects that can be converted to Python dictionaries or lists.  Use the following commands to install and import this module:
+        -   ```pip install PyYAML```
+        -   ```import yaml```
+    -   **pyang**:  This isn't a typical module you import into a Python program.  It's a utility written in Python that you can use to verify your YANG models, create YANG code, and transform YANG models into other data structures, such as XSD (XML Schema Definitions).  Use the following command to install this module:
+        -   ```pip install pyang```
+-   ***Tools for API interaction***:
+    -   **requests**:  This is a full library to interact with HTTP services and used extensively to interact with REST APIs.  Use the following commands to install and import this module:
+        -   ```pip install requests```
+        -   ```import requests```
+    -   **ncclient**:  This Python library helps with client-side scripting and application integration for the NETCONF protocol.  Use the following commands to install and import this module:
+        -   ```pip install ncclient```
+        -   ```from ncclient import manager```
+    -   **netmiko**:  This connection-handling library makes it easier to initiate SSH connections to network devices.  This module is intended to help bridge the programmability gap between devices with APIs and those without APIs that still rely on command-line interfaces and commands.  It relies on the paramiko module and works with multiple vendor platforms.  Use the following commands to install and import this module:
+        -   ```pip install netmiko```
+        -   ```from netmiko import ConnectHandler```
+    -   **pysnmp**:  This is a Python implemenetation of an SMP engine for network management.  It allows you to interact with older infrastructure components without APIs but that do support SNMP for management.  Use the following commands to install and import this module:
+        -   ```pip install pysnmp```
+        -   ```import pysnmp```
+-   ***Automation tools***
+    -   **napalm**:  napalm (Network Automation and Programmability Abstraction Layer with Multivendor Support) is a Python module that provides functionality that works in a multivendor fashion.  Use the following commands to install and import this module:
+        -   ```pip install napalm```
+        -   ```import napalm```
+    -   **nornir**:  This is an extendable, multithreaded framework with inventory management to work with large numbers of network devices.  Use the following commands to instal land import this module:
+        -   ```pip install nornir```
+        -   ```from nornir.core import InitNornir```
+-   ***Testing tools***:
+    -   **unittest**:  This standard library testing module is used to test the functionality of Python code.  It is often used for automated code testing and as part of test-driven development methodologies.  Use the following command to import this module:
+        -   ```import unittest```
+    -   **pyATS**:  This module was a gift from Cisco to the development community.  Originally named Genie, it was an internal testing framework used by cisco developers to validate their code for Cisco products.  pyATS is an incredible framework for constructing automated testing for infrastructure as code.  Use the following command to install this module:
+        -   ```pip install pyats (just install the core framework, check documentation for more options)```
+        -   Many parts of the **pyATS** framework can be imported.  Check the documentation on how to use it.

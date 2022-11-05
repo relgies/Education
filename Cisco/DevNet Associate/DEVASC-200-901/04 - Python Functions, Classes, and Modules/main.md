@@ -20,7 +20,7 @@ Building your own functions is how you construct capabilities that are not alrea
 
 &nbsp;
 
-To define a function in Python, you use the keyword **def**, a name for the function, a set of parentheses enclosing any arguments you want to pass to the function, and a color at the end.  The name of the function must follow these rules:
+To define a function in Python, you use the keyword **def**, a name for the function, a set of parentheses enclosing any arguments you want to pass to the function, and a colon at the end.  The name of the function must follow these rules:
 
 -   Must not start with a number
 -   Must not be a reserved Python word, a built-in function (for example, **print()**, **input()**, **type()**), or a name that has already been used as a function or variable Can be any combination of the A-Z, a-z, 0-9 and the underscore (_) and dash (-)
@@ -96,7 +96,7 @@ Each function must define how it will use arguments, using parameters to identif
 
 &nbsp;
 
-The variable **result** is local, meaning that it is not accessible to the main Python script, and it is used only within the function itself.  If you tried to call **result** directly, Python would produce an error saying that**result** is not defined.  You can, however, access global variables from within the function; you might do this, or example, to set certain constants or key variables that any function can use (for example, IP addresses).  The difference in accessibility between a local variable and a global variable is important, because they allow your code to maintain separation and can keep your function self-contained.
+The variable **result** is local, meaning that it is not accessible to the main Python script, and it is used only within the function itself.  If you tried to call **result** directly, Python would produce an error saying that **result** is not defined.  You can, however, access global variables from within the function; you might do this, or example, to set certain constants or key variables that any function can use (for example, IP addresses).  The difference in accessibility between a local variable and a global variable is important, because they allow your code to maintain separation and can keep your function self-contained.
 
 &nbsp;
 
@@ -569,7 +569,7 @@ Now you can use **cal** as an alias for **calendar** in your code, as shown in t
 
 &nbsp;
 
-Importing a whole module when you need only a specific method or function adds unneeded overhead.  To help with this, PYthon allows you to important specific methods by using the **from** syntax.  Here is an example of importing the **sqrt()** and **tan()** methods:
+Importing a whole module when you need only a specific method or function adds unneeded overhead.  To help with this, Python allows you to import specific methods by using the **from** syntax.  Here is an example of importing the **sqrt()** and **tan()** methods:
 
 &nbsp;
 
@@ -682,53 +682,53 @@ This chapter cannot cover every single module that you might find valuable when 
 &nbsp;
 
 -   General purpose standard library modules:
-    -   pprint:  The pretty print module is a more intelligent print function that makes it much easier to display text and ata by, for example, aligning data for better readability.  Use the following command to import this module:
+    -   **pprint**:  The pretty print module is a more intelligent print function that makes it much easier to display text and data by, for example, aligning data for better readability.  Use the following command to import this module:
         -   ```from pprint import pprint```
-    -   sys:  This module allows you to interact with the Python interpreter and manipulate and view values.  Use the following command to import this module:
+    -   **sys**:  This module allows you to interact with the Python interpreter and manipulate and view values.  Use the following command to import this module:
         -   ```import sys```
-    -   os:  This module gives you access to the underlying operating system environment and file system.  It allows you to open files and interact with OS variables.  Use the following command to import this module:
+    -   **os**:  This module gives you access to the underlying operating system environment and file system.  It allows you to open files and interact with OS variables.  Use the following command to import this module:
         -   ```import os```
-    -   datetime:  This module allows you to create, format, and work with calendar dates and time.  It also enables timestamps and other useful additions to logging and data.  Use the following command to import this module:
+    -   **datetime**:  This module allows you to create, format, and work with calendar dates and time.  It also enables timestamps and other useful additions to logging and data.  Use the following command to import this module:
         -   ```import datetime```
-    -   time:  This module allows you to add time-based delays and clock capabilities to your Python apps.  Use the following command to import this module:
+    -   **time**:  This module allows you to add time-based delays and clock capabilities to your Python apps.  Use the following command to import this module:
         -   ```import time```
 -   Modules for working with data:
-    -   xmltodict:  This module translates XML-formatted files into native Python dictionaries (key/value pairs) and back to XML, if needed.  Use the following commands to install and import this module:
+    -   **xmltodict**:  This module translates XML-formatted files into native Python dictionaries (key/value pairs) and back to XML, if needed.  Use the following commands to install and import this module:
         -   ```pip install xmltodict```
         -   ```import xmltodict```
-    -   csv:  This is a standard library module for understanding CSV files.  It is useful for exporting Excel spreadsheets into a format that you can then import into Python as a data source.  It can, for example, read in a CSV file and use it as a Python list data type.  Use the following command to import this module:
+    -   **csv**:  This is a standard library module for understanding CSV files.  It is useful for exporting Excel spreadsheets into a format that you can then import into Python as a data source.  It can, for example, read in a CSV file and use it as a Python list data type.  Use the following command to import this module:
         -   ```import csv```
-    -   json:  This is a standard library module for reading JSON-formatted data sources and easily converting them to dictionaries.  Use the following command to import this module:
+    -   **json**:  This is a standard library module for reading JSON-formatted data sources and easily converting them to dictionaries.  Use the following command to import this module:
         -   ```import json```
-    -   PyYAML:  This module converts YAML files to Python objects that can be converted to Python dictionaries or lists.  Use the following commands to install and import this module:
+    -   **PyYAML**:  This module converts YAML files to Python objects that can be converted to Python dictionaries or lists.  Use the following commands to install and import this module:
         -   ```pip install PyYAML```
         -   ```import yaml```
-    -   pyang:  This isn't a typical module you import into a Python program.  It's a utility written in Python that you can use to verify your YANG models, create YANG code, and transform YANG models into other data structures, such as XSD (XML Schema Definitions).  Use the following command to install this module:
+    -   **pyang**:  This isn't a typical module you import into a Python program.  It's a utility written in Python that you can use to verify your YANG models, create YANG code, and transform YANG models into other data structures, such as XSD (XML Schema Definitions).  Use the following command to install this module:
         -   ```pip install pyang```
 -   **Tools for API interaction**:
-    -   requests:  This is a full library to interact with HTTP services and used extensively to interact with REST APIs.  Use the following commands to install and import this module:
+    -   **requests**:  This is a full library to interact with HTTP services and used extensively to interact with REST APIs.  Use the following commands to install and import this module:
         -   ```pip install requests```
         -   ```import requests```
-    -   ncclient:  This Python library helps with client-side scripting and application integration for the NETCONF protocol.  Use the following commands to install and import this module:
+    -   **ncclient**:  This Python library helps with client-side scripting and application integration for the NETCONF protocol.  Use the following commands to install and import this module:
         -   ```pip install ncclient```
         -   ```from ncclient import manager```
-    -   netmiko:  This connection-handling library makes it easier to initiate SSH conncetions to network devices.  This module is intended to help bridge the programmability gap between devices with APIs and those without APIs that still rely on command-line interfaces and commands.  It relies on the paramiko module and works with multiple vendor platforms.  Use the following commands to install and import this module:
+    -   **netmiko**:  This connection-handling library makes it easier to initiate SSH conncetions to network devices.  This module is intended to help bridge the programmability gap between devices with APIs and those without APIs that still rely on command-line interfaces and commands.  It relies on the paramiko module and works with multiple vendor platforms.  Use the following commands to install and import this module:
         -   ```pip install netmiko```
         -   ```from netmiko import ConnectHandler```
-    -   pysnmp:  This is a Python implementation of an SNMP engine for network management.  It allows you to interact with older infrastructure components without APIs but that do support SNMP for management.  Use the following commands to install and import this module:
+    -   **pysnmp**:  This is a Python implementation of an SNMP engine for network management.  It allows you to interact with older infrastructure components without APIs but that do support SNMP for management.  Use the following commands to install and import this module:
         -   ```pip install pysnmp```
         -   ```import pysnmp```
 -   **Automation tools**
-    -   napalm:  napalm (Network Automation and Programmability Abstraction Layer with Multivendor Support) is a Python module that provides functionality that works in a multivendor fashion.  Use the following commands to install and import this module:
+    -   **napalm**:  napalm (Network Automation and Programmability Abstraction Layer with Multivendor Support) is a Python module that provides functionality that works in a multivendor fashion.  Use the following commands to install and import this module:
         -   ```pip install napalm```
         -   ```import napalm```
-    -   nornir:  This is an extendable, multithreaded framework with inventory management to work with large numbers of network devices.  Use the following commands to install and import this module:
+    -   **nornir**:  This is an extendable, multithreaded framework with inventory management to work with large numbers of network devices.  Use the following commands to install and import this module:
         -   ```pip install nornir```
         -   ```from nornir.core import InitNornir```
 -   Testing tools:
-    -   unittest:  This standard library testing module is used to test the functionality of Python code.  It is often used for automated code testing and as part of test-driven development methodologies.  Use the following command to import this module:
+    -   **unittest**:  This standard library testing module is used to test the functionality of Python code.  It is often used for automated code testing and as part of test-driven development methodologies.  Use the following command to import this module:
         -   ```import unittest```
-    -   pyats:  This module was a gift from Cisco to the development community.  Originally named Genie, it was an internal testing framework used by Cisco developers to validate their code for Cisco products.  pyats is an incredible framework for constructing automated testing for infrastructure as code.  Use the following command to install this module:
+    -   **pyats**:  This module was a gift from Cisco to the development community.  Originally named Genie, it was an internal testing framework used by Cisco developers to validate their code for Cisco products.  pyats is an incredible framework for constructing automated testing for infrastructure as code.  Use the following command to install this module:
         -   ```pip install pyats (just install the core framework, check documentation for more options)```
         -   Many parts of the **pyats** framework can be imported.  Check the documentation on how to use it.  
 
