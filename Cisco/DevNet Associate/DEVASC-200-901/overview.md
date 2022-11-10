@@ -1598,3 +1598,839 @@ By default, Python looks for a module in the same directory as the Python progra
     -   **pyATS**:  This module was a gift from Cisco to the development community.  Originally named Genie, it was an internal testing framework used by cisco developers to validate their code for Cisco products.  pyATS is an incredible framework for constructing automated testing for infrastructure as code.  Use the following command to install this module:
         -   ```pip install pyats (just install the core framework, check documentation for more options)```
         -   Many parts of the **pyATS** framework can be imported.  Check the documentation on how to use it.
+
+&nbsp;
+
+#   05 - Working with Data in Python 
+
+##  **File Input and Output**
+
+&nbsp;
+
+Python can natively extract data from a text file.  Binary files, on the other hand, need to be processed by a module or another external program first.
+
+Python views text files as a sequence of lines, with each line typically being 79 characters long with a newline character (**\n**) at the end.
+
+To open a file and read in its contents, first you have to tell Python the name of the file you want to work with.  this is done by using the **open()** function and assigned the output to a Python object.  The function returns a file handle, which Python uses to perform operations on the file:
+
+```python
+readdata = open("textfile.txt", "r")
+```
+
+The **open()** function requires two arguments: the name of the function as a string and the mode you want to open the file.
+
+Mode options:
+
+-   **r**:  Open for reading (default)
+-   **w**:  Open for writing, truncating the file first
+-   **x**:  Open for exclusive creation, failing if the file already exists
+-   **a**:  Open for writing, appending to the end of the file if it exists
+-   **b**:  Open in binary mode
+-   **t**:  Open in text mode (default)
+-   **+:**  Open for updating (reading and writing)
+
+&nbsp;
+
+With the file handling object named **readdata** you can use methods to interact with the file methods:
+
+```python
+print(readdata.read())
+
+Line one of a text file.
+
+Line two of a text file, just like line one, but the second one.
+
+Third line of a text file.
+```
+
+&nbsp;
+
+When using the **open()** function you must close the fine once finished with the **close()** method.
+
+```python
+readdata.close()
+```
+
+&nbsp;
+
+The **with** statement (also called ***context manager***) uses the **open()** function but doesn't require direct assignment to a variable.  It also has better exception handling and automatically closes the file once finished reading in or writing to the file.
+
+```python
+with open("textfile.txt", "r") as data:
+    print(data.read())
+```
+
+&nbsp;
+
+To append data to a file you need to change how you open the file to allow for writing:
+
+```python
+with open("textfile.txt", "r') as data:
+    data.write('\nFourth line added by Python')
+```
+
+The newline in front of the text you are appending makes it so that it isn't just tacked on at the very end of the text.
+
+&nbsp;
+
+##  **Parsing Data**
+
+### ***Comma-Seperated Values (CSV)***
+
+A CSV file is a plaintext spreadsheet or database file.  
+
+Each line in a CSV file represents a row, and commas are used to separate the individual data fields to make it easier to parse the data.
+
+Python has a built-in CSV module that you can import that understands the CSV format and simplifies your code.
+
+Typical CSV file (routerlist.csv):
+
+```csv
+"router1","192.168.10.1","Nashville"
+"router2","192.168.20.1","Tampa"
+"router3","192.168.30.1","San Jose"
+```
+
+To start working with this data, you have to import the CSV module, and then create a **reader** object to read the CSV file into.  
+
+First you have to read the file into a file handle, then run the CSV read function on it and pass the results on to a **reader** object.  
+
+From here you can begin to use the CSV data.  You can create another variable and pass the **reader** object variable to the built-in **list()** function:
+
+```python
+>>> import csv
+>>> samplefile = open('routerlist.csv')
+>>> samplereader = csv.reader(samplefile)
+>>> sampledata = list(samplereader)
+>>> sampledata
+
+[['router1', '192.168.10.1', 'Nashville'], ['router2',
+'192.168.20.1', 'Tampa'], ['router3', '192.168.30.1', 'San Jose ']]
+```
+
+Now having lists of lists you can manipulate this data using list notation.
+
+```python
+>>> sampledata[0]
+
+['router', '192.168.10.1', 'Nashville']
+
+>>> sampledata[0][1]
+
+'192.168.0.1'
+```
+
+&nbsp;
+
+Using **with**, you can iterate throug the CSV data and display information in an easier way:
+
+```python
+import csv
+with open("routerlist.csv") as data:
+    csv_list = csv.reader(data)
+    for row in csv_list:
+        device = row[0]
+        location = row[2]
+        ip = row[]
+        print(f"{device} is in {location.rstrip()} and has IP {ip}.")
+```
+
+> **Note**
+>
+> Why is list not needed?  **data** is the file handler, **csv_list** is the reader, but why do we not need the list function?*  After testing it seems to work with or without **list()**, not sure why.
+>
+> This was answered [here](https://www.reddit.com/r/learnpython/comments/wywuh5/no_list_needed_when_using_with_for_csv/).  Essentially though, **list()** works by essentially iterating over the items and building the list, similar to how a for loop iterates, so you can skip the list in the previous example and for loop over it as well. 
+
+The **rstrip** function is used because the last entry in a CSV file will have a whitespace character at the very end.  Without **rstrip** the formatting will be cut off.
+
+&nbsp;
+
+Adding a line to the CSV file follows a similar process to text files.  Instead of using a **reader** object, you use a **writer** object to store the formatted CSV data and then write it to the file.
+
+```python
+import csv 
+
+print("Please add a new router to the list")
+hostname = input("What is the hostname? ")
+ip = input("What is the ip address? ")
+location = input("What is the location? ")
+
+router = [hostname, ip, location]
+
+with open("routerlist.csv", "a") as data:
+    csv_writer = csv.writer(data)
+    csv_writer.writerow(router)
+```
+
+&nbsp;
+
+### ***JavaScript Object Notation (JSON)***
+
+The data structure of JSON is built around key/value pairs.
+
+You can easily convert JSON to lists (for a JSON array) and dictionaries (for JSON objects) with the built-in JSON module.
+
+There are four functions to perform the conversion of JSON data into Python objects and back:
+
+-   **load()**:  This allows you to import native JSON and convert it to a Python dictionary from a file.
+-   **loads()**:  this will import JSON data from a string for parsing and manipulating within your program.
+-   **dump()**:  This is used to write JSON data from Python objects to a file.
+-   **dumps()**:  This allows you to take JSON dicitonary data and convert it into serialized string for parsing and manipulating within Python.
+
+> **Note**
+> 
+> (*Personal Note*) One way to think about it is that when you are loading from or dumping to the file, you use load or dump (without s) but when you're loading the JSON object you already have out of the file handle out into a dictionary you loads (with s) and when you're dumping from a dictionary into the JSON object you use dumps.
+
+The **s** at the end of **dump** and **load** refers to a string, as in *dump string*.  To see this in action, you load the JSON file and map the file handle to a Python object (data) like so:
+
+```python
+import json
+with open("json_sample.json") as data:
+    json_data = data.read()
+
+json_dict = json_loads(json_data)
+```
+
+The object **json_dict** has taken the output of **json.loads(json_data)** and now holds the **json** object as a Python dictionary.
+
+You can now modify the key/value pairs.  In order to save the new **json** object back to the file, you have to use the **dump()** function (without the **s**) to convert the Python dictionary back into the JSON file object.
+
+To make it easier to read, you can use the **indent** keyword.
+
+```python
+with open("json_sample.json", "w") as filehandle:
+    json.dump(json_dict, filehandle, indent=4)
+```
+
+&nbsp;
+
+### ***Extensible Markup Language (XML)***
+
+Extensible Markup Language (XML) was designed to work with HTML for data transport and storage between web services and APIs.  
+
+XML is a tree structure, with the root element at the top.  
+
+There are parent/child relationships between elements.
+
+It's similar to JSON in that a tag acts as a key with a value.
+
+You can also assign attributes to a tag:
+
+```attribute name="some value"```
+
+This work the same as an element in that it can provide a way to represent data:
+
+```xml
+<?xml version=".0" encoding="UTF-8" ?>
+<interface xmlns="ietf-interfaces">
+    <name>GigabitEthernet2</name>
+    <description>Wide Area Network</description>
+    <enabled>true</enabled>
+    <ipv4>
+        <address>
+            <ip>92.168.1.5</ip>
+            <netmask>255.255.255.0</netmask>
+        </address>
+    </ipv4>
+</interface>
+```
+
+&nbsp;
+
+To work with XML you can use the native XML library which can be a bit harder if you just want to convert XML into something you want to work with in Python.  More easily you can use a module called **xmltodict** to convert XML into an ordered dictionary in Python.  ***This is a special class of dictionary that does not allow elements to change order.***  Since dictionaries use key/value pairs, where the key/value pairs are stored is normally not a problem, but in the case of XML, order matters.
+
+XML from previous example converted to an ordered dictionary:
+
+```python
+import xmltodict
+
+with open("xml_sample.xml") as data:
+    xml_example = data.read()
+
+xml_dict = xmltodict.parse(xml_example)
+
+>>> print(xml_dict)
+
+OrderedDict([('interface', OrderedDict([('@xmlns', 'ietf-interfaces'), ('name',
+'GigabitEthernet2'), ('description', 'Wide Area Network'), ('enabled', 'true'),
+('ipv4', OrderedDict([('address', OrderedDict([('ip', '192.168.0.2'), ('netmask',
+'255.255.255.0')]))]))]))])
+```
+
+Now that the XML is in a Python dictionary, you can modify an element:
+
+```python
+xml_dict["interface"]["ipv4"]["address"]["ip"] = "192.168.55.3"
+```
+
+You can see the changes in XML foramt by using the **unparse** function (not XML doesn't care about whitespaces, but you can use **pretty=True** to make it more human readable):
+
+```python
+>>> print(xmltodict.unprase(xml_dct, pretty=True))
+
+<?xml version="1.0" encoding="utf-8"?>
+<interface xmlns="ietf-interfaces">
+    <name>GigabitEthernet2</name>
+    <description>Wide Area Network</description>
+    <enabled>true</enabled>
+    <ipv4>
+        <address>
+            <ip>192.168.55.3</ip>
+            <netmask>255.255.255.0</netmask>
+        </address>
+    </ipv4>
+</interface>
+```
+
+&nbsp;
+
+To write changes back to the original file:
+
+```python
+with open("xml_sample.xml", "w") as data:
+    data.write(xmltodict.unparse(xml_dict, pretty=True))
+```
+
+&nbsp;
+
+### ***YAML Ain't Markup Language (YAML)***
+
+Example of YAML syntax:
+
+```yaml
+---
+interface:
+    name: GigabitEthernet2
+    description: Wide Area NEtwork
+    enabled: true
+    ipv4:
+        address:
+        -   ip: 172.16.0.2
+            netmask: 255.255.255.0
+```
+
+YAML can represent a list by using the **-** character to identify elements:
+
+```yaml
+---
+addresses:
+    -   ip: 172.16.0.2
+        netmask: 255.255.255.0
+    -   ip: 172.16.0.3
+        netmask: 255.255.255.0
+    -   ip: 172.16.0.4
+        netmask: 255.255.255.0
+```
+
+&nbsp;
+
+To work with YAML in Python, you need to install and import the PyYAML module.
+
+Once you have imported it into your code you can convert YAML to Python objects and back again.  
+
+YAML objects are converted to dictionaries, and YAML lists automaticallybecome Python lists.  The two function taht perform this are **yaml.load** to convert from YAML object into Python and **yaml.dump** to convert Python objects back to YAML.
+
+You can load a YAML file and then pass it to **yaml.load**.  
+
+The latest PyYAML module requires that you add an argument to tell it which loader you want to use.  This is a security measure so that your code is not vulnerable to arbitrary code execution from a bad YAML file.
+
+```python
+import yaml
+
+with open("yaml_sample.yaml") as data:
+    yaml_sample = data.read()
+
+yaml_dict = yaml.load(yaml_sample, Loader=yaml.FullLoader)
+```
+
+The variable **yaml_dict** is now a dictionary object containing the YAML file.  Had the key/value been a YAML list, it would have created a list instead.
+
+You can modify this object:
+
+```python
+>>> yaml_dict["interface"]["name"] = "GigabitEthernet"
+>>> print(yaml.dump(yaml_dict, default_flow_style=False))
+
+interface:
+    description: Wide Area Network
+    enabled: true
+    ipv4:
+        address:
+        -   ip: 92.168.0.2
+            netmask: 255.255.255.0
+    name: GigabitEthernet1
+```
+
+To write changes back to the YAML file:
+
+```python
+with open("yaml_sample.yaml", "w") as data:
+    data.write(yaml.dump(yaml_dict, default_flow_style=False))
+```
+
+&nbsp;
+
+##  **Error Handling in Python**
+
+&nbsp;
+
+**try-except-else-finally** code blocks.
+
+To add error handling to code you can use the **try** statement:
+
+```python
+x = 0
+while True:
+    try:
+        filename = input("Which file would you like to open?: ")
+        with open(filename, "r") as filehandle:
+            file_data = filehandle.read()
+    except FileNotFoundError:
+        print(f"Sorry, {filename} does not exist.  Please try again.")
+    else:
+        print(file_data)
+        x = 0
+        break
+    finally:
+        x += 1
+        if x == 3:
+            print('Wrong file name 3 times.\nCheck name and return.')
+            break
+```
+
+&nbsp;
+
+##  **Test-Driven Development (TDD)**
+
+&nbsp;
+
+Five steps of Test-Driven Development (TDD) process:
+
+-   **Step 1.  Write a test**:  Write a test that tests for the new class or function you want to add to your code.  Think about the class name and structure you will need in order to call the new capability that doesn't exist yet - and nothing more.
+-   **Step 2.  Test fails**:  Of course, the test fails because you haven't written the part that works yet.  The idea here is to think about what the class or function you want and test for its intendend output.  This initial test failures shows you exactly where you should focus your code writing to get it to pass.  This is like starting with your end state in mind, which is the most effective way to accomplish a goal.
+-   **Step 3.  Write some code**:  Write only the code needed to maek the new function or class successfully pass.  This is about efficiency and focus.
+-   **Step 4.  Test passes**:  The test now passes, and the code works.
+-   **Step 5.  Refactor**:  Clean up the code as necessary, removing any test stubs or hard-coded variables used n testing.  Refine the code, if needed, for speed.
+
+TDD works extremely well with the iterative nature of Agile development, with the side benefits of having plenty of test cases to show that the software works.
+
+&nbsp;
+
+##  **Unit Testing**
+
+&nbsp;
+
+A ***unit test*** is a type of test that is conducted on small, functional aspects of code.  It's the lowest level of software testing and is interested in the logic and operation of only a single function of code.
+
+A ***unit*** is the smallest testable part of your software.
+
+&nbsp;
+
+There are other types of testing such as ***integration testing*** and ***functional testing***.  The differences between these types of testing and unit testing comes down to the scope of the test.  
+
+As mentioned, a unit test is testing a small piece of code, such as a method or function.
+
+An ***integration test*** tests how one software component works with the rest of the application.  It is often used when the modules of an application are developed by separate teams or when a distributed application has multiple components working together.
+
+A ***function test*** (also called an ***end-to-end test***) is the broadest in scope from a testing perspsective.  This is where the entire system is tested against the function specification and requirements of the software application.
+
+&nbsp;
+
+**unittest** is Python's built-in unit test module.  
+
+A simple function that computes the area of a circle:
+
+```python
+from math import pi
+def area_of_circle(r):
+    return pi*(r**2)
+```
+
+If this function is ran and odd values are passed to it errors will occur.  To test this you can create a unit test.
+
+Naming the above code 'areacircle.py' the unit test file 'test_areacircle.py'.  Import the **unittest** module and from areacircle import the **area_of_circle** function.  Import the **pi** method from math to test the results. 
+
+Next create a class for the test.  It can be named anything but must inherit **unittest.TestCase** from the **unittest** module.  This is what enables teh test function methods to be assigned to the **test** class.  Next define the first function.
+
+You can test various inputs to validate the math in the function under **test** is working as it should.  Notice a new method called **assertAlmostEqual()**, which takes the function you are testing, passes a value to it, and checks the returned value against an expected value.
+
+```python
+import unittest
+from areacircle import area_of_circle
+from math import pi
+
+class Test_Area_of_Circle_input(unittest.TestCase):
+    def test_area(self):
+        # Test radius >= 0
+        self.assertAlmostEqual(area_of_circle(1), pi)
+        self.assertAlmostEqual(area_of_circle(0), 0)
+        self.assertAlmostEqual(area_of_circle(3.5), pi * 3.5**2)
+```
+
+You can go to the directory where the two scripts reside and enter ```python -m unittest test_areacircle.py``` to run the test.   Alternatively you can add the following to the bottom of the **test_areacircle.py** script to allow the **unittest** module to be launched when the test script is run:
+
+```python
+if __name__ = '__main__':
+    unittest.main()
+```
+
+Output:
+
+```
+.
+-------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+```
+
+After executing the functions, the dot at the top of the results shows that number of tests ran to determine whether the valus submitted produced an error.
+
+&nbsp;
+
+You can check if a negative number causes a problem.  Create a new function under the previous **test_area** function, naming it **test_values** (**test** at the beginning is required, or unittest will ignore the function and not check it).  Use the **assertRaises** check which will look for a **ValueError** exception for the function **area_of_circle** and pass it a value of **-1**.
+
+```python
+def test_values(self):
+    # Test that bad values are caught
+    self.assertRaises(ValueError, area_of_circle, -1)
+```
+
+Output:
+
+```
+.F
+=========================================
+FAIL: test_values (__main__.Test_Area_of_Circle_input)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chrijack/Documents/ccnadevnet/test_areacircle.py", line 14, in
+  test_values
+    self.assertRaises(ValueError, area_of_circle, -1)
+AssertionError: ValueError not raised by area_of_circle
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+FAILED (failures=1)
+```
+
+The first check is still good, so there is one dot at the top, but next is a **F** for fail.  There is a message saying that the **test_value** function is where it failed, and the original function did not catch this error.  This means the code is giving back tests, however a radisu of **-** is not possible, but the function gives you the follow output:
+
+```python
+>>> area_of_circle(-1)
+3.141592653589793
+```
+
+To fix this you can use error-checking.  The **if** statement can check for a negative number, and raise a **ValueError** with a message about invalid input:
+
+```python
+from math import pi
+
+def area_of_circle(r):
+    if r < 0:
+        raise ValueError('Negative radius value error')
+    return pi*(r**2)
+```
+
+The unit test will now pass the checks.
+
+&nbsp;
+
+#   06 - Application Programming Interfaces (APIs)
+
+&nbsp;
+
+Application Programming Interfaces (APIs) are mechanisms used to communicate with applications and other software.
+
+The two most common APIs: northbound and southbound APIs.
+
+&nbsp;
+
+###  ***Northbound APIs***
+
+Northbound APIs are often used for communication from a network controller to its management software.
+
+&nbsp;
+
+### ***Southbound APIs***
+
+Changes mode from a controller through a northbound API are then pushed to individual devices using a southbound API.
+
+Southbound APIs can modify more than just the data plane on a device.
+
+&nbsp;
+
+### ***Synchronous vs. Asynchronous APIs***
+
+APIs can handle transactions either in a synchronous or asynchronous manner.
+
+A ***synchronous API*** causes an application to wait for a response from the API in order to continue processing data or function normally.  This can lead to interruptions in application processing or delay in response or failed responses could cause the application to hang or stop performing the way it was intended to work.
+
+***Asynchronous APIs*** do exactly the opposite of synchronous APIs in that they do not wait until a response is received prior to continuing to function and process other aspects of data.  Asynchronous APIs provide a callback function so that the API response can be sent back at another time, without the application having to wait for the entire transaction to complete.
+
+&nbsp;
+
+### ***Representation State Transfer (REST) APIs***
+
+An API that uses REST is often referred to as a RESTful API.
+
+RESTful APIs use HTTP methods to gather and manipulate data.  Since there is a defined structure for how HTTP works, HTTP offers a consistent way to interact with APIs from multiple vendors.
+
+REST uses different HTTP functions to interact with data.
+
+HTTP functions are very similar to the functions that most applications and databases use to store or alter data.  These functions are called CRUD functions; CRUD is an acronym that stands for CREATE, READ, UPDATE, and DELETE.
+
+HTTP functions and sample use cases:
+
+| HTTP Function | Action | Use Case |
+| -- | -- | -- |
+| GET | Request data from a destination | Viewing a website |
+| POST | Submit data to a specific destination | Submitting login credentials |
+| PUT | Replaces data at a specific destination | Updating an NTP server |
+| PATCH | Appends data to a specific destination | Adding an NTP server |
+| DELETE | Removes data from a specific destination | Removing an NTP server |
+
+CRUD functions and sample use cases:
+
+| CRUD Function | Action | Use Cases |
+| -- | -- | -- |
+| CREATE | Insert data inside a database or an application | Creating a customer's home address in a database |
+| READ | Retrieves data from a database or an application | Pulling up a customer's home address from a database |
+| UPDATE | Modifies or replaces data in a database or an application | Changing a street address stored in a database |
+| DELETE | Removes data from a database or an application | Removing a customer from a database |
+
+&nbsp;
+
+### ***RESTful API Authentication***
+
+&nbsp;
+
+### ***Basic Authentication***
+
+The downfall of basic authentication is that the credentials are passed unencrypted.  The lack of encryption means that the credentials are in simple plaintext base 64 encoding in the HTTP header.  
+
+Basic authentication is more commonly used in SSL or TLS to prevent attacks that sniff the traffic to capture a username and password.
+
+Another issue with basic authentication is that the password is sent back and forth with each request, which increases the opportunity for an attacker to capture the traffic containing the password.
+
+&nbsp;
+
+### ***API Keys***
+
+Some APIs use API keys for authentication.
+
+An **API key** is a predetermined string that is passed from the client to the server.  It is intended to be a pre-shared secret and should not be well known or easy to guess, because it functions just like a password.
+
+Any API key can be passed to the server in three ways:
+
+-   String
+-   Request header
+-   Cookie
+
+&nbsp;
+
+***String*** based API key is sent with every API call and is often used as a one-off method of authentication.  When looking to do multiple API calls, it isn't convenient to manually enter the API key string every time.  This is where the request header or cookie options comes into play.
+
+*String BaseD API Key Example:*
+
+```
+GET /something?api_key=abcdef2345
+```
+
+&nbsp;
+
+***Request headers*** are frequently used when a user is making multiple API calls and doesn't want to keep having to put the API key into each API individually.  This is typically seen in Postman and Python scripts.  The header must include the string or token in the header of each API call.
+
+*Request Header API Key Example:*
+
+```
+GET /something HTTP/1.1
+X-API-Key:  abcdef12345
+```
+
+&nbsp;
+
+***Cookies*** are one of the most common methods for recurring API calls.  A cookie stores the API key string and can be reused and stored over and over.  This is synonymous with a header.
+
+*Cookie API Key Example:*
+
+```
+GET /something HTTP/1.1
+Cookie:  X-API-KEY=abcdef12345
+```
+
+&nbsp;
+
+### ***Custom Tokens***
+
+A ***custom token*** allows a user to enter his or her username and password once and then receives a unique auto-generated and encrypted token.  This token can then be used to access protected pages or resources instead of having to continuously enter the login credentials.
+
+Tokens can be time bound and set to expire after a specific amount of time has passed, forcing users to reauthenticate by reentering their credentials.
+
+Tokens simplify the login process and reduces the number of times a user has to provide login credentials.
+
+A token is stored in the user's browser and gets checked each time the user tries to access information requiring authentication.  Once the user logs out, the token is destroyed so it cannot be compromised.
+
+&nbsp;
+
+### ***Simple Object Access Protocol (SOAP)***
+
+***Simple Object Access Token (SOAP)*** is used to access web services.
+
+Although HTTP is the most commonly deployed transport for SOAP, SOAP can use either Simple Mail Transfer Protocol (SMTP) or HTTP.
+
+SOAP is used to exchange data between applications that were build on different programming languages.
+
+SOAP is based on XML.
+
+SOAP uses XML to communicate between web services and clients.  
+
+SOAP messages, which typically consist of the following four main components, are sent between the web applications and clients.
+
+-   Envelope
+-   Header
+-   Body
+-   Fault (optional)
+
+&nbsp;
+
+***Envelope:***
+The SOAP envelope encloses the XML data and identifies it as a SOAP message.  the envelope indicates the beginning and the end of the SOAP message.  
+
+&nbsp;
+
+***Header:***
+The next portion of a SOAP message is the SOAP header, and it can contain multiple header blocks.  Header blocks are targeted to specific SOAP receiver nodes.  If a SOAP message contains a header, it must come before the body element.
+
+&nbsp;
+
+***Body:***
+The SOAP body contains the actual message that is designated for the SOAP receiver.  Every sOAP envelope must contain at least one body element.
+
+&nbsp;
+
+A benefit of SOAP is that because it primarily uses HTTP, it is efficient in passing through firewalls without requiring any additional ports be allowed or opened for the web service traffic to be permitted.
+
+Benefits of SOAP:
+
+-   Works between different languages
+-   Uses simple and common HTTP and XML structure
+
+&nbsp;
+
+*Example SOAP Message:*
+```html
+POST /InStock HTTP/1.1
+Host:  www.example.com
+Content-Type:  application/soap+xml; charset=utf-8
+Content-Length:  299
+SOAPAction:  "http://www.w3.org/2003/05/soap-envelope"
+
+<?xml version="1.0"?>
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:m="http://www.example.org">
+    <soap:Header>
+    </soap:Header>
+    <soap:Body>
+        <m:GetStockPrice>
+            <m:StockName>CSCO</m:StockName>
+        </m:GetStockPrice>
+    </soap:Body>
+</soap:Evenlope>
+```
+
+&nbsp;
+
+*SOAP Fault Options:*
+
+| SOAP Fault Code | Description |
+| -- | -- |
+| VersionMismatch | The faulting node found an invalid element information item instead of the expected envelope element information item.  The namespace, local name, or both did not match the envelope element information item required by this recommendation. |
+| MustUnderstand | This is a child element of the SOAP header.  If this attribute is set, any information that was not understood triggers this fault code. |
+| DataEncodingUnknown | A SOAP header block or SOAP body child element information item targeted at the faulting SOAP node is scoped. |
+| Sender | The message was incorrectly formed or did not contain the information needed to succeed.  For example, the message might have lacked the proper authentication or payment information.  This code generally indicates that the message is not to be resent without change. |
+| Receiver | The message could not be processed for reasons attributable to the processing of the message rather than to the contents of the message itself.  For example, processing could include communicating with an upstream SOAP node, which did not respond.  The message could succeed, however, if resent at a later point in time.
+
+
+The fault message shown in example below was generated because the Detail value wasn't interpreted correctly due to the type in the XML ```<m:MaxTime>P5M</m:MaxTime>```.  The value P5M caused the issue in the case because the code was expecting it to be 5PM.  The XML code and value should be ```<m:MaxTime>5PM</m:MaxTime>``` in this case.
+
+*Sample SOAP Fault:*
+
+```html
+<env:Envelope xmlns:env="http://www.w3.org/2005.05/soap-envelope"
+    xmlns:m="http://www.example.org/timeouts"
+    xmlns:="http://www.w3.org/XML/998/namespace">
+    <env:Body>
+        <env:Fault>
+            <env:Code>
+                <env:Value>end:Sender</env:value>
+                <env:Subcode>
+                    <env:Value>m:MessageTimeout</env:Value>
+                </env:Subcode>
+            </env:Code>
+            <env:Reason>
+                <env:Text xml:lang="en">Sender Timeout</env:Text>
+            </env:Reason>
+            </env:Detail>
+                <m:MaxTime>P5M</m:MaxTime>
+            </env:Detail>
+        </env:Fault>
+    </env:Body>
+</env:Envelope>
+```
+
+&nbsp;
+
+### ***Remote-Procedure Calls (RPCs)***
+
+Remote-procedure calls (RPCs) make it possible to execute code or a program on a remote network.  RPCs behave as if the code were executed locally on the same local node, even though the code is executed on a remote address space
+
+RPCs are sometimes also known as function or subroutine calls.
+
+Using an RPC is a common way of executing specific commands, such as GET or POST operations to set API or URL.
+
+When a client sends a request message, the RPC translates it and then sends it to the server.  A request may be a procedure or a function call destined to a remote server.  When a server receives the request, it sends back a response to the client.  While this communication is happening, the client is blocked, allowing the server time to process the call.  Once the call is processed and a response has been sent back to the client, the communication between the client and server is unblocked so the client can resume executing the procedure call.  
+
+RPC calls are typically synchronous.  There are also asynchronous RPC calls, but the focus of this section is on synchronous RPC calls.
+
+&nbsp;
+
+There are different versions of RPC messages, however the most common is XML-RPC.
+
+*Sample of XML-RPC Request Message:  Uses GET to retrieve the name of the 2st state added to the United States*
+
+```html
+<?xml version="1.0"?>
+<methodCall>
+    <methodName>example.getStateName</methodName>
+    <params>
+        <param>
+            <value><i4>21</i4></value>
+        </param>
+    </params>
+</methodCall>
+```
+
+&nbsp;
+
+Below is an example of an XML-RPC reply or response message, in which the response is to the GET message from above.
+
+*Sample XML-RPC Reply Message:*
+
+```html
+<?xml verison="1.0"?>
+<methodResponse>
+    <params>
+        <param>
+            <value><string>Illinois</string></value>
+        </param>
+    </params>
+</methodResponse>
+```
+
+&nbsp;
+
+#   07 - RESTful API Requests and Responses
+
+&nbsp;
+

@@ -36,7 +36,7 @@ If a network operator makes a change to a switch's configuration in the manageme
 
 &nbsp;
 
-### Synchronous Versus Asynchronous APIs**
+### **Synchronous Versus Asynchronous APIs**
 
 &nbsp;
 
@@ -56,7 +56,7 @@ In summary, the main difference between synchronous and asynchronous APIs is tha
 
 &nbsp;
 
-> ***Personal Note**:  Client uses an API call to send a request to the server.  The server receives the request and begin to execute procedure.  During this time the client is continuing to function.  The server sends the response.  The client receives the response via callback and continues execution.
+> ***Personal Note***:  Client uses an API call to send a request to the server.  The server receives the request and begin to execute procedure.  During this time the client is continuing to function.  The server sends the response.  The client receives the response via callback and continues execution.
 
 &nbsp;
 
@@ -155,7 +155,7 @@ Some APIs use API keys for authentication.  An **API key** is a predetermined st
 
 &nbsp;
 
-Example 6-1 provides an example of a string based API key.  this type of API key is sent with  every APi call and is often used as a one-off method of authentication.  When you're looking to do multiple API calls, it isn't convenient to manually enter the API key string every time.  This is where the request header or cookie options come into play.
+Example 6-1 provides an example of a string based API key.  This type of API key is sent with  every API call and is often used as a one-off method of authentication.  When you're looking to do multiple API calls, it isn't convenient to manually enter the API key string every time.  This is where the request header or cookie options come into play.
 
 &nbsp;
 
@@ -217,7 +217,7 @@ A custom **token** allows a user to enter his or her username and password once 
 
 &nbsp;
 
-Simple Object Access Protocol (SOAP) is used to access web services.  Although HTTP is the most commonly deployed transports for SOAP, SOAP can use either Simple Mail Transfer Protocol (SMTP), or HTTP.  SOAP is used to exchange data between applications that were built on different programming languages, such as Java,. NET, and PHP.  SOAP greatly simplifies the life of a developer, eliminating the need to know how to develop in each of these specific programming languages.  It makes it possible to exchange data between these applications in a more simplified manner, without requiring a developer to be an expert in all the different languages.  SOAP is based on XML.  Because most programming languages today have libraries for working with XML, SOAP can act as an intermediary specification between the different applications.
+Simple Object Access Protocol (SOAP) is used to access web services.  Although HTTP is the most commonly deployed transport for SOAP, SOAP can use either Simple Mail Transfer Protocol (SMTP), or HTTP.  SOAP is used to exchange data between applications that were built on different programming languages, such as Java,. NET, and PHP.  SOAP greatly simplifies the life of a developer, eliminating the need to know how to develop in each of these specific programming languages.  It makes it possible to exchange data between these applications in a more simplified manner, without requiring a developer to be an expert in all the different languages.  SOAP is based on XML.  Because most programming languages today have libraries for working with XML, SOAP can act as an intermediary specification between the different applications.
 
 &nbsp;
 
@@ -294,7 +294,7 @@ As mentioned briefly at the beginning of this section, SOAP can include optional
 
 &nbsp;
 
-The fault message shown in Example 6-5 was generated because the Detail value wasn't interpreted correctly due to the type in the XML `<m:MaxTime>P5M</m:MaxTime>`.  The value P5M caused the issue in this case because the code was expecting it to be 5PM.  the XML code and value should be `<m:MaxTime>5PM</m:MaxTime>` in this case.
+The fault message shown in Example 6-5 was generated because the Detail value wasn't interpreted correctly due to the type in the XML `<m:MaxTime>P5M</m:MaxTime>`.  The value P5M caused the issue in this case because the code was expecting it to be 5PM.  The XML code and value should be `<m:MaxTime>5PM</m:MaxTime>` in this case.
 
 &nbsp;
 
@@ -350,7 +350,7 @@ As mentioned earlier in this section, an RPC call is blocked during the waiting 
 
 &nbsp;
 
-Now that the high-level communications of RPC have been covered, let's look at an example of an RPC request message.  There are different versions of RPC messages.  However, the most common is XML-RPC; XML-RPC was also the most common version prior to SOAP becoming.  Example 6-6 shows a simple RPC call with XML-RPC that uses a GET to retrieve the name of the 21st sate added to the Untied States.
+Now that the high-level communications of RPC have been covered, let's look at an example of an RPC request message.  There are different versions of RPC messages.  However, the most common is XML-RPC; XML-RPC was also the most common version prior to SOAP becoming.  Example 6-6 shows a simple RPC call with XML-RPC that uses a GET to retrieve the name of the 21st sate added to the United States.
 
 &nbsp;
 

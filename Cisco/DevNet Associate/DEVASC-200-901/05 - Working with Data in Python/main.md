@@ -4,7 +4,7 @@
 
 &nbsp;
 
-To extra data from a text file, you can use native Python capabilities.  Binary files, on the other hand, need to be processed by some module or another external program before it is possible to extract the data from them.  The vast majority of your needs will be addressed through text files, so that is what this section focuses on.
+To extract data from a text file, you can use native Python capabilities.  Binary files, on the other hand, need to be processed by some module or another external program before it is possible to extract the data from them.  The vast majority of your needs will be addressed through text files, so that is what this section focuses on.
 
 &nbsp;
 
@@ -12,7 +12,7 @@ From Python's perspective, a text file can be thought of as a sequence of lines.
 
 &nbsp;
 
-To open a file and read in its contents, you have to first tell Python the name of the file you want to work with.  You do this by using the **open()** function and assigning the output to a PYthon object (the variable **readdata** in this case).  The function returns a file handle, which Python uses to perform various operations on the file.  The code looks as follows:
+To open a file and read in its contents, you have to first tell Python the name of the file you want to work with.  You do this by using the **open()** function and assigning the output to a Python object (the variable **readdata** in this case).  The function returns a file handle, which Python uses to perform various operations on the file.  The code looks as follows:
 
 &nbsp;
 
@@ -22,7 +22,7 @@ readdata = open("textfile.txt", "r")
 
 &nbsp;
 
-The **open()** function requires two arguments:  the name of the file as a string and the mode that you want to open the file.  In the preceding example, it opens the file in read mode.  There are numerous options you can use when you set mode, and oyu can combine them in some cases to fine-tune how you want Python to handle the file.  The following are some of the options:
+The **open()** function requires two arguments:  the name of the file as a string and the mode that you want to open the file.  In the preceding example, it opens the file in read mode.  There are numerous options you can use when you set mode, and you can combine them in some cases to fine-tune how you want Python to handle the file.  The following are some of the options:
 
 -   **r**:  Open for reading (default)
 -   **w**:  Open for writing, truncating the file first
@@ -117,7 +117,7 @@ Imagine a world where all the data is in nice, neatly formatted cells, completel
 
 &nbsp;
 
-A CSV file is just a plaintext spreadsheet or database file.  All of those spreadsheets or databases that you have with infrastructure information can be easily exported as CSV files so that you can use them as source data in Python.  Each line in a CSV file represents a row, and commas are used toe separate the individual data fields to make it easier to parse the data.  Python has a built-in CSV module that you can import that understands the CSV format and simplifies your code.  The following is an example of a typical CSV file (in this case named routerlist.csv):
+A CSV file is just a plaintext spreadsheet or database file.  All of those spreadsheets or databases that you have with infrastructure information can be easily exported as CSV files so that you can use them as source data in Python.  Each line in a CSV file represents a row, and commas are used to separate the individual data fields to make it easier to parse the data.  Python has a built-in CSV module that you can import that understands the CSV format and simplifies your code.  The following is an example of a typical CSV file (in this case named routerlist.csv):
 
 &nbsp;
 
@@ -150,7 +150,7 @@ This example shows a common asset list or device inventory, such as one that you
 
 &nbsp;
 
-In this example, you now have a list of lists that includes each row of data.  If you want to manipulate this data, you could because it's now in a native format for PYthon.  Using list notation, you can extract individual pieces of information.
+In this example, you now have a list of lists that includes each row of data.  If you want to manipulate this data, you could because it's now in a native format for Python.  Using list notation, you can extract individual pieces of information.
 
 &nbsp;
 
@@ -247,7 +247,7 @@ What is the location? London
 
 &nbsp;
 
-If you run the code show above and input details for router 4, now when you display the router list, you will have the new router included as well:
+If you run the code shown above and input details for router 4, now when you display the router list, you will have the new router included as well:
 
 &nbsp;
 
@@ -349,7 +349,7 @@ Link', 'enabled': True, 'ipv4': {'address': [{'ip': '192.168.0.2',
 
 &nbsp;
 
-In order to save the new **json** object back to a file, you have to use the **dump()** function (without the **s**) to convert the Python dictionary back into a JSON file object.  To make it easier to read, you can use the **indent keyword:
+In order to save the new **json** object back to a file, you have to use the **dump()** function (without the **s**) to convert the Python dictionary back into a JSON file object.  To make it easier to read, you can use the **indent** keyword:
 
 &nbsp;
 
@@ -760,7 +760,7 @@ There are other types of testing that you may hear about, such as ***integration
 
 &nbsp;
 
-Python has a built-in unit test module, named unittest.  This module is quite full featured and can support a tremendous number of test cases.  There are other testing modules that you can use, such as Nose and PyTest, but for the purpose of the 200-901 DevNet Associate DEVASC exam, you need to know how unittest works.  In order to use unittest, you need a bit of code to test.  Here is a simple function that computers the are of a circle:
+Python has a built-in unit test module, named unittest.  This module is quite full featured and can support a tremendous number of test cases.  There are other testing modules that you can use, such as Nose and PyTest, but for the purpose of the 200-901 DevNet Associate DEVASC exam, you need to know how unittest works.  In order to use unittest, you need a bit of code to test.  Here is a simple function that computes the area of a circle:
 
 &nbsp;
 
@@ -834,7 +834,7 @@ OK
 
 &nbsp;
 
-The dot at the top shows that 1 test ran (even though you had multiple checks in the same function) to determine whether the values submitted produced an error.  Since all are valid for the function, teh unit test came back successful. 
+The dot at the top shows that 1 test ran (even though you had multiple checks in the same function) to determine whether the values submitted produced an error.  Since all are valid for the function, the unit test came back successful. 
 
 &nbsp;
 
