@@ -2434,3 +2434,622 @@ Below is an example of an XML-RPC reply or response message, in which the respon
 
 &nbsp;
 
+##  **RESTful API Fundamentals**
+
+&nbsp;
+
+An ***application programming interface (API)*** is a set of functions and procedures intended to be used as an interface for software components to communicate with each other.
+
+&nbsp;
+
+### ***API Types***
+
+APIs can be broadly classified into three categories, based on the type of work that each one provides:
+
+-   **Service API**:  In a service API, an application can call on another application to solve a particular problem.  Usually these systems can exist independently.  For example, in a payment system, an application can call the API to accept payments via credit cards.  As another example, with a user-management system, an application can call an API to validate and authenticate users.
+    -   ***Solve or Execute This Task for Me***
+        -   *Payment Systems*
+        -   *User Management*
+        -   *Social Media Handler*
+-   **Information API**:  An information API allows one application to ask another application for information.  *Information* in this context can refer to data gathered over time, telemetry data, or a list of devices that are currently connected.
+    -   ***Get Me the Current Information***
+        -   *Analytics*
+        -   *Device List*
+        -   *Time Series*
+-   **Hardware API**:  Application developers use hardware APIs to gain access to the features of hardware devices.  Usually these APIs encompass some kind of hardware or sensors, and an application can call this kind of API to get the GPS location or real-time sensor data such as temperature or humidity.
+    -   ***Get Me the Current Location of the Vehicle***
+        -   *Sensor Data*
+        -   *Real-Time Hardware Status*
+        -   *Device Management*
+
+&nbsp;
+
+### ***API Access Types***
+
+There are typically three ways APIs can be accessed:
+
+-   **Private**:  A private API is for internal use only.  This access type gives a company the most control over its API.
+-   **Partner**:  A partner API is shared with specific business partners.  This can provide additional revenue streams without compromising security.
+-   **Public**:  A public API is available to everyone.  This allows third parties to develop applications that interact with an API and can be a source of innovation.
+
+Most APIs are accessed through a network (with the biggest network being the Internet) and with HTTP being so common it is the protocol underlying most APIs.
+
+&nbsp;
+
+### ***HTTP Basics***
+
+Communication in HTTP centers around a concept called the request/response cycle, in which the client sends the server a request to do something and the server in turn sends the client a response saying whether or not the server can do what the client asked.
+
+In HTTP, in order to make a successful request to a server, the client needs to include four items:
+
+-   **URL (uniform resource locator)**
+-   **Method**
+-   **List of headers**
+-   **Body**
+
+&nbsp;
+
+### ***Uniform Resource Locator (URL)***
+
+A URL is similar to a house address in that it defines that location where a service resides on the internet.
+
+A URL typically has four components:
+
+-   **Protocol**:  http (Not Secure) or https (Secure)
+-   **Server/host address**:  IP Address or Hostname to Connect to (myhouse.cisco.com)
+-   **Resource**:  Location of the Data or Object on the Server (api/room/livingroom/)
+-   **Parameters**:  Details to Scope, Filter, or Clarify the Request (lights?state=ON)
+
+&nbsp;
+
+### ***Method***
+
+HTTP defines a set of request methods, outlined below.  A client can use one of these request methods to send a request to an HTTP server.
+
+Request Methods
+
+| Method | Explanation |
+| - | - |
+| GET | A client can use a GET request to get a web resource from the server. |
+| HEAD | A client can use a HEAD request to get the header that a GET request would have obtained.  Because the header contains the last-modified date of the data, it can be used to check against the local cache copy. | 
+| POST | A client can use a POST request to post data or add new data to the server. | 
+| PUT | A client can use a PUT request to ask a server to store or update data. |
+| PATCH | A client can use a PATCH request to ask a server to partially store or update data. |
+| DELETE | A client can use a DELETE request to ask a server to delete data. |
+| TRACE | A client can use a TRACE request to ask a server to return a diagnostic trace of the actions it takes. |
+| OPTIONS | A client can use an OPTIONS request to ask a server to return a list of the request methods it supports. |
+| CONNECT | A Client can use a CONNECT request to tell a proxy to make a connection opt another host and simply reply with the content, without attempting to parse or cache it.  This request is often used to make SSL connection through the proxy. |
+
+&nbsp;
+
+### ***REST Methods and CRUD***
+
+REST is an architectural paradigm that allows developers to build RESTful services.  These RESTful applications make use of HTTP requests for handling all four CRUD operations: CREATE, READ, UPDATE, and DELETE.  These four operations are the operations most commonly used in manipulating data.  The HTTP methods map in a one-to-one way to the CRUD operations, as shown below:
+
+Mapping HTTP Methods to CRUD Operations
+
+| HTTP Method | Operation | Explanation |
+| -- | -- | -- |
+| POST | CREATE | Used to create a new object or resource.<br>Example:  Add new room to a house. |
+| GET | READ | Used to retrieve resource details from the system.<br>Example:  Get a list of all the rooms or all the details of one room. |
+| PUT | UPDATE | Typically used to replace or update a resource.  Can be used to modify or create a resource.<br>Example:  Update details of a room. |
+| PATCH | UPDATE | Used to modify some details about a resource.<br>Example:  Change the dimensions of a room. |
+| DELETE | DELETE | Used to remove a resource from the system.<br>Example:  Delete a room from a house. |
+
+&nbsp;
+
+### ***Deep Dive into GET and POST***
+
+GET request methods fetch information and that's it; they have no side effects, make no modifications to the system, create nothing, an destroy nothing.
+
+*Syntax of a GET Request*
+
+> GET &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; Request URI &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; HTTP Version
+> <br/>
+> __
+> <br/>
+> Request Header (Optional)
+> <br/>
+> __
+> <br/>
+> Request Body (Optional)
+
+-   **GET**:  The keyword GET must be all uppercase.
+-   **Request URI**:  Specifies the path of the resource requested, which must begin with the root / of the document base directory.
+-   **HTTP version**:  Either HTTP/1.0 or HTTP/1.1.  This client negotiates the protocol to be used for the current session.  For example, the client may request to use HTTP/1.1.  If the server does not support HTTP/1.1, it may inform the client in the response to use HTTP/1.0.
+-   **Request headers (optional)**:  The client can use optional request headers (such as accept and accept language) to negotiate with the server and ask the server to deliver the preferred contents (such as the language the client prefers).
+-   **Request body (optional)**:  A GET request message has an optional request body, which contains the query string (explained later in this chapter).
+
+&nbsp;
+
+The POST request method is used to post additional data to the server.  
+
+Issuing an HTPT URL from the browser always triggers a GET request.  
+
+To trigger a POST request, you can use an HTML form with attribute method="post" or write your own code.  
+
+The POST request is the same as the GET request except that the URL-encoded query string is sent in the request body rather than appended behind the URL.
+
+The POST request has the following components:
+
+*Syntax of a POST Request*
+
+> POST &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; Request URI &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; HTTP Version
+> <br/>
+> __
+> <br/>
+> Content Type
+> <br/>
+> __
+> <br/>
+> Content Length
+> <br/>
+> __
+> <br/>
+> Request Header (Optional)
+> <br/>
+> __
+> <br/>
+> Request Body (Optional)
+
+-   **POST**:  The keyword POST must be in all uppercase.
+-   **Request URI**:  Specifies the path of the resource requested, which must begin from the root / of the document base directory.
+-   **HTTP version**:  Either HTTP/1.0 or HTTP/1.1.  This client negotiates the protocol to be used for the current session.  For example, the client may request to use HTTP/1.1.  If the server does not support HTTP/1.1, it may inform the client in the response to use HTTP/1.0.
+-   **Request headers (optional)**:  The client can use optional request headers, such as content type and content length to inform the server of the media type and the length of the request body, respectively.
+-   **Request body (optional)**:  A POST request message has an optional request body, which contains the query string (explained later in this chapter).
+
+&nbsp;
+
+### ***HTTP Headers***
+
+HTTP headers and parameters provide a lot of information that can help you trace issues when you encounter them.  HTTP headers are an essential part of an API request and response as they represent the metadata associated with the API request and response.  
+
+Headers carry information for the following:
+
+-   Request and response body
+-   Request authorization
+-   Response caching
+-   Response and cookies
+
+In addition, HTTP headers have information about HTTP connection types, proxies, and so on.  Most of these headers are for managing connections between a client, a server, and proxies.
+
+&nbsp;
+
+Headers are classified as ***request headers*** and ***response headers***.  
+
+You have to set the request headers when sending a request API and have to set the assertion against the response headers to ensure that the correct headers are returned.
+
+&nbsp;
+
+### ***Request Headers***
+
+The request headers appear as name:value pairs.  Multiple values are separated by commas, can be specified as follows:
+
+```
+request-header-name: request-header-value1, request-header-value2, ...
+```
+
+The following is an example of request headers:
+
+```
+Host: myhouse.cisco.com
+Connection:  Keep-Alive
+Accept: image/gif, image/jpeg, */*
+Accept-language: us-en, fr, cn
+```
+
+&nbsp;
+
+### ***Response Headers***
+
+The response headers also appear as name:value pairs, as with request headers, multiple values can be specified as followings:
+
+```
+request-header-name: response-header-value1, response-header-value2
+```
+
+The following are some examples of response headers:
+
+```
+Content-Type: text/html
+Content-Length: 35
+Connection:  Keep-Alive
+Keep-Alive:  timeout=15, max=100
+The response message body contains the resource data requested.
+```
+
+&nbsp;
+
+The following are some examples of request and response headers:
+
+-   **Authorization**:  Carries credentials containing the authentication information of the client for the resource being requested.
+-   **WWW-Authenticate**:  This is sent by the server if it needs a form of authentication before it can response with the actual resource being requested.  It is often sent along with response code 401, which means "unauthorized".
+-   **Accept-Charset**:  This request header tells the server which character sets are acceptable by the client.
+-   **Content-Type**:  This header indicates the media type (text/HTML or application/JSON) of the client request sent to the server by the client, which help process the request body correctly.
+-  **Cache-Control**:  This header is the cache policy defined by the server.  For this response, a cached response can be stored by the client and reused until the time defined in the Cache-Control header.
+
+&nbsp;
+
+### ***Response Codes***
+
+The first line of a response message (that is, the status line) contains the response status code, which the server generates to indicate the outcome of the request.  Each status code is a three-digit number:
+
+-   1xx (informational):  The request was successfully received; the server is continuing the process.
+-   2xx (success):  The request was successfully received, understood, accepted, and serviced.
+-   3xx (redirection):  Further action must be taken to complete the request.
+-   4xx (client error):  The request cannot be understood or is unauthorized or the requested source could not be found.
+-   5xx (server error):  The server failed to fulfill the request.
+
+HTTP Status Codes
+
+| Status Code | Meaning | Explanation |
+| -- | -- | -- |
+| 100 | Continue | The server received the request and is in the process of giving the response. |
+| 200 | Okay | The request is fulfilled. |
+| 301 | Move permanently | The resource required has been permanently moved to a new location.  The URL of the new location is given in the Location response header.  The client should issue a new request to the new location, and the application should update all references to this new location. |
+| 302 | Found and redirected (or move temporarily) | This is the same as code 301, but the new location is temporary in nature.  The client should issue a new request, but applications need not update the reference. |
+| 304 | Not modified | In response to the if-modified-since conditional GET request, the server notifies that the resource request has not been modified. |
+| 400 | Bad request | The server could not interpret or understand the request; there is probably a syntax error in the request message. |
+| 401 | Authentication required | The requested resource is protected and requires the client's credentials (username and password).  The client should resubmit the request with the appropriate credentials (username and password). |
+| 403 | Forbidden | The server refuses to supply the resource, regardless of the identity of the client. |
+| 404 | Not found | The requested resource cannot be found on the server. |
+| 405 | Method not allowed | The requested method used (for example, POSt, PUT, DELETE) is a valid method.  However the server does not allowed that method for the resource requested.
+| 408 | Request timeout | The request sent to the server took longer than the website's server was prepared to wait. |
+| 414 | Request URI too large | The URI requested by the client is longer than the server is willing to interpret. |
+| 500 | Internal server error | The server is confused; this may be caused by an error in the server-side program responding to the request. |
+| 501 | Method not implemented | The request method used is invalid; this could be caused by a typing error, such as Get in place of GET. |
+| 502 | Bad gateway | The proxy or gateway indicates that it received a bad response from the upstream server. |
+| 503 | Service unavailable | The server cannot respond due to overloading or maintenance.  The client can try again later. |
+| 504 | Gateway timeout | The proxy or gateway indicates that it received a timeout from an upstream server.
+
+&nbsp;
+
+### ***XML***
+
+***Extensible Markup Language (XML)*** is a markup language that encodes information between descriptive tags.
+
+XML is a superset of Hypertext Markup Language (HTML)
+
+An entire XML document is stored as text, and it is both machine readable and human readable.
+
+With XML you can assign some meaning to the tags in the document.  You can extract the various attributes from the response by simply locating the content surrounded by <study_room> and </study_room>; this content is technically known as the <study_room> ***element***.
+
+XML Data Format:
+
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+    <home>this is my house</home>
+    <home>located in San Jose, CA</home>
+    <rooms>
+        <living_room>true</living_room>
+        <kitchen>false</kitchen>
+        <study_room>
+            <size>20x30</size>
+        </study_room>
+        <study_room>
+            <desk>true</desk>
+        </study_room>
+        <study_room>
+            <lights>On</lights>
+        </study_room>
+    </rooms>
+</root>
+```
+
+&nbsp;
+
+### ***JSON***
+
+***JavaScript Object Notation (JSON)*** format is derived from JavaScript object syntax, but it is entirely text based.  
+
+JSON is a key:value data format that is typically rendered with curl braces {} and square brackets [].
+
+A key/value pair has a colon (:) that separates the key from the value, and each such pair is separated by a comma in the document or the response.
+
+JSON ***keys*** are valid strings.  The value of a key is one of the following data types:
+
+-   **String**
+-   **Number**
+-   **Object**
+-   **Array**
+-   **Boolean (true or false)**
+-   **Null**
+
+```json
+{
+    "home": [
+        "this is my house",
+        "located in San Jose, CA"
+    ],
+    "rooms": {
+        "living_room": "true",
+        "kitchen": "false",
+        "study_room": [
+            {
+                "size": "20x30"
+            },
+            {
+                "desk": true
+            },
+            {
+                "lights": "On"
+            }
+        ]
+    }
+}
+```
+
+&nbsp;
+
+### ***YAML***
+
+YAML is an acronym that stands for "***YAML Ain't Markup Language***."
+
+YAML is a data serialization language.  It's a strict superset of JSON, another data serialization language.  But because it's a strict superset, it can do everything JSON can do and more.  One significant difference is that newlines and indentation means something in YAML, whereas JSON uses brackets and braces to convey similar ideas.  
+
+YAML uses three main data formats:
+
+-   **Scalars**:  The simplest is a *keyvalue* view.
+-   **Lists/sequences**:  Data can be ordered by indexes.
+-   **Dictionary mappings**:  These are similar to scalars but contain nested data, including other data types.
+
+YAML Data Format
+
+```yaml
+---
+home:
+  -  this is my house
+  -  located in San Jose, CA
+rooms:
+  living_room: 'true'
+  kitche: 'false'
+  study_room:
+  -  size: 20x30
+  -  desk: true
+  -  lights: 'On'
+```
+
+&nbsp;
+
+### ***Webhooks***
+
+Webhooks are user-defined HTTP callbacks.  
+
+A webhook is triggered by an event, such as pushing code to a repository or trying a keyword in a chat window.
+
+An application implementing webhooks sends a POSt message to a URL when a specific event happens.  
+
+Webhooks are also referred to as ***reverse APIs***, but more accurately a webhook lets you skip the request step in the request/response cycle.  Not request is required for a webhook, and a webhook sends data when triggered.
+
+&nbsp;
+
+For security reasons, the REST service may perform some validation to determine whether the receiver is valid.  A simple validation handshake performs validation, but this is just one way of validating.
+
+&nbsp;
+
+The validation token is a unique token specified by the server.
+
+Validation tokens can be generated or revoked on the server side through the configuration UI.  
+
+When the server sends data to a webhook URL, it includes a validation token in the request HTTP header.  The webhook URL should consist of the same validation token value in the HTTP response header.  This way, the server knows that it is sending to a validate endpoint and not a rogue endpoint.
+
+&nbsp;
+
+### ***Tools Used When Developing Webhooks***
+
+&nbsp;
+
+### ***Sequence Diagrams***
+
+A sequence diagram models the interaction between various objects in a single use case.  It illustrates how the different parts of a system interact with each other to carry out a function and the order in which the interactions occur when a particular use case is executed.
+
+In simpler terms, a sequence diagram shows how different parts of a system work in a sequence together to get something done.
+
+&nbsp;
+
+### ***REST Constraints***
+
+REST defines six architectural constraints, also known as Fielding's constraints, that make any web service a truly RESTful API.
+
+-   ***Client/server***
+-   ***Stateless***
+-   ***Cache***
+-   ***Uniform interface***
+-   ***Layered system***
+-   ***Code on demand***
+
+&nbsp;
+
+### ***Client/Server***
+
+The client and server exist independently.  They must have no dependency of any sort on each other.  The only information needed is for the client to know the source URIs on the server.  The interaction between them is only in the form of request initiated by the client and response that the server sends to the client in response to the requests.  The client/server constraint encourage separation of concerns between the client and the server and allows them to evolve independently.
+
+&nbsp;
+
+### ***Stateless***
+
+REST services have to be stateless.  Each individual request contains all the information the server needs to perform the request and return a response, regardless of other requested made by the same API user.  The server should not need any additional information from previous requests to fulfill the current request.  The URI identifies the resource, and the body contains the state of the resource.  A stateless service is easy to scale horizontally, allowing additional servers to be added or removed as necessary without worry about routing subsequent requests to the same server.  The server can be further load balanced as necessary.
+
+&nbsp;
+
+### ***Cache***
+
+With REST services, response data must be implicitly or explicitly labeled as cacheable or non-cacheable.  The service indicates the duration for which the response is valid.  Caching helps improve performance on the client side and capability on the server side.  If the client has access to a valid cached response for a given request, it avoids repeating the same request.  Instead, it uses its cached copy.  This helps alleviate some of the server's work and thus contributes to scalability and performance.
+
+> Note
+> <br>
+> GET requests should be cacheable by default.  Usually browsers treat all GET requests as cacheable.
+> <br>
+> POST requests are not cacheable by default but can be made cacheable by adding either an Expires header or a Cache-Control header to the response.
+> <br>
+> PUT and DELETE are not cacheable at all.
+
+&nbsp;
+
+### ***Unform Interface***
+
+The uniform interface is a contract for communication between a client and a server.  It is achieved through four subconstraints:
+
+-  **Identification of resources**:  Resources are uniquely identified by URIs.  These identifies are stable and do not change across interactions, even when the resource state changes.
+-  **Manipulation of resource through representation**:  A client manipulates resources by sending new representations of the resource to the service.  The server controls the resource representation and can accept or reject the new resource representation sent by the client.
+-  **Self-descriptive messages**:  REST request and response messages contain all information needed for the service and the client to interpret the message and handle it appropriately.  The messages are quite verbose and include the method, the protocol use, and the content type.  This enables each message to be independent.
+-  **Hypermedia as the Engine of Application State (HATEOS)**:  Hypermedia connects resources to each other and describes their capabilities in machine-readable ways.  Hypermedia refers to the hyperlinks, or simply links, that the server can include in the response.  Hypermedia is a way for the server to tell a client what HTTP requests the client might want to take in the future.
+
+&nbsp;
+
+### ***Layered System***
+
+A layered system further builds on the concept of client/server architecture.  A layered system indicates that there can be more components than just the client and the server, and each system can have additional layers in it.  These layers should be easy to add, remove, or change.  Proxies, load balancers, and so on are examples of additional layers.
+
+&nbsp;
+
+### ***Code on Demand***
+
+Code on demand is an optional constraint that gives the client flexibility by allowing it to download code.  The client can request code from the server, and the response from the server will contain some code, usually in the form of a script, when the response is in HTML format.  The client can then execute that code.
+
+&nbsp;
+
+### ***REST API Versioning***
+
+Versioning is a crucial part of API design.  It gives developers the ability to improve an API without breaking the client's applications when new updates are rolled out.  Four strategies are commonly employed with API versioning:
+
+-   **URI path versioning**:  In this strategy, the version number of the API is included in the URL path.
+-   **Query parameter versioning**:  In this strategy, the version number is sent as a query parameter in the URL.
+-   **Custom headers**:  REST APIs are versioned by providing custom headers with the version number included as an attribute.  The main difference between this approach and the previous ones is that it doesn't clutter the URI with versioning information.
+-   **Content negotiations**:  This strategy allows you to version a single resource representation instead of versioning an entire API, which means it gives you more granular control over versioning.  Another advantage of this approach is that it doesn't require you to implement URI routing rules, which are introduced by versioning through the URI path.
+
+&nbsp;
+
+### ***Pagination***
+
+There are two popular approaches to pagination:
+
+-   **Offset-based pagination**
+-   **Keyset-based pagination**, also known as *continuation token* or *cursor pagination* (recommended)
+
+A simple approach to offset-based pagination is to use the parameters **offset** and **limit**:
+
+*Pagination:  Offset and Limit*
+```python
+http://myhouse.cisco.com/api/room/livingroom/devices?offset=100&limit=15
+# returns the devices between 100-115
+```
+
+Usually if the parameters are not specified, the default values are used.  Never return all resources.
+
+&nbsp;
+
+### ***Rate Limiting and Monetization***
+
+Rate-limiting techniques are used to increase security, business impact, and efficiency across the board or end to end.  
+
+-   Security:  Open access can decrease value and limit business success.  Rate limiting is a crucial component of an API's scalability.  Processing limits are typically measured in transactions per second (TPS).  If a user sends too many requests, API rate limiting can throttle client connections instead of disconnecting them immediately.  Throttling enables clients to keep using your service while still protecting your API.  Finally, there is always a risk of API requests timing out, and the open connections also increase the risk of DDoS attacks.
+-   Business impact:  One approach to API rate limiting is to offer a free tier and a premium tier, with different limits for each tier.  Limits could be in terms of sessions or in terms of numbers of APIs per day or per month.  there are many factors to consider when deciding what to charge for premium API access.  API providers need to consider the following when setting up API rate limits:
+    -   Are requested throttled when they exceed the limit?
+    -   Do new calls and requests incur additional fees?
+    -   Do new calls and requests receive a particular error code, and if so, which one?
+-   Efficiency:  Unregulated API requests usually and eventually lead to slow page load times for websites.
+
+&nbsp;
+
+### ***Rate Limiting on the Client Side***
+
+If you are writing client-side code, consider the following:
+
+-   Avoid constant polling by using webhooks to trigger updates.
+-   Cache your own data when you need to store specialized values or rapidly review very large data sets.
+-   Query with special filters to avoid re-polling unmodified data.
+-   Download data during off-peak hours.
+
+&nbsp;
+
+##  **REST Tools**
+
+&nbsp;
+
+### ***Postman***
+
+&nbsp;
+
+### ***curl***
+
+curl is an extensive command-line tool.
+
+Commonly used command-line options:
+
+-   **-d**:  This option allows you to pass data to the remote server.  You can either embed the data in the command or pass the data using a file.
+-   **-H**:  This option allows you to add an HTTP header to the request.
+-   **-insecure**:  This option tells curl to ignore HTTPTs certification validation.
+-   **-c**:  This option stores data received by the server.  You can reuse this data in subsequent commands with the -b option.
+-   **-b**:  This option allows you to pass cookie data.
+-   **-X**:  This option allows you to specify the HTTP method, which normally defaults to GET.
+
+&nbsp;
+
+### ***HTTPie***
+
+HTTPie is a command-line HTTP client written in Python.
+
+HTTPie is used primarily for testing, trouble-free debugging, and interacting with HTTP servers, web services, and RESTful APIs.
+
+&nbsp;
+
+### ***Python Requests***
+
+Requests is a Python module that you can use to send HTTP requests.
+
+You can use Requests with Python version 2.7 and 3.x.  
+
+Requests is an external module, so it needs to be installed before you can use it:
+
+```$ pip install requests```
+
+To add HTTP headers to a request, you can simply pass them in a Python dict to the headers parameter.  Similarly, you can send your own cookies to a server by using a dict passed to the cookies parameter.
+
+*Simple HTTP GET Using Python Requests*
+
+```python
+import requests
+
+url = "https://postman-echo.com/get"
+querystring = {"test":"123"}
+headers = {}
+
+response = requests.request("GET", url, headers=headers, params=querystring)
+print(response.text)
+```
+
+*Simple HTTP POST Using Python Requests*
+
+```python
+import requests
+
+url = "https://postman-echo.com/post"
+payload = "hello DevNet"
+headers = {'content-type': 'text/plain'}
+
+response = requests.request("POST", url, data=payload, headers=headers)
+print(response.text)
+```
+
+With the Requests library, authentication is usually done by passing the 'authorization' keyword along with the type key.
+
+*Basic Auth Using Python Requests*
+
+```python
+import requests
+
+url = "https://postman-echo.com/basic-auth"
+headers = {
+    'authorization': "Basic cG9zdG1hbjpwYXNzd29yZA=="
+}
+
+response = requests.request("GET", url, headers=headers)
+print(response.text)
+```
+
+&nbsp;
+
+### ***REST API Debugging Tools for Developing APIs***
+

@@ -38,7 +38,7 @@
                 <br />csv_writer.writerow(data)
             <li>with open("text.csv", "a") as filehandle:
                 <br />csv_writer = csv.writer(filehandle)
-                <br />csv_writerow(data)
+                <br />csv_writer.writerow(data)
             <li>with open("text.csv", "a") as filehandle:
                 <br />csv_writer = csv.writer(f)
                 <br />csv_writer.writerow(data)

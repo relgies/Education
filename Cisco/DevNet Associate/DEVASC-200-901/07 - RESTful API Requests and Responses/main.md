@@ -52,7 +52,7 @@ Figure 7-3 *Information API Providing Information or Analysis of Data That Has B
 
 &nbsp;
 
--   Hardware API:  Application developers use hardware APIs to gain access to the features of hardware devices.  Usually these APIs encompass some kind of hardware or sensors, and an application can call this kind of API to get the GPS location or real-time sensor data such as temperature or humidity.  Figure 7-4 provides a visual representation of what a hardware API does.
+-   **Hardware API**:  Application developers use hardware APIs to gain access to the features of hardware devices.  Usually these APIs encompass some kind of hardware or sensors, and an application can call this kind of API to get the GPS location or real-time sensor data such as temperature or humidity.  Figure 7-4 provides a visual representation of what a hardware API does.
 
 &nbsp;
 
@@ -209,7 +209,7 @@ As you have seen, REST is an architectural paradigm that allows developers to bu
 
 &nbsp;
 
-GET is the most common HTTP request method.  A client can use the GET request method to request (or "get") a resource from an HTTP server.  GET requests, which have special qualities, fetch information, and that's it; they have no side effects, make no modifications ot the system, create nothing, and destroy nothing.  GET requests should, in other words, be safe and idempotent.  (Idempotent means that no matter how many times you perform an action, the state of the system you're dealing with remains the same.)
+GET is the most common HTTP request method.  A client can use the GET request method to request (or "get") a resource from an HTTP server.  GET requests, which have special qualities, fetch information, and that's it; they have no side effects, make no modifications to the system, create nothing, and destroy nothing.  GET requests should, in other words, be safe and idempotent.  (Idempotent means that no matter how many times you perform an action, the state of the system you're dealing with remains the same.)
 
 &nbsp;
 
@@ -239,7 +239,7 @@ A GET request message has the following components, as shown in Figure 7-8.
 
 &nbsp;
 
-The POST request method is used to post additional data to the server (for example, submitting HTML form data or uploading a file).  Issuing an HTTP URL from the browser always triggers a GET request.  To trigger a POST request, you can use an HTML form with attribute method="post" or write your own code.  For submitting HTML form data, the POSt request is the same as the GET request except that the URL-encoded query string is sent in the request body rather than appended behind the URI.
+The POST request method is used to post additional data to the server (for example, submitting HTML form data or uploading a file).  Issuing an HTTP URL from the browser always triggers a GET request.  To trigger a POST request, you can use an HTML form with attribute method="post" or write your own code.  For submitting HTML form data, the POST request is the same as the GET request except that the URL-encoded query string is sent in the request body rather than appended behind the URI.
 
 &nbsp;
 
@@ -388,14 +388,14 @@ Table 7-4 HTTP Status Codes
 | 100 | Continue | The server received the request and is in the process of giving the response. |
 | 200 | Okay | The request is fulfilled. |
 | 301 | Move permanently | The resource requested has been permanently moved to a new location.  The URL of the new location is given in the Location response header.  The client should issue a new request to the new location, and the application should update all references to this new location. |
-| 302 | Found and redirected (or move temporarily) | This is the same as code 301, but the new location is temporary in mature.  The client should issue a new request, but applications need not update the references. | 
+| 302 | Found and redirected (or move temporarily) | This is the same as code 301, but the new location is temporary in nature.  The client should issue a new request, but applications need not update the references. | 
 | 304 | Not modified | In response to the if-modified-since conditional GET request, the server notifies that the resource requested has not been modified. |
 | 400 | Bad request | The server could not interpret or understand the request; there is probably a syntax error in the request message. |
 | 401 | Authentication required | The requested resource is protected and requires the client's credentials (username and password).  The client should resubmit the request with the appropriate credentials (username and password). |
 | 403 | Forbidden | The server refuses to supply the resource, regardless of the identity of the client. |
 | 404 | Not found | The requested resource cannot be found on the server. |
-| 405 | Method not allowed | THe requested method used (for example, POST, PUT, DELETE) is a valid method.  However the server does not allow that method for the resource requested. |
-| 408 | Request timeout | THe request sent to the server took longer than the website's server was prepared to wait. |
+| 405 | Method not allowed | The requested method used (for example, POST, PUT, DELETE) is a valid method.  However the server does not allow that method for the resource requested. |
+| 408 | Request timeout | The request sent to the server took longer than the website's server was prepared to wait. |
 | 414 | Request URI too large | The URI requested by the client is longer than the server is willing to interpret. |
 | 500 | Internal server error | The server is confused;  this may be caused by an error in the server-side program responding to the request. |
 | 501 | Method not implemented | The request method used is invalid; this could be caused by a typing error, such as Get in place of GET. |
@@ -511,7 +511,7 @@ Example 7-2 shows a sample JSON response document, and you can see the full resp
 
 &nbsp;
 
-YAML is a data serialization language designed for human interaction.  It's a strict superset of JSON, another data serialization language.  But because it's a strict superset, it can do everything that JSON cna do and more.  One significant difference is that newlines and indentation mean something in YAML, whereas JSON uses brackets and braces to convey similar ideas.  YAML uses three main data formats:
+YAML is a data serialization language designed for human interaction.  It's a strict superset of JSON, another data serialization language.  But because it's a strict superset, it can do everything that JSON can do and more.  One significant difference is that newlines and indentation mean something in YAML, whereas JSON uses brackets and braces to convey similar ideas.  YAML uses three main data formats:
 
 -   **Scalars**:  The simplest is a *keyvalue* view.
 -   **Lists/sequences**:  Data can be ordered by indexes.
@@ -588,7 +588,7 @@ Figure 7-11 is a sequence diagram for the example we've been looking at, where a
 
 The sequence of events that occur is as follows:
 
--   The client browser points to httpL//myhouse.cisco.com/ (the HTTP GET request sent), which is the web application.
+-   The client browser points to http://myhouse.cisco.com/ (the HTTP GET request sent), which is the web application.
 -   The server sends out a REST API request to get all the rooms of the back-end service (/API/getallrooms) to get all the details of the house.
 -   The back-end API service returns data in JSON format.
 -   The web application processes the JSON and renders the data in the user interface.
@@ -621,7 +621,7 @@ The following sections discuss these constraints in some detail.
 
 &nbsp;
 
-The client and server exist independently.  They must haven o dependency of any sort on each other.  The only information needed is for the client to know the source URIs on teh server.  The interaction between them is only in the form of requests initiated by the client and responses that the server sends to the client in response to the requests.  The client/server constraint encourages separation of concerns between the client and the server and allows them to evolve independently.
+The client and server exist independently.  They must haven no dependency of any sort on each other.  The only information needed is for the client to know the source URIs on the server.  The interaction between them is only in the form of requests initiated by the client and responses that the server sends to the client in response to the requests.  The client/server constraint encourages separation of concerns between the client and the server and allows them to evolve independently.
 
 &nbsp;
 
@@ -629,7 +629,7 @@ The client and server exist independently.  They must haven o dependency of any 
 
 &nbsp;
 
-REST services have to be stateless.  each individual request contains all the information the server needs to perform the request and return a response, regardless of other requests made by the same API user.  The server should not need any additional information from previous requests to fulfill the current request.  The URI identifies the resource, and the body contains the state of the resource.  A stateless service is easy to scale horizontally, allowing additional servers to be added or removed as necessary without worry about routing subsequent requests to the same server.  The servers can be further load balanced as necessary.
+REST services have to be stateless.  Each individual request contains all the information the server needs to perform the request and return a response, regardless of other requests made by the same API user.  The server should not need any additional information from previous requests to fulfill the current request.  The URI identifies the resource, and the body contains the state of the resource.  A stateless service is easy to scale horizontally, allowing additional servers to be added or removed as necessary without worry about routing subsequent requests to the same server.  The servers can be further load balanced as necessary.
 
 &nbsp;
 
@@ -637,7 +637,7 @@ REST services have to be stateless.  each individual request contains all the in
 
 &nbsp;
 
-With REST services, response data must be implicitly or explicitly labeled as cacheable or non-cacheable.  The service indicates the duration for which the response is valid.  Caching helps improve performance on the client side ans capability on the server side.   If the client has access to a valid cached response for a given request, it avoids repeating the same request.  Instead, it uses its cached copy.  This helps alleviate some of the server's work and thus contributes to scalability and performance.
+With REST services, response data must be implicitly or explicitly labeled as cacheable or non-cacheable.  The service indicates the duration for which the response is valid.  Caching helps improve performance on the client side and capability on the server side.   If the client has access to a valid cached response for a given request, it avoids repeating the same request.  Instead, it uses its cached copy.  This helps alleviate some of the server's work and thus contributes to scalability and performance.
 
 &nbsp;
 
@@ -657,8 +657,8 @@ With REST services, response data must be implicitly or explicitly labeled as ca
 
 The uniform interface is a contract for communication between a client and a server.  It is achieved through four subconstraints:
 
--   **Identification of resources**:  As we saw earlier in the chapter, resources are uniquely identified by URIs.  THese identifiers are stable and do not change across interactions, even when the resource state changes.
--   **Manipulation of resource through representations**:  A client manipulates resources by sending new representations of the resource to the service.  THe server controls the resource representation and can accept or reject the new resource representation sent by the client.
+-   **Identification of resources**:  As we saw earlier in the chapter, resources are uniquely identified by URIs.  These identifiers are stable and do not change across interactions, even when the resource state changes.
+-   **Manipulation of resource through representations**:  A client manipulates resources by sending new representations of the resource to the service.  The server controls the resource representation and can accept or reject the new resource representation sent by the client.
 -   **Self-descriptive messages**:  REST request and response messages contain all information needed for the service and the client to interpret the message and handle it appropriately.  The messages are quite verbose and include the method, the protocol used, and the content type.  This enables each message to be independent.
 -   **Hypermedia as the Engine of Application State (HATEOS)**:  Hypermedia connects resources to each other and describes their capabilities in machine-readable ways.  Hypermedia refers to the hyperlinks, or simply links, that the server can include in the response.  Hypermedia is a way for the server to tell a client what HTTP requests the client might want to make in the future.
 
