@@ -114,7 +114,7 @@ The Meraki APIs covered so far are mostly used to extra data from the cloud plat
 
 &nbsp;
 
-To get access to the Dashboard API, you first need to enable it.  Begin by logging into the Cisco Meraki dashboard at https://dashobaord.meraki.com using your favorite web browser and navigating to Organization > Settings.  From there, scroll down and locate the section named Dashboard API Access and make sure you select Enable Access and save the configuration changes at the bottom of the page.  Once you have enabled the API, select your username at the top-right corner of the web page and select My Profile.  In your profile, scroll down and locate the section named Dashboard API Access and select Generate New API Key.  The API key you generate is associated with your account.  You can generate, revoke, and regenerate your API key in your profile.  Make sure you copy and store your API key in a safe place, as whoever has this key can impersonate you and get access through the Dashboard API to all the information your account has access to.  For security reasons, the API key is not stored in plaintext in your profile, so if you lose the key, you will have to revoke the old one and generate a new one.  If you believe that your API key has been compromised, you can generate a new one to automatically revoke the existing API key.  
+To get access to the Dashboard API, you first need to enable it.  Begin by logging into the Cisco Meraki dashboard at https://dashboard.meraki.com using your favorite web browser and navigating to Organization > Settings.  From there, scroll down and locate the section named Dashboard API Access and make sure you select Enable Access and save the configuration changes at the bottom of the page.  Once you have enabled the API, select your username at the top-right corner of the web page and select My Profile.  In your profile, scroll down and locate the section named Dashboard API Access and select Generate New API Key.  The API key you generate is associated with your account.  You can generate, revoke, and regenerate your API key in your profile.  Make sure you copy and store your API key in a safe place, as whoever has this key can impersonate you and get access through the Dashboard API to all the information your account has access to.  For security reasons, the API key is not stored in plaintext in your profile, so if you lose the key, you will have to revoke the old one and generate a new one.  If you believe that your API key has been compromised, you can generate a new one to automatically revoke the existing API key.  
 
 &nbsp;
 
@@ -122,7 +122,7 @@ Every Dashboard API request must specify an API key within the request header.  
 
 &nbsp;
 
-The key for the authentication request header is **X-Cisco-Meraki-API-Key**, and the value is the API key oyu obtained previously.
+The key for the authentication request header is **X-Cisco-Meraki-API-Key**, and the value is the API key you obtained previously.
 
 &nbsp;
 
@@ -134,7 +134,7 @@ The Cisco Meraki Dashboard API uses the base URL **https://api.meraki.com/api/v0
 
 &nbsp;
 
-To make it easier for people to become comfortable with the Meraki platform, the Dashboard API is organized to mirror the structure of the Meraki dashboard.  WHen you become familiar with either the API or the GUI, it should be easy to switch between them.  The hierarchy of the Dashboard API looks as follows:
+To make it easier for people to become comfortable with the Meraki platform, the Dashboard API is organized to mirror the structure of the Meraki dashboard.  When you become familiar with either the API or the GUI, it should be easy to switch between them.  The hierarchy of the Dashboard API looks as follows:
 
 -   Organizations
     -   Networks
@@ -213,7 +213,7 @@ Strict-Transport-Security: max-age=15552000; includeSubDomains
 
 &nbsp;
 
-You can see in Example 8-1 that the response code for the request is 302.  This indicates a redirect to the URL value in the Location header.  Redirects like the one in Example 8-1 can occur with any API call within the Dashboard API, including POST, PUT, and DELETE.  For GET calls, the redirect is specified through a 302 status code, and for any non-GET calls, the redirects are specified with 307 or 308 status codes.  When you specify the **-I** option for **curl**, only the headers of the response are displayed to the user.  At this point, you need to run the **curl** command again but this time specify the resource as https://n149.meraki.com/api/v0/organizations, remove the **-I** flag, and add a n Accept header to specify that the response to the call should be in JSON format.  The command should look like this.
+You can see in Example 8-1 that the response code for the request is 302.  This indicates a redirect to the URL value in the Location header.  Redirects like the one in Example 8-1 can occur with any API call within the Dashboard API, including POST, PUT, and DELETE.  For GET calls, the redirect is specified through a 302 status code, and for any non-GET calls, the redirects are specified with 307 or 308 status codes.  When you specify the **-I** option for **curl**, only the headers of the response are displayed to the user.  At this point, you need to run the **curl** command again but this time specify the resource as https://n149.meraki.com/api/v0/organizations, remove the **-I** flag, and add an Accept header to specify that the response to the call should be in JSON format.  The command should look like this.
 
 &nbsp;
 
@@ -245,7 +245,7 @@ The response in this case contains the Id of the DevNet Sandbox organization in 
 
 &nbsp;
 
-Now let's loo at how you can obtain the organization ID for the Cisco DevNet Sandbox Meraki account by using Postman.  As mentioned in Chapter 7, Postman is a popular tool used to explore APIs and create custom requests; it has extensive built-in support for different authentication mechanisms, headers, parameters, collections, environments, and so on.  By default Postman has the Automatically Follow Redirects option enabled in Settings, so you do not have to change the https://api.meraki.com/api/v0/organizations resource as it is already done in the background by Postman.  If you disable the Automatically Follow Redirects option in the Postman settings, you should see exactly the same behavior you just saw with **curl**.  Figure 8-1 shows the Postman client interface with all the fields (the method of the call, the resource URL, and the headers) populated so that the Cisco Meraki REST API returns all the organizations to which this account has access.
+Now let's look at how you can obtain the organization ID for the Cisco DevNet Sandbox Meraki account by using Postman.  As mentioned in Chapter 7, Postman is a popular tool used to explore APIs and create custom requests; it has extensive built-in support for different authentication mechanisms, headers, parameters, collections, environments, and so on.  By default Postman has the Automatically Follow Redirects option enabled in Settings, so you do not have to change the https://api.meraki.com/api/v0/organizations resource as it is already done in the background by Postman.  If you disable the Automatically Follow Redirects option in the Postman settings, you should see exactly the same behavior you just saw with **curl**.  Figure 8-1 shows the Postman client interface with all the fields (the method of the call, the resource URL, and the headers) populated so that the Cisco Meraki REST API returns all the organizations to which this account has access.
 
 &nbsp;
 
@@ -435,7 +435,7 @@ for NET in NETS:
 #Get a list of all the devices that are part of the Always On Network
 DEVICES = MERAKI.devices.get_network_devices("L_646829496481099586")
 for DEVICE in DEVICES: 
-    print("Device Model: {0:9s},Serial: {1:14s},MAC: {2:17}, Firmware:3:12s}"\
+    print("Device Model: {0:9s},Serial: {1:14s},MAC: {2:17}, Firmware:{3:12s}"\
         .format(DEVICE['model'], DEVICE['serial'], \
             DEVICE['mac'], DEVICE['firmware']))
 ```
@@ -462,7 +462,7 @@ Finally, you get the list of devices that are part of the networks and have the 
 
 &nbsp;
 
-Cisco Digital NEtwork Architecture (DNA) is an open, extensible, software-driven architecture from Cisco that accelerates and simplifies enterprise network operations.  Behind this new architecture is the concept of intent-based networking, a new era in networking, in which the network becomes an integral and differentiating part of the business.  With Cisco DNA and the products behind it, network administrators define business intents that get mapped into infrastructure configurations by a central SDN controller.  In the future, an intent-based network will dynamically adjust itself based on what it continuously learns from the traffic it transports as well as the business inputs it gets from the administrator.
+Cisco Digital Network Architecture (DNA) is an open, extensible, software-driven architecture from Cisco that accelerates and simplifies enterprise network operations.  Behind this new architecture is the concept of intent-based networking, a new era in networking, in which the network becomes an integral and differentiating part of the business.  With Cisco DNA and the products behind it, network administrators define business intents that get mapped into infrastructure configurations by a central SDN controller.  In the future, an intent-based network will dynamically adjust itself based on what it continuously learns from the traffic it transports as well as the business inputs it gets from the administrator.
 
 &nbsp;
 
@@ -517,9 +517,9 @@ Next, let's focus on the Cisco DNA Center Platform Intent API.  As of this writi
 -   **Operational Tools category**:  This category includes APIs for the most commonly used tools in the Cisco DNA Center toolbelt:
     -   The Command Runner API enables the retrieval of all valid keywords that Command Runner accepts and allows you to run read-only commands on devices to get their real-time configuration.
     -   The Network Discovery API provides access to the discovery functionalities of Cisco DNA Center.  You can use this API to create, update, delete, and manage network discoveries and the credentials needed for them.  You can also retrieve network discoveries, network devices that were discovered as part of a specific network discovery task, and credentials associated with these discoveries.
-    -   The Temple Programmer API can be used to manage configuration templates.  You can create , view, edit, delete, version, add commands, check contents for errors, deploy, and check the status of template deployments.
-    -   The Path Trace API provides access to the Path Trace application in Cisco DNA Center.  Path Trace can be used to troubleshoot and trace application paths throughout the network and provide statistics at each hop.  The API gives you access to initiating,retrieving, and deleting path traces.
-    -   The File API enables you to retrieve files such as digital certificates, maps, and SWIM files fromm Cisco DNA Center.
+    -   The Temple Programmer API can be used to manage configuration templates.  You can create, view, edit, delete, version, add commands, check contents for errors, deploy, and check the status of template deployments.
+    -   The Path Trace API provides access to the Path Trace application in Cisco DNA Center.  Path Trace can be used to troubleshoot and trace application paths throughout the network and provide statistics at each hop.  The API gives you access to initiating, retrieving, and deleting path traces.
+    -   The File API enables you to retrieve files such as digital certificates, maps, and SWIM files from Cisco DNA Center.
     -   The Task API provides information about the network action that are being run asynchronously.  Each of the se background actions can take from seconds to minutes to complete, and each has a task associated with it.  You can query the Task API about the completion status of these tasks, get the task tree, retrieve tasks by their IDs, and so on.
     -   The Tag API gives you the option of creating, updating, and deleting tags as well as assigning tags to specific devices.  Tags are very useful in Cisco DNA Center; they are used extensively to group devices by different criteria.  You can then apply policies and provision and filter these groups of devices.
 
@@ -533,7 +533,7 @@ So in this section, we've covered all the APIs and the multivendor SDK offered b
 
 &nbsp;
 
-In Cisco DNA Center version 1.3, the REST API is not enabled by default.  Therefore, you need to log in to DNA Center with a super-admin role account, navigate to Platform > MAnagement > Bundles, and enable the DNA Center REST API bundle.  The status of the bundle should be active.
+In Cisco DNA Center version 1.3, the REST API is not enabled by default.  Therefore, you need to log in to DNA Center with a super-admin role account, navigate to Platform > Management > Bundles, and enable the DNA Center REST API bundle.  The status of the bundle should be active.
 
 &nbsp;
 
@@ -548,7 +548,7 @@ Next, you will use **curl**, a command-line tool that is useful in testing REST 
 ```
 curl -X POST \
     https://sandboxdnac2.cisco.com/dna/system/api/v1/auth/token \
-    -H 'Authorization: Basic ZGV2- bmV0dXNlcjpDaXNjbzEyMyE=
+    -H 'Authorization: Basic ZGV2bmV0dXNlcjpDaXNjbzEyMyE='
 ```
 
 &nbsp;
@@ -804,7 +804,7 @@ First, this example imports the **api** class from **dnacentersdk**.  Next, it i
 
 &nbsp;
 
-Cisco SD-WAN (Software-DEfined Wide Area Network) is a cloud-first architecture for deploying WAN connectivity.  Wide-area networks have been deployed for a long time, and many lessons and best practices have been elarned throughout the years.  Applying all these lessons to software-defined networking (SDN) resulted in the creation of Cisco SD-WAN.  An important feature of SDN is the separation of the control plane from the data plane.
+Cisco SD-WAN (Software-Defined Wide Area Network) is a cloud-first architecture for deploying WAN connectivity.  Wide-area networks have been deployed for a long time, and many lessons and best practices have been elarned throughout the years.  Applying all these lessons to software-defined networking (SDN) resulted in the creation of Cisco SD-WAN.  An important feature of SDN is the separation of the control plane from the data plane.
 
 &nbsp;
 
@@ -820,7 +820,7 @@ Historically, the control plane and data plane were part of the network device a
 
 &nbsp;
 
-SDM separates the functionality of the control plane and data plane in different devices, and several benefits result.  First, the cost of the resulting network should be lower as not all network devices have to implement expensive software and hardware features to accommodate both a control plane and data plane.  The expensive intelligence from the control plane is constrained to a few devices that become the brains of the network, and the data plane is built with cheaper devices that implement only fast forwarding.  Second, the convergence of this new network, which is the amount of time it takes for all devices to agree on a consistent view of the network, should be much lower than in the case of the non-SDN architectures of the past.  In networks of similar sizes, the ones built with network devices that implement both the control plane and the data plane in their architecture take much longer to exchange all thet information needed to forward data traffic than do the networks that implement separate control and data plane functionality in their architecture.  Depending on the size of a network, this could mean waiting for thousands of devices to exchange information through their control plane protocols and settle on a certain view of the network or wait for tens of SDN controllers to accomplish the same task; the convergence time improvements are massive.
+SDN separates the functionality of the control plane and data plane in different devices, and several benefits result.  First, the cost of the resulting network should be lower as not all network devices have to implement expensive software and hardware features to accommodate both a control plane and data plane.  The expensive intelligence from the control plane is constrained to a few devices that become the brains of the network, and the data plane is built with cheaper devices that implement only fast forwarding.  Second, the convergence of this new network, which is the amount of time it takes for all devices to agree on a consistent view of the network, should be much lower than in the case of the non-SDN architectures of the past.  In networks of similar sizes, the ones built with network devices that implement both the control plane and the data plane in their architecture take much longer to exchange all thet information needed to forward data traffic than do the networks that implement separate control and data plane functionality in their architecture.  Depending on the size of a network, this could mean waiting for thousands of devices to exchange information through their control plane protocols and settle on a certain view of the network or wait for tens of SDN controllers to accomplish the same task; the convergence time improvements are massive.
 
 &nbsp;
 

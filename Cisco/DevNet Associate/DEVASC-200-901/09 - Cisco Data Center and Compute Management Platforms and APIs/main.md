@@ -59,7 +59,7 @@ The configuration of the ACI fabric is stored in the APIC using an object-orient
 
 &nbsp;
 
-Each of the switches contains a complete copy of the concrete model.  When a policy that represents a configuration is created in the APIC, the controller updates the logical model.  It then performs the intermediate step of creating a complete policy that it pushes into all the switches, where the concrete model is updated.  The Cisco Nexus 9000 switches can only execute the concrete model when running in ACI mode.  Each switch has a copy of the concrete model.  If by any chance, all the PAIC controllers in a cluster go offline, the fabric keeps functioning, but modifications to the fabric policies are not possible.
+Each of the switches contains a complete copy of the concrete model.  When a policy that represents a configuration is created in the APIC, the controller updates the logical model.  It then performs the intermediate step of creating a complete policy that it pushes into all the switches, where the concrete model is updated.  The Cisco Nexus 9000 switches can only execute the concrete model when running in ACI mode.  Each switch has a copy of the concrete model.  If by any chance, all the APIC controllers in a cluster go offline, the fabric keeps functioning, but modifications to the fabric policies are not possible.
 
 &nbsp;
 
@@ -84,7 +84,7 @@ The MIT hierarchical structure starts at the top with the root object and contai
     -   **Infra**:  The infra tenant is provided by the system and can be configured by the fabric administrator.  It contains policies that manage the operation of infrastructure resources.
     -   **Management**:  The management tenant is provided by the system and can be configured by the fabric administrator.  This tenant contains policies and resources for in-band and out-of-band configuration of fabric nodes.
 -   **Access policies**:  These policies control the operation of leaf switch access ports, which provide fabric connectivity to resources such as virtual machine hypervisors, compute devices, storage devices, and so on.  Several access policies come built in with the ACI fabric by default.  The fabric administrator can tweak these policies or create new ones, as necessary.
--   **Fabric policies**:  These policies control the operation of the switch fabric ports.  Configurations for time synchronization, routing protocol,s and domain name resolution are managed with these policies.
+-   **Fabric policies**:  These policies control the operation of the switch fabric ports.  Configurations for time synchronization, routing protocols, and domain name resolution are managed with these policies.
 -   **VM domains**:  Virtual machine (VM) domain group virtual machine controllers that require similar networking policies configurations.  The APIC communicates with the VM controller to push network configurations all the way to the VM level.
 -   **Integration automation framework**:  The Layer 4 to Layer 7 service integration automation framework enables a system to respond to services coming online or going offline.
 -   **AAA policies**:  Access, authentication, and account (AAA) policies control user privileges, roles, and security for the ACI fabric.
@@ -117,7 +117,7 @@ Tenants are top-level MOs that identify and separate administrative control, app
 
 &nbsp;
 
-The tenant networking objects provide Layer 2 and Layer 33 connectivity between the endpoints and consist of the following constructs: VRF (virtual routing and forwarding) instances, bridge domains, subnets, and external networks.  Figure 0-5 displays in more details how the tenant networking constructs are organized.
+The tenant networking objects provide Layer 2 and Layer 3 connectivity between the endpoints and consist of the following constructs: VRF (virtual routing and forwarding) instances, bridge domains, subnets, and external networks.  Figure 0-5 displays in more details how the tenant networking constructs are organized.
 
 &nbsp;
 
@@ -173,7 +173,7 @@ The EPG is the most important object in the policy model.  An EPG is a collectio
 
 &nbsp;
 
-Contracts define the policies and services that get applied to EPGs.  Contracts can be used for redirecting service to a Layer 4 to Layer 7 device, assigning QoS values, and controlling the traffic flow between EPGs.  EPGs can only communicate with other EPGs based on contract rules.  Contracts specify the protocols and ports allowed between EPGs.  EPGs can only communicate with other EPgs based on contract rules.  Contracts specify the protocols and ports allowed between EPGs.  If there is no contract, inter-EPG communication is disabled by default.  For intra-EPG communication, no contract is required as this traffic is always allowed by default.  The relationship between an EPG and a contract can be either a consumer or a provider.  EPG providers expose contracts with which a consumer EPG must comply.  When an EPG consumes a contract, the endpoints in the consuming EPG cna initiate communication with any endpoint from the provider EPG.  Figure 9-7 displays this contractual relationship between providing and consuming EPGs.
+Contracts define the policies and services that get applied to EPGs.  Contracts can be used for redirecting service to a Layer 4 to Layer 7 device, assigning QoS values, and controlling the traffic flow between EPGs.  EPGs can only communicate with other EPGs based on contract rules.  Contracts specify the protocols and ports allowed between EPGs.  If there is no contract, inter-EPG communication is disabled by default.  For intra-EPG communication, no contract is required as this traffic is always allowed by default.  The relationship between an EPG and a contract can be either a consumer or a provider.  EPG providers expose contracts with which a consumer EPG must comply.  When an EPG consumes a contract, the endpoints in the consuming EPG cna initiate communication with any endpoint from the provider EPG.  Figure 9-7 displays this contractual relationship between providing and consuming EPGs.
 
 &nbsp;
 
@@ -218,7 +218,7 @@ APIC REST API username- and password-based authentication uses a special URI, in
 **Example 9-1** ***curl** Command for Cisco APIC Authentication*
 
 ```
-curl -k - X POST \
+curl -k -X POST \
     https://sandboxapicdc.cisco.com/api/aaaLogin.json \
     -d '{
         "aaaUser": {
@@ -227,7 +227,7 @@ curl -k - X POST \
                 "pwd": "ciscopsdt"
             }
         }
-    }
+    }'
 ```
 
 &nbsp;
@@ -276,7 +276,7 @@ The response to the POST operation contains an authentication token that will be
 
 &nbsp;
 
-Next, let's get a list of all the ACI fabrics that are being managed by this APIc instance.  The URI for this GET operation is `https://sandboxapicdc.cisco.com/api/node/class/fabricPod.json`, and the **APIC-cookie** header, is specified for authentication purposes.
+Next, let's get a list of all the ACI fabrics that are being managed by this APIC instance.  The URI for this GET operation is `https://sandboxapicdc.cisco.com/api/node/class/fabricPod.json`, and the **APIC-cookie** header, is specified for authentication purposes.
 
 &nbsp;
 
@@ -432,7 +432,7 @@ From the response, we can see that this ACI fabric is made up of four devices: a
 
 &nbsp;
 
-Asa of this writing, there are several tools and libraries available for Cisco ACI automation.  An ACI Python SDK called Cobra can be used for advanced development.  For basic day-to-day configuration and monitoring tasks and for getting started with ACI automation, there is also a Python library called **acitoolkit**.  The acitoolkit library exposes a subset of the APIC object model that covers the most common ACI workflows.
+As of this writing, there are several tools and libraries available for Cisco ACI automation.  An ACI Python SDK called Cobra can be used for advanced development.  For basic day-to-day configuration and monitoring tasks and for getting started with ACI automation, there is also a Python library called **acitoolkit**.  The acitoolkit library exposes a subset of the APIC object model that covers the most common ACI workflows.
 
 &nbsp;
 
@@ -477,7 +477,6 @@ for EP in ENDPOINTS:
         EP.ip,
         EP.encap,
         tenant.name,
- 
         app_profile.name,
         epg.name))
 ```
@@ -500,7 +499,7 @@ Cisco ***Unified Computing System (UCS)*** encompasses most of the Cisco compute
 
 &nbsp;
 
-Cisco UCS B-series blade servers, C-series rack servers, S-series storage servers, UCS Mini, and Cisco HyperFlex hyperconverged servers can all be managed through one interface: UCS Manager.  UCS Manager provides unified, embedded management of all software and hardware components of Cisco UCS.  Cisco UCS Manager software runs on a pair of hardware appliances called ***fabric interconnets***.  The two fabric interconnects from an active/standby cluster that provides high availability.  The UCS infrastructure that is being managed by UCS Manager forms a UCS fabric that can include up to 160 servers.  The system can scale to thousands of servers by integration individual UCS Manager instances with Cisco UCS Central in a multidomain Cisco UCS environment.
+Cisco UCS B-series blade servers, C-series rack servers, S-series storage servers, UCS Mini, and Cisco HyperFlex hyperconverged servers can all be managed through one interface: UCS Manager.  UCS Manager provides unified, embedded management of all software and hardware components of Cisco UCS.  Cisco UCS Manager software runs on a pair of hardware appliances called ***fabric interconnects***.  The two fabric interconnects from an active/standby cluster that provides high availability.  The UCS infrastructure that is being managed by UCS Manager forms a UCS fabric that can include up to 160 servers.  The system can scale to thousands of servers by integration individual UCS Manager instances with Cisco UCS Central in a multidomain Cisco UCS environment.
 
 &nbsp;
 
@@ -512,7 +511,7 @@ UCS Manager participates in the complete server lifecycle, including server prov
 
 &nbsp;
 
-All cisco UCS servers support Cisco SingleConnect technology.  Cisco SingleConnect is a revolutionary technology that supports all traffic from the servers (LAN, SAN, management, and so on) over a single physical link.  The savings that this technology brings only as part of the cabling simplification is orders of magnitude higher than competing products.
+All Cisco UCS servers support Cisco SingleConnect technology.  Cisco SingleConnect is a revolutionary technology that supports all traffic from the servers (LAN, SAN, management, and so on) over a single physical link.  The savings that this technology brings only as part of the cabling simplification is orders of magnitude higher than competing products.
 
 &nbsp;
 
@@ -532,7 +531,7 @@ The UCS Manager programmatic interface is the XML API.  The Cisco UCS Manager XM
 
 &nbsp;
 
-All the physical and logical components that make up Cisco UCS are represented in a hierarchical management information tree 9MIT), also known as the Management Information Model (MIM).  Each node in the tree represents a managed object (MO) or a group of objects that contain its administrative and operational states.  At the top of the hierarchical structure is the **sys** object, which contains all the parent and child nodes in the tree.  Each object in Cisco UCS has a unique distinguished name that describes the object and its place in the tree.  The information mode lis centrally stored and managed by a process running on the fabric interconnects that is called the ***Data Management Engine (DME)***.  When an administrative change is initiated to a Cisco UCS component, the DME first applies that change to the information mode and then applies the change to the actual management endpoint.  This approach is referred to as a ***model-drive framework***.
+All the physical and logical components that make up Cisco UCS are represented in a hierarchical management information tree (MIT), also known as the Management Information Model (MIM).  Each node in the tree represents a managed object (MO) or a group of objects that contain its administrative and operational states.  At the top of the hierarchical structure is the **sys** object, which contains all the parent and child nodes in the tree.  Each object in Cisco UCS has a unique distinguished name that describes the object and its place in the tree.  The information model is centrally stored and managed by a process running on the fabric interconnects that is called the ***Data Management Engine (DME)***.  When an administrative change is initiated to a Cisco UCS component, the DME first applies that change to the information mode and then applies the change to the actual management endpoint.  This approach is referred to as a ***model-drive framework***.
 
 &nbsp;
 
@@ -579,7 +578,7 @@ Since the query methods available with the XML API can return large sets of data
 
 &nbsp;
 
-External applications can get cisco UCS Manager state change information either by regular polling or by event subscription.  Full event subscription is supported with the API and is the preferred method of notification.  Polling usually consumes a lot of resources and should be used only in limited situations.
+External applications can get Cisco UCS Manager state change information either by regular polling or by event subscription.  Full event subscription is supported with the API and is the preferred method of notification.  Polling usually consumes a lot of resources and should be used only in limited situations.
 
 &nbsp;
 
@@ -617,7 +616,7 @@ curl -k -X https://10.10.20.110/nuova \
 
 &nbsp;
 
-The IP address of the Cisco UCS Manager is **10.10.20.110**, the XML API resource is **/nuova**, and the authentication method used is **aaaLogin***.  The username and password are passed in an XML document within the **inName** and **inPassword** variables.  In this case, both the username and password are **ucspe**.  The **Content-Type** header specifies the type of data that the **POST** call will send to the XML API (which is, of course, **XML** in this case).
+The IP address of the Cisco UCS Manager is **10.10.20.110**, the XML API resource is **/nuova**, and the authentication method used is **aaaLogin**.  The username and password are passed in an XML document within the **inName** and **inPassword** variables.  In this case, both the username and password are **ucspe**.  The **Content-Type** header specifies the type of data that the **POST** call will send to the XML API (which is, of course, **XML** in this case).
 
 &nbsp;
 
@@ -765,7 +764,7 @@ The Cisco UCS PowerTool suite is a PowerShell module that helps automate all asp
 
 &nbsp;
 
-Cisco UCS Python sDK is a Python module that helps automate all aspects of Cisco UCS management, including server, network, storage, and hypervisor management.  The Cisco UCS Python SDK works on the Cisco UCS Manager MIT, performing create, read, modify, or delete actions on the managed objects in the tree.  Python versions 2.7 and higher and version 3.5 and higher are supported.  The Cisco UCS Python module for UCS Manager is called **ucsmsdk** and can be installed using pip by issuing the following command at the command prompt: **pip install ucsmsdk**.  As of this writing, the current version of the ucsmsdk module is 0.9.8.
+Cisco UCS Python SDK is a Python module that helps automate all aspects of Cisco UCS management, including server, network, storage, and hypervisor management.  The Cisco UCS Python SDK works on the Cisco UCS Manager MIT, performing create, read, modify, or delete actions on the managed objects in the tree.  Python versions 2.7 and higher and version 3.5 and higher are supported.  The Cisco UCS Python module for UCS Manager is called **ucsmsdk** and can be installed using pip by issuing the following command at the command prompt: **pip install ucsmsdk**.  As of this writing, the current version of the ucsmsdk module is 0.9.8.
 
 &nbsp;
 
@@ -777,11 +776,11 @@ Next, let's explore the Cisco UCS Python SDK and see how to connect to a Cisco U
 
 &nbsp;
 
-First, the **UseHandle** class is imported.  An instance of this class is used to connect to Cisco UCS Manager.  The Cisco UCS Manager IP address, username, and password are passed in as parameters to the instance of the UseHandle class that is called **HANDLE**.  Several methods aer available with the UseHandle class.  In this script only three are used:
+First, the **UseHandle** class is imported.  An instance of this class is used to connect to Cisco UCS Manager.  The Cisco UCS Manager IP address, username, and password are passed in as parameters to the instance of the UseHandle class that is called **HANDLE**.  Several methods are available with the UseHandle class.  In this script only three are used:
 
 -   **HANDLE.login()**:  This method is used to log in to Cisco UCS Manager.
 -   **HANDLE.query_classid()**:  This method is used to query the MIT for objects with a specific class ID.
--   **HANDLE.logout()**:  This method is used to log out from the Cisco UCS MAnager.
+-   **HANDLE.logout()**:  This method is used to log out from the Cisco UCS Manager.
 
 
 The BLADES variable contains a dictionary of all the compute blades that are being managed by the 10.10.20.11 instance of Cisco UCS Manager.  Within a **for** loop, specific information regarding the DN, serial number, administrative state, model number, and total amount of memory for each blade is extracted and displayed to the console.  The Python script using the Cisco UCS Manager SDK that accomplishes all of these tasks looks as shown in Example 9-11.
@@ -976,7 +975,7 @@ curl -k -L -X GET \
 
 &nbsp;
 
-For this request, the **-g** parameter disables the **curl** check for nested braces **{}**, the **-k** or **-insecure** parameter allows **curl** to proceed nad operate even if the server uses self-signed SSL certificates, and the **-L** parameter allows **curl** to follow the redirects sent by the server.  The URL for the request follows the requirements discussed previously ,using the **/app/api/rest** endpoint to access the REST API and then passing the **formatType**, **opName**, and **opData** as parameters.  The HTTP header for authentication is named **X-Cloupia-Request-Key** and contains the value of the access key for the admin user for the Cisco UCS Director instance that runs on the server with IP address **10.10.10.66**.  The response from the instance of Cisco UCS Director looks as shown in Example 9-13. 
+For this request, the **-g** parameter disables the **curl** check for nested braces **{}**, the **-k** or **-insecure** parameter allows **curl** to proceed and operate even if the server uses self-signed SSL certificates, and the **-L** parameter allows **curl** to follow the redirects sent by the server.  The URL for the request follows the requirements discussed previously, using the **/app/api/rest** endpoint to access the REST API and then passing the **formatType**, **opName**, and **opData** as parameters.  The HTTP header for authentication is named **X-Cloupia-Request-Key** and contains the value of the access key for the admin user for the Cisco UCS Director instance that runs on the server with IP address **10.10.10.66**.  The response from the instance of Cisco UCS Director looks as shown in Example 9-13. 
 
 &nbsp;
 
@@ -1075,7 +1074,7 @@ The Cisco Intersight platform provides intelligent cloud-powered infrastructure 
 
 -   It simplifies Cisco UCS and Cisco HyperFlex management with a single management platform.
 -   It makes it possible to scale across data center and remote locations without additional complexity.
--   It automates the generation and forwarding of technical support files to the Cisco Technical Assistance CEnter to accelerate the troubleshooting process.
+-   It automates the generation and forwarding of technical support files to the Cisco Technical Assistance Center to accelerate the troubleshooting process.
 -   Full programmability and automation capabilities are available through a REST API interface.
 -   A streamlined upgrade process is available for standalone Cisco UCS servers.
 
@@ -1104,7 +1103,7 @@ Cisco Intersight includes a REST API interface built on top of the OpenAPI speci
 | **Moid** | A unique identifier of the managed object instance. |
 | **ObjectType** | The fully qualified class name of the managed object. |
 | **AccountMoid** | The Intersight account ID for the managed object. |
-| **CreateTime** | The time when the managedo bject was created. |
+| **CreateTime** | The time when the managed object was created. |
 | **ModTime** | The time when the managed object was last modified.  **ModTime** is autmatically updated whenever at least one property of the managed object is modified. |
 | **Owners** | An array of owners, which represents effective ownership of the object. |
 | **Tags** | An array of tags that allow the addition of key/value metadata to managed objets. |
@@ -1117,7 +1116,7 @@ Every managed object has a unique **Moid** identifier assigned when the resource
 
 &nbsp;
 
-Each managed object can be addressed using a unique uniform resource identifier (URI) that includes the **Moid**.  The URI can be used in any HTTPs request to address the managed object.  A generic Cisco Intersight URI is of the following form:
+Each managed object can be addressed using a unique uniform resource identifier (URI) that includes the **Moid**.  The URI can be used in any HTTPS request to address the managed object.  A generic Cisco Intersight URI is of the following form:
 
 `https://intersight.com/path[?query]`
 
@@ -1142,11 +1141,11 @@ Every managed object in the Cisco Intersight information model supports tagging.
 
 &nbsp;
 
-MAnaged objects may include object relationships, where dynamic links to REST resources.  Cisco Itnersight uses Hypermedia as the Engine of Application State (HATEOAS) conventions to represent objection relationships.  Object relaitonships can be links to self or links to other managedo bjects, which, taken as a whole, form a graph of objects.  By using relationships as a first-class attribute in the object model, many classes of graphs can be represented, including trees and cyclic or bipartite grpahs.
+Maaaged objects may include object relationships, which are dynamic links to REST resources.  Cisco Intersight uses Hypermedia as the Engine of Application State (HATEOAS) conventions to represent objection relationships.  Object relationships can be links to self or links to other managed objects, which, taken as a whole, form a graph of objects.  By using relationships as a first-class attribute in the object model, many classes of graphs can be represented, including trees and cyclic or bipartite graphs.
 
 &nbsp;
 
-Intersight provides a rich query language based on the OData standard.  The query language is represented using URL query parameters for **GET** results.  Several types of data are supported with Intergsight queries, including string, number, duraiton, date and time, and time of day.
+Intersight provides a rich query language based on the OData standard.  The query language is represented using URL query parameters for **GET** results.  Several types of data are supported with Intersight queries, including string, number, duration, date and time, and time of day.
 
 &nbsp;
 
@@ -1154,7 +1153,7 @@ Intersight provides a rich query language based on the OData standard.  The quer
 
 &nbsp;
 
-When a client sends an API request , the Intersight web service must identify and authenticate the client.  The intersight web service supports two authentication methods:
+When a client sends an API request, the Intersight web service must identify and authenticate the client.  The Intersight web service supports two authentication methods:
 
 -   API keys
 -   Session cookies
@@ -1165,7 +1164,7 @@ An Intersight API key is composed of a keyId and a keySecret.  The API client us
 
 &nbsp;
 
-Cookies are used primarily by the Intersight UGI client running in a browser.  When accessing the Intersight web service, end users must first authenticate to https://sso.cisco.com.  When authentication is successful, sso.cisco.com sends a signed SAML assertion to thte Intersight web service, and Itnersighte generates a session cookie with limited time span validity.  The client must send the session cookie in each API request.
+Cookies are used primarily by the Intersight GUI client running in a browser.  When accessing the Intersight web service, end users must first authenticate to https://sso.cisco.com.  When authentication is successful, sso.cisco.com sends a signed SAML assertion to the Intersight web service, and Intersight generates a session cookie with limited time span validity.  The client must send the session cookie in each API request.
 
 &nbsp;
 
@@ -1230,4 +1229,4 @@ The first two lines of Example 9-16 use the **import** keyword to bring in and m
 
 &nbsp;
 
-Next, an instance of the **EquipmentDeviceSummaryApi** class is created and stored in the **D_HANDLE** variable.  This Python class maps into the **/api/v1/equipment/DeviceSummaries** REST APi resource.  The **D_HANDLE** variable contains the handle to that REST API resource.  The **equipment_device_summaries_get** method that is available with the **EquipmentDeviceSummaryApi** class is invoked next, and the results are stored in the **DEVICES** variable, which contains a complete list of all the equipment that is being managed by Cisco Intersight for the user account with the keyId and keySecret with which the initial connection was established.  The **for** loop iterates over the devices in the list and extracts for each one of the distinguished name, model, serial number, and object type and displays this information to the console.
+Next, an instance of the **EquipmentDeviceSummaryApi** class is created and stored in the **D_HANDLE** variable.  This Python class maps into the **/api/v1/equipment/DeviceSummaries** REST API resource.  The **D_HANDLE** variable contains the handle to that REST API resource.  The **equipment_device_summaries_get** method that is available with the **EquipmentDeviceSummaryApi** class is invoked next, and the results are stored in the **DEVICES** variable, which contains a complete list of all the equipment that is being managed by Cisco Intersight for the user account with the keyId and keySecret with which the initial connection was established.  The **for** loop iterates over the devices in the list and extracts for each one of the distinguished name, model, serial number, and object type and displays this information to the console.

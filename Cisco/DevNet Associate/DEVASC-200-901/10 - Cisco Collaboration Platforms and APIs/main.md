@@ -10,7 +10,7 @@ Cisco Collaboration Platforms and APIs
 
 &nbsp;
 
-#   Introduction ot hte Cisco Collaboration Portfolio
+#   Introduction to the Cisco Collaboration Portfolio
 
 &nbsp;
 
@@ -80,7 +80,7 @@ The following sections describe the products available under the Unified Communi
 
 &nbsp;
 
-Both Webex Teams and Webex Meetings have a Join button you cna click to easily join a meeting.  this helps ensure that meetings start on time and it streamlines the process of joining a meeting.  Cisco Webex Teams also has features that will help you make decisions on which meetings to prioritize and when to join then:
+Both Webex Teams and Webex Meetings have a Join button you can click to easily join a meeting.  This helps ensure that meetings start on time and it streamlines the process of joining a meeting.  Cisco Webex Teams also has features that will help you make decisions on which meetings to prioritize and when to join then:
 
 -   **Seeing invitee status/participants**:  Every invitee can see who has accepted/declined the meeting and who's in the meeting live before even joining.  There is no need to switch back and forth between your calendar and the meeting application.
 -   **Instantly switching between meetings**:  If you need to move from one meeting to another, simply leave the meeting with one click and join the other one with another click.
@@ -188,7 +188,7 @@ The Cisco collaboration portfolio is rich in features.  APIs are used to integra
 
 -   Webex Meetings API
 -   Webex Teams
--   Contact Center (FInesse)
+-   Contact Center (Finesse)
 -   Endpoints
 
 &nbsp;
@@ -214,7 +214,7 @@ Webex APIs provide applications with direct access to the Cisco Webex platform, 
 -   Administer the Webex Teams platform for an organization, add user accounts, and so on
 -   Create a Webex teams team, space, and memberships
 -   Search for people in the company
--   Post messages ina Webex teams space
+-   Post messages in a Webex teams space
 -   Get Webex Teams space history or be notified in real time when new messages are posted by others
 
 &nbsp;
@@ -264,7 +264,7 @@ When making requests to the Webex REST API, an authentication HTTP header is use
 
 &nbsp;
 
-To perform actions on behalf of someone else, you need a separate access token that you obtained through an OAuth authorization grant flow.  OAuth is supported directly into the platform.  With a few easy steps, you can have a Webex Teams user granted permission to your app and perform actions on that person's behalf.  Figure 01-4 shows how third-party apps can access the platform.
+To perform actions on behalf of someone else, you need a separate access token that you obtained through an OAuth authorization grant flow.  OAuth is supported directly into the platform.  With a few easy steps, you can have a Webex Teams user granted permission to your app and perform actions on that person's behalf.  Figure 10-4 shows how third-party apps can access the platform.
 
 &nbsp;
 
@@ -316,7 +316,7 @@ Scopes define the level of access that an integration requires.  Each integratio
 | spark:memberships_write | Invite people to rooms on your behalf |
 | spark:messages_read | Read the content of rooms that you're in |
 | spark:messages_write | Post and delete messages on your behalf |
-| spark:teams_read | LIst the teams you are a member of |
+| spark:teams_read | List the teams you are a member of |
 | spark:teams_write | Manage teams on your behalf |
 | spark:team_memberships_read | List the people in the teams that you are in |
 | spark:team_memberships_write | Add people to teams on your behalf |
@@ -407,7 +407,7 @@ print(RESPONSE.text)
 
 &nbsp;
 
-Rooms are virtual meeting places where people post messages and collaborate to get work done.  The Rooms API is used to manage rooms - t ocreate, delete, and rename them.  Table 10-5 lists the operations that can be performed with the Room API.
+Rooms are virtual meeting places where people post messages and collaborate to get work done.  The Rooms API is used to manage rooms - to create, delete, and rename them.  Table 10-5 lists the operations that can be performed with the Room API.
 
 &nbsp;
 

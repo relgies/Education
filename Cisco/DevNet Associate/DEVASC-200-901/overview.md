@@ -3053,3 +3053,567 @@ print(response.text)
 
 ### ***REST API Debugging Tools for Developing APIs***
 
+&nbsp;
+
+#   07 - Cisco Enterprise Networking Management Platforms and APIs
+
+&nbsp;
+
+##  **What is an SDK?**
+
+&nbsp;
+
+An SDK (software development kit) or devkit is a set of software development tools that developers can use to create software or applications for a certain platform, operating system, computer system, or device.
+
+An SDK typically contains a set of libraries, APIs, documentation, tools, sample code, and processes that make it easier for developers to integrate, develop, and extend the platform.
+
+A good SDK has these qualities:
+
+-   Is easy to use
+-   Is well documented
+-   Has value-added functionality
+-   Integrates well with other SDKs
+-   Has minimal impact on hardware resources
+
+SDKs provide the following advantage:
+
+-   Quicker integration
+-   Faster and more efficient development
+-   Brand control
+-   Increased security
+-   Metrics
+
+&nbsp;
+
+##  **Cisco Meraki**
+
+&nbsp;
+
+Meraki cloud platform APIs:
+
+-   ***Captive Portal API***
+-   ***Scanning API***
+-   ***MV Sense Camera API***
+-   ***Dashboard API***
+
+&nbsp;
+
+The Cisco Meraki cloud platform also provides webhooks, which offer a way to subscribe to alerts sent from the Meraki cloud when an event occurs.
+
+A Meraki alert includes a JSON-formatted message that can be configured to be sent to a unique URL, where it can be further processed, stored, and acted upon.
+
+&nbsp;
+
+The ***Captive Portal API*** extends the power of the built-in Meraki splash page functionality by providing complete control of the content and authentication process that a user interacts with when connecting to a Meraki wireless network.  This means Meraki network administrators can completely customize the portal, including the onboarding experience for clients connecting to the network, how the web page looks and feels, and then the authentication and billing process.
+
+The ***Scanning API*** takes advantage of Meraki smart devices equipped with wireless and BLE (Bluetooth Low Energy) functionality to provide location analytics and report on user behavior.  The Scanning API delivers data in real time and can be used to detect Wi-Fi and BLE devices and clients.  The data is exported to a specific destination server through the HTTP POST and JSON documents.
+
+The ***MV Sense Camera API*** takes advantage of the powerful onboard processor and a unique architecture to run machine learning workloads at the edge.  Through the MV Sense API, object detection, classification, and tracking are exposed and become available for application integration.  Both REST and MQTT API endpoints are provided, and information is available in a request or subscribe model.  MQ Telemetry Transport (MQTT) is a client/server publish/subscribe messaging transport protocol.  It is lightweight, simple, open, and easy to implement.  MQTT is ideal for use in constrained environments such as Internet of Things (IoT) and machine-to-machine communication where a small code footprint is required.
+
+The Meraki APIs covered so far are mostly used to extract data from the cloud platform and build integrations and applications with that data.  
+
+The ***Dashboard API***, provides endpoints and resources for configuration, management, and monitoring automation of the Meraki cloud platform.  The Dashboard API is meant to be open ended and can be used for many purposes and use cases.  Some of the most common use cases for the Dashboard API are as follows:
+
+-   Provisioning new organizations, administrators, networks, devices, and more
+-   Configuring networks at scale
+-   Onboarding and decommissioning of clients
+-   Building custom dashboards and applications
+
+&nbsp;
+
+To access the Dashboard API it must first be enabled.  Begin by logging into the Cisco Meraki dashboard at https://dashboard.meraki.com and navigating to **Organization > Settings**.  From there, scroll down and locate the section named **Dashboard API Access** and make sure to select **Enable Access** and save the configuration changes at the bottom of the page.  
+
+Once the API has been enabled, select the username at the top-right corner of the web page, and select **My Profile**.  In the profile, scroll down and locate the section named **Dashboard API Access** and select **Generate New API Key**.  The API key generated is associated with your account.  You can generate, revoke, and regenerate an API key in the profile.  
+
+For security reasons the API key is not stored in plaintext in the profile, so if it is lost you will have to revoke the old one and generate a new one.
+
+&nbsp;
+
+Every Dashboard APi request must specify the API key within the request header.  If a missing or incorrect API key is specified, the API returns a 404 HTTP error message.  
+
+&nbsp;
+
+The key for the authentication request header is **X-Cisco-Meraki-API-Key**, and the value is the API key obtained previously.
+
+&nbsp;
+
+In order to mitigate abuse and denial-of-service attacks, the Cisco Meraki Dashboard API is limited to 5 API calls per second per organization.  In the first second, a burst of an additional 5 calls is allowed, for a maximum of 15 API calls in the first 2 seconds per organization.  
+
+If the rate limit is exceeded, an error message with HTTP status code 429 is returned.
+
+The rate-limiting technique that tthe Dashboard API implements is based on the token bucket model.
+
+&nbsp;
+
+The Cisco Meraki Dashboard API uses the base URL **https://api.meraki.com/api/v0**.
+
+&nbsp;
+
+The Dashboard API is organized to mirror the structure of the Meraki dashboard.  The hierarchy of the Dashboard API looks as follows:
+
+-   Organizations
+    -   Networks
+        -   Devices
+            -   Uplinks
+
+Most Dashboard API calls require either the organization ID or the network Id as part of the endpoint.  All API calls require an API key.
+
+&nbsp;
+
+The Meraki Dashboard API supports three special query parameters for pagination:
+
+-   **perPage**:  The number of entries to be returned in the current request
+-   **startingAfter**:  A value used to indicate that the returned data will start immediately after this value
+-   **endingBefore**:  A value used to indicate that the returned data will end immediately before this value
+
+While the types of the **startingAfter** and **endingBefore** values differ based on API endpoints, they generally are either timestamps specifying windows in time for which the data should be returned or integer values specifying IDs and ranges of IDs.
+
+&nbsp;
+
+The Dashboard API also supports action batches, which make it possible to submit multiple configuration requests in a single transaction and are ideal for initial provisioning of a large number of devices or performing large configuration changes through the whole network.  Action batches also provide a mechanism to avoid hitting the rate limitations implemented in the API for high-scale configuration changes as you can implement all the changes with one or a small number of transactions instead of a large number of individual API requests.  
+
+Action batch transactions can be run either synchronously, waiting for the API call return before continuing or asynchronously, in which case the API call does not wait for a return as the call is placed in a queue for processing.
+
+With action batches, you can be confident that all the updates contained in the transaction were submitted successfully before being committed because batches are run in an atomic fashion: all or nothing.
+
+&nbsp;
+
+At this point you need to obtain the organization ID for the account.
+
+The base URL for the Dashboard API is **https://api.meraki.com/api/v0**.  To get the organization for the account with the API key, you have to append the **/organizations** resources to the base URL, resulting in **https://api.meraki.com/api/v0/organizations**.  You also need to indicate the **X-Cisco-Meraki-API-Key** header for authentication purposes.
+
+The **curl** command would look as follows:
+
+```curl
+curl -I -X GET \
+    --url 'https://api.meraki.com/api/v0/organizations' \
+   -H 'X-Cisco-Meraki-API-Key: 6bec40cf957de430a6f1f2baa056b99a4fac9ea0'
+    -H 'X-Cisco-Meraki-API-Key: '
+```
+
+Example of the response:
+
+```
+HTTP/1.1 302 Found
+Server: nginx
+Date: Sat, 17 Aug 2019 19:05:25 GMT
+Content-Type: text/html; charset=utf-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: Fri, 01 Jan 1990 00:00:00 GMT
+X-Frame-Options: sameorigin
+X-Robots-Tag: none
+Location: https://n149.meraki.com/api/v0/organizations
+X-UA-Compatible: IE=Edge,chrome=1
+X-Request-Id: 87654dbd16ae23fbc7e3282a439b211c
+X-Runtime: 0.320067
+Strict-Transport-Security: max-age=15552000; includeSubDomains
+```
+
+The response code is a 302, indicating a redirect to the URL value in the **Location** header
+
+When you specify the **-I** option for **curl**, only the headers of the response are displayed to the user.  You need to run the **curl** command again but this time specify the resource from the **Location** header which is **https://n149.meraki.com/api/v0/organizations**, remove the **-I** flag, and add an **Accept** header to specify that the response to the call should be in JSON format.
+
+```curl
+curl -X GET \
+    --url 'https://n49.meraki.com/api/v0/organizations' \
+    -H 'X-Cisco-Meraki-API-Key: 15da0c6ffff295f16267f88f98694cf29a86ed87' \
+    -H 'Accept: application/json'
+```
+
+The response in this case contains the ID of the DevNet Sandbox organization JSON format:
+
+```json
+[
+    {
+        "name": "DevNet Sandbox",
+        "id": "549236"
+    }
+]
+```
+
+&nbsp;
+
+By default Postman has the **Automatically Follow Redirects** option enabled in Settings, so you don't have to change the resource address as it is already done in the background by Postman.
+
+&nbsp;
+
+To get a list of networks associated with an organization, you need to do a GET request to https://api.meraki.com/api/v0/organizations/{organizationID}/networks, where {organizationID} is the ID obtained previously:
+
+```
+curl - X GET \
+    --url 'https://n149.meraki.com/api/v0/organizations/549236/networks' \
+    -H 'X-Cisco-Meraki-API-Key: 15da0c6ffff295f16267f88f98694cf29a86ed87' \
+    -H 'Accept: application/json'
+```
+
+The response from the API should contain a list of all the networks that are part of the DevNet Sandbox organization and should look similar to the output below:
+
+```json
+[
+   {
+      "timeZone" : "America/Los_Angeles",
+      "tags" : " Sandbox ",
+      "organizationId" : "549236",
+      "name" : "DevNet Always On Read Only",
+      "type" : "combined",
+      "disableMyMerakiCom" : false,
+      "disableRemoteStatusPage" : true,
+      "id" : "L_646829496481099586"
+   },
+   {
+      "organizationId" : "549236",
+      "tags" : null,
+      "timeZone" : "America/Los_Angeles",
+      "id" : "N_646829496481152899",
+      "disableRemoteStatusPage" : true,
+      "name" : "test - mx65",
+      "disableMyMerakiCom" : false,
+      "type" : "appliance"
+   }, ... omitted output
+```
+
+Once you've obtained a list of all the networks that are part of the organization, you can obtain a list of all devices that are part of a network using the associated network ID.  Like the previous step, the API resource that contains the information you are looking for is **/networks/{networkID}/devices**.
+
+```curl
+curl -X GET \
+    --url 'https://n49.meraki.com/api/v0/networks/L_646829496481099586/devices' \
+    -H 'X-Cisco-Meraki-API-Key: 15da0c6ffff295f16267f88f98694cf29a86ed87' \
+    -H 'Accept: application/json'
+```
+
+&nbsp;
+
+There are two SDKs for the Dashboard API: one is Python based and the other is Node.js based.
+
+In order to get access to the Python SDK, you need to install the **meraki-sdk** module: 
+
+```pip install meraki-sdk```
+
+You then follow the same three steps previously: Get the organization ID, get a list of all networks the are part of the organization, and all the devices associated with a network.
+
+You need to import the **MerakiSdkClient** class from the **meraki_sdk** module.  You can use the MerakiSdkClient class to create an API client by passing the API key as a parameter and creating an instance of this class called MERAKI.
+
+```python
+# /usr/bin/env python
+from meraki_sdk.meraki_sdk_client import MerakiSdkClient
+
+# Cisco DevNet Sandbox Meraki API key
+X_CISCO_MERAKI_API_KEY = '15da0c6ffff295f16267f88f98694cf29a86ed87'
+
+# Establish a new client connection to the Meraki REST API
+MERAKI = MerakiSdkClient(X_CISCO_MERAKI_API_KEY)
+
+# Get a list of all the organizations for the Cisco DevNet account
+ORGS = MERAKI.organizations.get_organizations()
+
+for ORG in ORGS:
+    print("Org ID: {} and Org Name: {}".format(ORG['id'], ORG['name']))
+
+PARAMS = {}
+PARAMS["organization_id"] = "549236"    # Demo Organization "DevNet Sandbox"
+
+# Get a list of all the networks for the Cisco DevNet organization
+NETS = MERAKI.networks.get_organization_networks(PARAMS)
+for NET in NETS:
+    print("network ID: {0:20s}, Name: {1:45s},Tags: {2:<10s}".format(NET['id'], NET['name'], str(NET['tags'])))
+
+# Get a list of all the devices that are part of the Always On Network
+DEVICES = MERAKI.devices.get_network_devices("L_646829496481099586")
+for DEVICES in DEVICES:
+    print("Device Model: {0:9s},Serial: {1:14s},MAC: {2:17}, Firmware:{3:12s}").format(DEVICE['model', DEVICE['serial'], DEVICE['mac'], DEVICE['firmware']])
+```
+
+&nbsp;
+
+##  **Cisco DNA Center**
+
+&nbsp;
+
+***Cisco Digital Network Architecture (DNA)*** is an open, extensible, software-driven architecture from Cisco that accelerates and simplifies enterprise network operations.  Behind this new architecture is the concept of intent-based networking.
+
+***Cisco DNA Center*** is the network management and command center for Cisco DNA.  With Cisco DNA Center, you can provision and configure network devices, define consistent policy throughout a network, get live instantaneous statistics, and get granular networkwide views.  Multidomain and multivendor integrations are all built on top of a secure platform.
+
+Cisco DNA Center provides a set of REST APIs and SDKs through the Cisco DNA Center platform that are grouped in the following categories:
+
+-   ***Intent API***
+-   ***Integration API***
+-   ***Multivendor SDK***
+-   ***Events and notifications***
+
+&nbsp;
+
+The ***Intent API*** is a northbound REST API that exposes specific capabilities of the Cisco DNA Center platform.The main purpose of the Intent API is to simplify the process of creating workflows that consolidate multiple network actions into one.
+
+The Intent API provides automation capabilities and simplified workflows for QoS policy configuration, software image management and operating system updates for all devices  n the network, overall client health status, and monitoring of application health. 
+
+&nbsp;
+
+The ***Integration API*** was created to simplify and streamline end-to-end processes.  Through this API, Cisco DNA Center platform publishes network data, events, and notifications to external systems and at the same time can consume information from these connected systems.
+
+Integrations with IT service management and ticketing systems are supported.  Automatic ticket creation and assignment based on network issues that are flagged by Cisco DNA Center are possible.  Cisco DNA Center can even suggest remediation steps based on the machine learning algorithms.
+
+IP Address Management (IPAM) integrations are also supported by the Integration API.
+
+Data as a service (DaaS) APIs that are part of the Integration API allow Cisco DNA Center to publish insights and data to external tools and reporting solutions.
+
+The Integration aPI is also used for cross-domain integrations with other Cisco products, such as Cisco Meraki, Cisco Stealthwatch, and Cisco ACI.  The idea is to deliver a consistent intent-based infrastructure across data center, WAN, and security solutions.
+
+&nbsp;
+
+Cisco DNA Center allows customers to have their non-Cisco devices managed by DNA Center though a ***multivendor SDK***.  Cisco DNA Center communicates with third-party devices through ***device packages***.  The ***device packages*** are developed using the multivendor SDK and implemented southbound interfaces based on CLI, SNMP, or NETCONF.
+
+&nbsp;
+
+Cisco DNA Center also provides webhooks for ***events and notifications*** that are generated or on the Cisco DNA Center appliance itself.
+
+You have the option of configuring a receiving URL to which the Cisco DNA Center platform can publish events.  Based on these events, the listening application can take business actions.
+
+&nbsp;
+
+The ***Intent API*** is organized into several distinct categories:
+
+-   **Know Your Network category**:  This category contains API calls pertaining to sites, networks, devices, and clients:
+    -   With the ***Site Hierarchy Intent API***, you can get information about, create, update, and delete sites as well as assigned devices to a specific site.  (Sites within Cisco DNA Center are logical groupings of network devices based on geographic location or site.)
+    -   The ***Network Health Intent API*** retrieves data regarding network devices, their health, and how they are connected.
+    -   The ***Network Device Detail Intent API*** retrieves detailed information about devices.  Different parameters can be passed to limit the scope of the information returned by the API, such as timestamp, MAC address, and UUID.  Besides all the detailed information you can retrieve for all the devices in the network, you can also add, delete, update, or sync specified devices.
+    -   The ***Client Health Intent API*** returns overall client health information for both wired and wireless clients.
+    -   The ***Client Detail Intent API*** returns detailed information about a single client.
+-   **Site Management category**:  This category helps provision enterprise networks with zero-touch deployments and manage the activation and distribution of software images in these networks:
+    -   The ***Site Profile Intent API*** gives you the option to provision NFV and ENCS devices as well as retrieve the status of the provisioning activities.
+    -   The ***Software Image Management (SWIM)*** API enables you to completely manage the lifecycle of software images running within a network in an automated fashion.  With this API, you can retrieve information about available software images, import images into Cisco DNA Center, distribute images to devices, and activate software images that have been deployed to devices.
+    -   The ***Plug and Play (PnP) API*** enables you to manage all PnP-related workflows.  With this API, you can create, update, and delete PnP workflows and PnP server profiles, claim and unclaim devices, add and remove virtual accounts, and retrieve information about all PnP-related tasks.
+-   **Connectivity category**:  This category contains APIs that provide mechanisms to configure and manage both non-fabric wireless and Cisco SDA wired fabric devices.  For fabric devices, you can add and remove border devices to the fabric and get details about their status.  For non-fabric wireless devices, you can create, update, and delete wireless SSIDs, profiles, and provisioning activities.
+-   **Operational Tools category**:  This category includes APIs for the most commonly used tools in the Cisco DNA Center toolbelt:
+    -   The ***Command Runner API*** enables the retrieval of all valid keywords that Command Runner accepts and allows you to run read-only commands on devices to get their real-time configuration.
+    -   The ***Network Discovery API*** provides access to the discovery functionalities of Cisco DNA Center.  You can use this API to create, update, delete, and manage network discoveries and the credentials needed for them.  You can also retrieve network discoveries, network devices that were discovered as part of a specific network discovery task, and credentials associated with these discoveries.
+    -   The ***Temple Programmer API*** can be used to manage configuration templates.  You can create, view, edit, delete, version, add commands, check contents for errors, deploy, and check the status of template deployments.
+    -   The ***Path Trace API*** provides access to the Path Trace application in Cisco DNA Center.  Path Trace can be used to troubleshoot and trace application paths throughout the network and provide statistics at each hop.  The API gives you access to initiating, retrieving, and deleting path traces.
+    -   The ***File API*** enables you to retrieve files such as digital certificates, maps, and SWIM files from Cisco DNA Center.
+    -   The ***Task API*** provides information about the network actions that are being run asynchronously.  Each of these background actions can take from seconds to minutes to completely, and each has a task associated with it.  You can query the Task API about the completion status of these tasks, get the task tree, retrieve tasks by their IDs, and so on.
+    -   The ***Tag API*** gives you the option of creating, updating, and deleting tags as well as assigning tags to specific devices.  Tags are very useful in Cisco DNA Center; they are used extensively to group devices by different criteria.  You can then apply policies and provision and filter these groups of devices.
+
+&nbsp;
+
+The Cisco DNA Center platform APIs are rate limited to five API requests per minute.
+
+&nbsp;
+
+In Cisco DNA Center version .3, the REST API is not enabled by default.  Therefore, you need to log in to DNA Center with super-admin role account, navigate to Platform > Management > Bundles, and enable the DNA Center REST API bundle.  The status of the bundle should be active.
+
+&nbsp;
+
+The Cisco DNA Center platform API authorization is based on basic auth.  Basic auth is an authorization type that requires a username nad password.  The username and password are base-64 encoded and then transmitted to the API service in the Authorization header.  The authorization resource is **/system/api/v1/auth/token** and requires the API call to be POST.  The API endpoint then becomes **https://sandboxdnac2.cisco.com/system/api/v1/auth/token**.
+
+```curl
+curl -X POST \
+    https://sandboxdnac2.cisco.com/dna/system/api/v1/auth/token \
+    -H 'Authorization: Basic ZGV2bmV0dXNlcjpDaXNjbzEyMyE='
+```
+
+The result should be JSON formatted with the key **Token** and a value containing the actual authorization token:
+
+```json
+{"Token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1Y2U3M-
+TJiMDhlZTY2MjAyZmEyZWI4ZjgiLCJhdXRoU291cmNlIjoiaW50ZXJuYWwiL-
+CJ0ZW5hbnROYW1lIjoiVE5UMCIsInJvbGVzIjpbIjViNmNmZGZmNDMwOTkwM-
+DA4OWYwZmYzNyJdLCJ0ZW5hbnRJZCI6IjViNmNmZGZjNDMwOTkwMDA4OWYwZ-
+mYzMCIsImV4cCI6MTU2NjU0Mzk3OCwidXNlcm5hbWUiOiJkZXZuZXR1c2VyIn0.
+Qv6vU6d1tqFGx9GETj6SlDa8Ts6uJNk9624onLSNSnU"}
+```
+
+The token will be used in all subsequent API calls through a header that is called **X-Auth-Token**.
+
+The API resource that will return a complete list of all network devices managed by Cisco DNA Center is **/dna/intent/api/v1/network-device**.
+
+Since we're now retireving information, we need to do a GET request with the X-Auth-Token header:
+
+```curl
+curl -X GET \
+    https://sandboxdnac2.cisco.com/dna/intent/api/v/network-device \
+    -H 'X-Auth-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.
+  eyJzdWIiOiI1Y2U3MTJiMDhlZTY2MjAyZmEyZWI4ZjgiLCJhdXRoU291c-
+  mNlIjoiaW50ZXJuYWwiLCJ0ZW5hbnROYW1lIjoiVE5UMCIsInJvbGVzIjpbI-
+  jViNmNmZGZmNDMwOTkwMDA4OWYwZmYzNyJdLCJ0ZW5hbnRJZCI6IjViNmNmZG-
+  ZjNDMwOTkwMDA4OWYwZmYzMCIsImV4cCI6MTU2NjYwODAxMSwidXNlcm5hbWUiOi-
+  JkZXZuZXR1c2VyIn0.YXc_2o8FDzSQ1YBhUxUIoxwzYXXWYeNJRkB0oKBlIHI'
+```
+
+The response should look like the following:
+
+```json
+{
+   "response" : [
+       {
+         "type" : "Cisco 3504 Wireless LAN Controller",
+         "roleSource" : "AUTO",
+         "apManagerInterfaceIp" : "",
+         "lastUpdateTime" : 1566603156991,
+         "inventoryStatusDetail" : "<status><general code=\"SUCCESS\"/></status>",
+         "collectionStatus" : "Managed",
+         "serialNumber" : "FCW2218M0B1",
+         "location" : null,
+         "waasDeviceMode" : null,
+         "tunnelUdpPort" : "16666",
+         "reachabilityStatus" : "Reachable",
+         "lastUpdated" : "2019-08-23 23:32:36",
+         "tagCount" : "0",
+         "series" : "Cisco 3500 Series Wireless LAN Controller",
+         "snmpLocation" : "",
+         "upTime" : "158 days, 13:59:36.00",
+         "lineCardId" : null,
+         "id" : "50c96308-84b5-43dc-ad68-cda146d80290",
+         "reachabilityFailureReason" : "",
+         "lineCardCount" : null,
+         "managementIpAddress" : "10.10.20.51",
+         "memorySize" : "3735302144",
+         "errorDescription" : null,
+         "snmpContact" : "",
+         "family" : "Wireless Controller",
+         "platformId" : "AIR-CT3504-K9",
+         "role" : "ACCESS",
+         "softwareVersion" : "8.5.140.0",
+         "hostname" : "3504_WLC",
+         "collectionInterval" : "Global Default",
+         "bootDateTime" : "2019-01-19 02:33:05",
+         "instanceTenantId" : "SYS0",
+         "macAddress" : "50:61:bf:57:2f:00",
+         "errorCode" : null,
+         "locationName" : null,
+         "softwareType" : "Cisco Controller",
+         "associatedWlcIp" : "",
+         "instanceUuid" : "50c96308-84b5-43dc-ad68-cda146d80290",
+         "interfaceCount" : "8"
+      },
+      ... omitted output
+   ],
+   "version" : "1.0"
+```
+
+&nbsp;
+
+The Cisco DNA Center Python SDK was developed for Python 3, and maps all the Cisco DNA Center APIs into classes and methods.  
+
+Installing the SDK is as simple as issuing teh command **pip install dnacentersdk** from the command prompt.
+
+```python
+#! /usr/bin/env python
+from dnacentersdk import api
+
+# Create a DNACenterAPI connection obkect;
+# it uses DNA Center sandbox URL, username, and password
+DNAC = api.DNACenterAPI(username="devnetuser",
+                        password="Cisco123!",
+                        base_url="https://sandboxdnac2.cisco.com")
+
+# Find all devices
+DEVICES = DNAC.devices.get_device_list()
+
+# Print select information about the retrieved devices
+print('{0:25s}{1:1}{3:1}{4:15s}'.format("Device Name", "|", "Device Type", "|", "Up Time"))
+print('-'*95)
+for DEVICE in DEVICES.response:
+    print('{0:25s}{1:1}{2:45s}{3:1}{4:15s}'.format(DEVICE.hostname, "|", DEVICE.type, "I", DEVICE.upTime))
+print('-'*95)
+
+# Get the health of all clients on Thursday, August 22, 2019 8:41:29 PM CMT
+CLIENTS = DNAC.clients.get_overall_client_health(timestamp="1566506489000")
+
+# Print select information about the retrieved client health statistics
+print('{0:25s}{1:1}{2:45s}{3:1}{4:15s}'.format("Client Category", "|", "Number of Clients", "I", "Clients Score"))
+print('-'*95)
+for CLIENT in CLIENTS.response:
+    for score in CLIENT.scoreDetail:
+        print('{0:25s}{1:1}{2:<45d}{3:1}{4:<15d}'.format(score.scoreCategory.value, "|", score.clientCount, "|", score.scoreValue))
+print('-'*95)
+```
+
+&nbsp;
+
+##  **Cisco SD-WAN**
+
+&nbsp;
+
+Cisco SD-WAN (Software-Defined Wide Area Network) is a cloud-first architecture for deploying WAN connnectivity.  
+
+An important feature of SDN is the separation of the control plane from the data plane.
+
+The **control plane** includes a set of protocols and features that a network device implements so that it can determine which network path to use to forward data traffic.  Spanning tree protocols and routingprotocols are some of the protocols that make up the control plane in network devices.  
+
+The **data plane** includes the protocols and features that a network device implements to forward traffic to its destination as quickly as possible.  Cisco Express Forward (CEF) is a proprietary switching mechanism that is part of the data plane.  
+
+SDN separates the functionality of the control plane and data plane in different devices, and several benefits result.
+
+-   The cost of the resulting network should be lower as not all devices have to implement expensive software and hardware features to accomodate both a control plane and data plane.
+-   The convergence of this net network, which is the amount of time it takes for all devices to agree on a consistent view of the network, should be much lower than in the case of the non-SDN architecture.
+
+&nbsp;
+
+Cisco currently has two SD-WAN offerings.  The first one, based on the **Viptela** acquisition, is called **Cisco SD-WAN**; the second one, based on thet Meraki acquisition, is called **Meraki SD-WAN**.
+
+-   **vManage**:  Cisco vManage is a centralized network managemente system that provides a GUI and REST API interface fto the SD-WAN fabric.  You can easily manage, monitor, and configure all Cisco SD-WAN components through this single pane of glass.
+-   **vSmart**:  Cisco vSmart is the brains of the centralized control plane for the overlay SD-WAN network.  It maintains a centralized routing table and centralized routing policy that it propagates to all the network Edge devices through permanent DTLS tunnels.
+-   **vBond**:  Cisco vBond is the orchestrator of the fabric.  It authenticates the vSmart controllers and the vEdge devices and coordinates connectivity between them.  The vBond orchestrator is the only component in the SD-WAN fabric that needs public IP reachability to ensure that all devices can connect to it.
+-   **vEdge**:  Cisco vEdge routers, as the name implies, are Edge devices that are located at the perimeter of the fabric, such as in remote offices data center, branches, and campuses.  They represent the data plane and bring the whole fabric together and route traffic to and from their sites across the overlay network.
+
+All the components of the Cisco SD-WAN fabric run as virtual appliances, adn the vEdges are also available as hardware routers.
+
+Separating the WAN fabric this way makes it more scalable, faster to converge, and cheaper to deploy and maintain.
+
+On top of the transport-independent underlay that supports all types of WAN circuits, an overlay network is built that runs OMP (Overlay Management Protocol).  Much like BGP, OMP propagates throughout the network all the routing information neede for all the components of the fabric to be able to forward data according to the routing policies configured in vManage.
+
+&nbsp;
+
+Cisco **vManage** provides a REST API that exposes the functionality of the Cisco SD-WAN software and hardware features.  The API resources that are avilabale through the REST itnerface are grouped in the following conditions:
+
+-   **Administration**:  For management of users, groups, and local vManage instance
+-   **Certificate Management**:  For management of SSL certificates and security keys
+-   **Configuration**:  For creation of feature and device configuraiton templates and creation and configuraiton of vManage cluster
+-   **Device Inventory**:  For collecting device inventory information including system status
+-   **Monitoring**:  For getting access to status, statistics, and related operational information about all the deivces in the network every 10 minutes from all devices
+-   **Real-Time Monitoring**:  For gathering real-time monitoring statistics and traffic information approximately once per second
+-   **Troubleshooting Tools**:  For API calls used in troubleshooting, such as determine the effects of applying a traffic policy, updating software, or retrieving software version information
+
+Cisco vManage exposes a self-documenting web interface for the REST API that is enabled by default and accessed at **https://vManage_IP_or_hostname:port/apidocs**.  The default port is 8443.
+
+The web interface displays a list of all the REST API resources available, the methods associated with each one of them, and the model schema of the responses.
+
+&nbsp;
+
+The initial connection to a Cisco vManage instance is established through an authorization request to https://sandboxsdwan.cisco.com:8443/j_security_check.  The information sent over this POST call is a URL form encoded and contains the username and password.
+
+```curl
+curl -c -x -X POST -k \
+    https://sandboxsdwan.cisco.com:8443/j_security_check \
+    -H 'Content-Type: application/x-www-form-urlencoded' \
+    -d 'j_username=devnetuser&j_password=Cisco123!'
+```
+
+&nbsp;
+
+The **-c -** option passed to the **curl** request specifies that the returned authorization cookie should be printed to the console.  The **-k** option bypasses SSL certificate verification as the certificate for this sandbox is self-signed.  The output should look as follows:
+
+```
+# Netscape HTTP Cookie File
+
+# https://curl.haxx.se/docs/http-cookies.html
+
+# This file was generated by libcurl! Edit at your own risk.
+
+#HttpOnly_sandboxsdwan.cisco.com.  FALSE  /  TRUE  0   JSESSIONID.
+v9QcTVL_ZBdIQZRsI2V95vBi7Bz47IMxRY3XAYA6.4854266f-a8ad-4068-9651-
+d4e834384f51
+```
+
+The long string after the **JSESSIONID** is the value of the authorization cookie that will be needed in all subsequent API calls.
+
+To get a list of devices the resource is **/dataservice/device**:
+
+```curl
+curl -X GET -k \
+    https://sandboxsdwan.cisco.com:8443/dataservice/device \
+    -H 'Cookie: JSESSIONID=v9QcTVL_ZBdIQZRsI2V95vBi7Bz47IMxRY3XAYA6.4854266f-a8ad-4068-9651-d4e834384f51'
+```
+
