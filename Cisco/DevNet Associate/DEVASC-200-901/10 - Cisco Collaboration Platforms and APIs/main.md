@@ -499,7 +499,7 @@ $ curl -X GET \
 
 &nbsp;
 
-A membership represents a person's relationship to a room.  You can use the Memberships API to list members of any room that you're in or create memberships to invite someone to a room.  Memberships can also be updated to make someone a moderator or deleted to remove someone from the room.  Table 10-6 lists the operations that can be performed with respect ot the Memberships API, such as listing memberships and adding a new member.
+A membership represents a person's relationship to a room.  You can use the Memberships API to list members of any room that you're in or create memberships to invite someone to a room.  Memberships can also be updated to make someone a moderator or deleted to remove someone from the room.  Table 10-6 lists the operations that can be performed with respect to the Memberships API, such as listing memberships and adding a new member.
 
 &nbsp;
 
@@ -603,7 +603,8 @@ HEADERS = {
     5YTY3OWUtZGYy_PF84_consumer",
     "Content-Type": "application/json",
 }
-RESPONSE = requests.request("POST", URL, da
+RESPONSE = requests.request("POST" URL, data=json.dumps(PAYLOAD), headers=HEADERS)
+pprint.pprint(json.loads(RESPONSE.text))
 ```
 
 &nbsp;
@@ -723,7 +724,7 @@ The following are some advanced APIs:
 
 &nbsp;
 
-The cisco Finesse desktop is a call agent and supervisor desktop solution designed to meet the growing needs of agents, supervisors, and the administrators and developers who support them.  The Cisco Finesse desktop runs in a browsers, which means you install Cisco Unified Contact Center Express (Unified CCX), and agents start by simply typing in the URL for the Unified CCX server.  The desktop is more than an agent state and call-control application.  It is an OpenSocial gadget container, built to include third-party applications in a single agent desktop experience.  Rather than switching between applications, agents have easy access to all applications and tools from a single window, which increases their efficiency.  Figure 10-9 shows the architecture and high-level flow of Finesse, which involves the following steps:
+The Cisco Finesse desktop is a call agent and supervisor desktop solution designed to meet the growing needs of agents, supervisors, and the administrators and developers who support them.  The Cisco Finesse desktop runs in a browsers, which means you install Cisco Unified Contact Center Express (Unified CCX), and agents start by simply typing in the URL for the Unified CCX server.  The desktop is more than an agent state and call-control application.  It is an OpenSocial gadget container, built to include third-party applications in a single agent desktop experience.  Rather than switching between applications, agents have easy access to all applications and tools from a single window, which increases their efficiency.  Figure 10-9 shows the architecture and high-level flow of Finesse, which involves the following steps:
 
 &nbsp;
 
@@ -826,7 +827,7 @@ All Finesse APIs use HTTP BASIC authentication, which requires the credentials t
 "Basic ZGV2YXNjOnN0cm9uZ3Bhc3N3b3Jk"
 ```
 
-where ZGV2YXNjOnN0cm9uZ3Bhc3N3b3Jk is the Base64-encoded string *devasc:strongpassword* (where *devasc* is the username, and *strongpassword* is the password.)  Example 10-8 shows three liens of code that do Base64 encoding in order to plug the value in the authorization headers.
+where ZGV2YXNjOnN0cm9uZ3Bhc3N3b3Jk is the Base64-encoded string *devasc:strongpassword* (where *devasc* is the username, and *strongpassword* is the password.)  Example 10-8 shows three lines of code that do Base64 encoding in order to plug the value in the authorization headers.
 
 &nbsp;
 
@@ -853,7 +854,7 @@ With Single Sign-On mode, the authorization header would contain the following s
 
 &nbsp;
 
-Table 1-10 lists the various methods and User APIs to perform operations with the user, such as listing, logging in, and changing properties.
+Table 10-10 lists the various methods and User APIs to perform operations with the user, such as listing, logging in, and changing properties.
 
 &nbsp;
 
@@ -864,8 +865,8 @@ Table 1-10 lists the various methods and User APIs to perform operations with th
 | GET | <pre>http://\<FQDN>/finesse/api/User/\<id></pre> | Get a copy of the user object |
 | GET | <pre>http://\<FQDN>/finesse/api/User</pre> | Get a list of all users |
 | PUT | <pre>http://\<FQDN>/finesse/api/User/\<id><br>with XML body:<br>\<User><br>  \<state>LOGIN\</state><br>\<extension>5250001\</extension><br>\</User> | Sign in to the CTI server |
-| PUT | <pre>http://\<FQDN>/finesse/api/User/\<id><br>with XML body:<br>\<User><br>\<state>READY\</state><br>\</User> | Set the user's state:<br> <li>READY <li>NOT_READY <li>LOGOUT |
-| GET | <pre>http://\<FQDN>/finesse/api/User/\<id>\PhoneBooks</pre> | Get a list of phone books and the first 15000 associated contacts for that user |
+| PUT | <pre>http://\<FQDN>/finesse/api/User/\<id><br>with XML body:<br>\<User><br>  \<state>READY\</state><br>\</User> | Set the user's state:<br> <li>READY <li>NOT_READY <li>LOGOUT |
+| GET | <pre>http://\<FQDN>/finesse/api/User/\<id>/PhoneBooks</pre> | Get a list of phone books and the first 1500 associated contacts for that user |
 
 &nbsp;
 
@@ -952,7 +953,7 @@ print(RESPONSE.status_code)
 
 &nbsp;
 
-The Team object represents a team and contains the URI, the team name, nd the users associated with the team.  Table 10-11 shows the Finesse Team aPIs to access the Team object and list all team messages.
+The Team object represents a team and contains the URI, the team name, and the users associated with the team.  Table 10-11 shows the Finesse Team aPIs to access the Team object and list all team messages.
 
 &nbsp;
 
@@ -988,7 +989,7 @@ print(response.text)
 
 &nbsp;
 
-Dialog APIs
+##  Dialog APIs
 
 &nbsp;
 
@@ -1515,8 +1516,7 @@ You create a session by sending an xAPI session request to the endpoint.  Exampl
 import requests
 URL = "http://10.10.20.159/status.xml"
 HEADERS = {
-    'Cookie': "SessionId=c6ca2fc23d3f211e0517d4c603fbe4205c77d13dd6913c7bc12eef4085b
-7637b"
+    'Cookie': "SessionId=c6ca2fc23d3f211e0517d4c603fbe4205c77d13dd6913c7bc12eef4085b7637b"
 }
 
 RESPONSE = requests.request("GET", URL, headers=HEADERS)
@@ -1587,7 +1587,7 @@ Expression: <S: 1, 255> Expression: <S: 1, 255> Expression: <S: 1, 255>
 
 &nbsp;
 
-Example 10-22 shows a simple Python POst to register a webhook.
+Example 10-22 shows a simple Python POST to register a webhook.
 
 &nbsp;
 
@@ -1745,7 +1745,7 @@ When you download the AXL Toolkit and unzip the file, the schema folder contains
 
 &nbsp;
 
-The se XML schema files contain full details about the AXL API format, including the request names, fields/elements, data types used, and field validation rules.  One advantage of .xsd schema files is that they can be used to automatically/programmatically validate a particular XML document against the schema to ensure that it is well formatted and valid according to the schema specs.
+These XML schema files contain full details about the AXL API format, including the request names, fields/elements, data types used, and field validation rules.  One advantage of .xsd schema files is that they can be used to automatically/programmatically validate a particular XML document against the schema to ensure that it is well formatted and valid according to the schema specs.
 
 &nbsp;
 
@@ -1822,7 +1822,7 @@ if __name__ == '__main__':
 
 The Python SDK called CiscoAXL is pretty simple to use.  As of this writing, there are other SDKs available, but we use CiscoAXL here as an example.  to start with this SDK, you need to install it by using the **pip** or **pip3** command:
 
-`pip install ciscoaxl or pip install ciscoaxl`
+`pip install ciscoaxl` or `pip3 install ciscoaxl`
 
 &nbsp;
 

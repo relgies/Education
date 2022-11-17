@@ -69,7 +69,7 @@ Cisco Umbrella is a cloud-based secure gateway that helps protect and defend aga
 
 &nbsp;
 
-Cisco Umbrella processes billions of DNS requests per de, analyzing and learning about various activities and blocking requests to unwanted and malicious destinations before a connection is even established.  Cisco Umbrella incorporates the following security services in its offering, regardless of where the user is located:
+Cisco Umbrella processes billions of DNS requests per day, analyzing and learning about various activities and blocking requests to unwanted and malicious destinations before a connection is even established.  Cisco Umbrella incorporates the following security services in its offering, regardless of where the user is located:
 
 -   It blocks malware, ransomware, and phishing attempts from malicious or fraudulent sites.
 -   It can be integrated with Cisco AMP and other antivirus engines
@@ -188,9 +188,9 @@ print(response.text)
 
 The management API includes the following:
 
--   **ISP and MSSP endpoints**:  The API returns the service provide IDs and customer IDs.  These endpoints are for Internet service providers (ISPs), managed service providers (MSPs), using the MasteR service license, managed security service providers (MSSPs), and partner console users.  To perform these queries, you must have your service provider ID (SPId) from your console's URL.
--   *MS and multiple-organization endpoints*:  The API creates new MSP customers, returns MSP customer records, and updates and deletes MSP customers.  This endpoint is for MSP and multiple-organization consoles, *not* for MSPs using MSLA.
--   *Networks*.  The API returns network records and deletes networks.  Note that parent organizations do not have networks.  To create and manage networks on behalf of child organizations, use the organizations/customerID/networks endpoints.
+-   **ISP and MSSP endpoints**:  The API returns the service provider IDs and customer IDs.  These endpoints are for Internet service providers (ISPs), managed service providers (MSPs), using the Master Service license, managed security service providers (MSSPs), and partner console users.  To perform these queries, you must have your service provider ID (SPId) from your console's URL.
+-   **MSP and multiple-organization endpoints**:  The API creates new MSP customers, returns MSP customer records, and updates and deletes MSP customers.  This endpoint is for MSP and multiple-organization consoles, *not* for MSPs using MSLA.
+-   **Networks**.  The API returns network records and deletes networks.  Note that parent organizations do not have networks.  To create and manage networks on behalf of child organizations, use the organizations/customerID/networks endpoints.
 -   **Roaming computers**:  The API returns roaming computer records and updates or deletes roaming computers.
 -   **Internal networks**:  The API creates, updates, and deletes internal networks and returns internal network records.
 -   **Internal domains**:  The API creates, updates, and deletes internal domains and returns internal domain records.
@@ -214,7 +214,7 @@ The Cisco Umbrella Enforcement API is designed to give technology partners the a
 
 &nbsp;
 
-The API is restricted to HTTPs and is hosted at https://s-platform.api.opendns.com.  A fixed  UUID-v4 customer key handles customer authentication to the API.  A key must be supplied with each request to the API.  To generate or get the customer key, you have to log in to the console and navigate to Policies > Policy Components > Integrations.
+The API is restricted to HTTPS and is hosted at https://s-platform.api.opendns.com.  A fixed  UUID-v4 customer key handles customer authentication to the API.  A key must be supplied with each request to the API.  To generate or get the customer key, you have to log in to the console and navigate to Policies > Policy Components > Integrations.
 
 &nbsp;
 
@@ -364,13 +364,13 @@ print(response.text)
 
 &nbsp;
 
-The Cisco Umbrella Investigate API is designed to give technology partners the ability to query security events from their platform/service/appliance within a mutual customer's environment to the Umbrella cloud for investigation purposes.  The Umbrella Investigate API empowers users to query the Umbrella database to deem a domain saf or not safe.  It goes beyond traditional DNS results to show security events and correlations.
+The Cisco Umbrella Investigate API is designed to give technology partners the ability to query security events from their platform/service/appliance within a mutual customer's environment to the Umbrella cloud for investigation purposes.  The Umbrella Investigate API empowers users to query the Umbrella database to deem a domain safe or not safe.  It goes beyond traditional DNS results to show security events and correlations.
 
 &nbsp;
 
 The following are some of the tasks that can be done via the Umbrella Investigate REST API:
 
--   Check the security status ofa domain, IP address, or subset of domains that appears in the logs from your firewall, UTM, or other Internet egress points.
+-   Check the security status of a domain, IP address, or subset of domains that appears in the logs from your firewall, UTM, or other Internet egress points.
 -   Determine whether other related cooccurring domains were accessed at the same time as the domain or IP address you're looking up.
 -   Find a historical record for this domain or IP address in the DNS database to see what has changed.
 -   Query large numbers of domains quickly to find out whether they're scored as malicious and require further investigation.
@@ -389,7 +389,7 @@ Developers and customers can use and query Umbrella data via the Investigate API
     -   **RIP Score**:  This IP reputation score is designed to rate an IP address based on the amount of malicious activity hosted at that address. Scores range from -100 (very suspicious) to 0.
 -   **WHOIS record data**:  This category includes the email address used to register the domain, the associated name server, historical information, and so on.  It can be used to find out more about the history of the domain and the registrant, including whether the email address was used to register other malicious domains.
 -   **Cooccurrences**:  This category depicts other domains that were queried right before or after a given domain and are likely related.  The Investigate API is often used to uncover other domains that may be related to the same attack but are hosted on completely separate networks.
--   **Passive DNS**:  This category depicts the history of domain-to-IP address mapping.  This information is used to see if anything suspicious happened with the domain or IP address.  For example, you might find that the IP address ic continually changing or find that the IP address has more domains than previous declared.
+-   **Passive DNS**:  This category depicts the history of domain-to-IP address mapping.  This information is used to see if anything suspicious happened with the domain or IP address.  For example, you might find that the IP address is continually changing or find that the IP address has more domains than previously declared.
 -   **Malware file data**:  Information is gathered in the form of malware file analysis and threat intelligence from Cisco AMP Threat Grid.  This kind of information is used to find out if there are any specific malware files associated with a domain and also to query file hashes to see if they're malicious.
 
 &nbsp;
@@ -498,7 +498,7 @@ In the past, stateful firewalls with simple packet filtering capabilities effici
 -   **Application identification and filtering**:  An NGFW identifies and filters traffic based on specific applications rather than just opening ports for all kinds of traffic.  An NGFW prevents malicious apps and activities from using nonstandard ports in order to avoid the firewall.
 -   **SSL and SSH inspection**:  NGFWs can inspect SSL- and SSH-encrypted traffic.  An NGFW decrypts traffic, makes sure the applications are allowed, checks other policies, and then re-encrypts the traffic.  This provides additional protection against malicious apps and activities that try to hide by using encryption to avoid the firewall.
 -   **Intrusion prevention**:  An NGFW has intelligent capabilities to provide more in-depth traffic inspection to perform intrusion detection and prevention.
--   **ISE integration**:  NGFWs have the support of Cisco ISE.  This integration allows authorized users and devices tot use specific applications.
+-   **ISE integration**:  NGFWs have the support of Cisco ISE.  This integration allows authorized users and devices to use specific applications.
 -   **Malware filtering**:  NGFWs can provide a reputation-based screening to block applications that have bad reputations.  This functionality can check for phishing, viruses, and other malware sites and apps.
 
 &nbsp;
@@ -542,7 +542,7 @@ The Firepower Management Center REST APIs enable you to program Firepower device
 
 &nbsp;
 
-The Firepower APIs are already part of the FMC software by default, and the only thing that is required is to enable them via the UI.  The Firepower APIs use token-based authentication for API users.  Consider the simple example shown in Example 11-9.  It uses the python **requests** command to make the REST call, the POSt method, and the API `https://fmcrestapisandbox.cisco.com/api/fmc_platform/v1/auth/generatetoken`.
+The Firepower APIs are already part of the FMC software by default, and the only thing that is required is to enable them via the UI.  The Firepower APIs use token-based authentication for API users.  Consider the simple example shown in Example 11-9.  It uses the python **requests** command to make the REST call, the POST method, and the API `https://fmcrestapisandbox.cisco.com/api/fmc_platform/v1/auth/generatetoken`.
 
 &nbsp;
 
@@ -790,7 +790,7 @@ With Cisco AMP for Endpoints, security teams leverage an integrated solution to 
 
 Automation can be achieved by using the AMP for Endpoints API, which allows users to exploit their investigations by identifying which endpoints have seen a file, create custom file lists, and move endpoints in and out of triage groups.  The API also makes it possible to collect and archive all events generated in an environment, which in turn makes possible extended historical data correlation.  The AMP for Endpoints API enables developer and security teams to do the following:
 
--   **Ingest events**:  The API stores events in third-party tool,s archives extended event histories, and correlates against other logs.
+-   **Ingest events**:  The API stores events in third-party tools, archives extended event histories, and correlates against other logs.
 -   **Search**:  The API can find where a file has been, determine if a file has been executed, and capture command-line arguments.
 -   **Basic management**:  The API allows you to create groups, move desktop or computers, and manage file lists.
 
@@ -986,7 +986,7 @@ Table 11-6 shows all other APIs that AMP for Endpoints has to offer.
 | GET | `https://api.amp.cisco.com/v1/audit_logs` | Provide audit logs based on the filters specified in the query parameters |
 | GET | `https://api.amp.cisco.com/v1/audit_log_types` | Provide a list of all the audit log types supported by the API |
 | GET | `https://api.amp.cisco.com/v1/computers` | Fetch the list of computers |
-| GET | `https://api.cmp.cisco.com/v1/computers/user_activity` | Fetch the list of computers that have observed activity by a given username |
+| GET | `https://api.amp.cisco.com/v1/computers/user_activity` | Fetch the list of computers that have observed activity by a given username |
 | GET | `https://api.amp.cisco.com/v1/computers/activity` | Search all computers across the organization for any events or activities associated with a file or network operation |
 | GET | `https://api.amp.cisco.com/v1/events` | Provide a general query interface for events |
 | GET | `https://api.amp.cisoc.com/v1/event_types` | Identify and filter events by a unique ID |
@@ -1076,7 +1076,7 @@ Cisco ISE has two APIs:
 
 &nbsp;
 
-The cisco ISE administrator must assign special privileges to a user to perform operations using the ERS API.  The Cisco ISE administrator can assign the following two roles to deliver services using the ERS API (see Figure 11-10):
+The Cisco ISE administrator must assign special privileges to a user to perform operations using the ERS API.  The Cisco ISE administrator can assign the following two roles to deliver services using the ERS API (see Figure 11-10):
 
 -   External RESTful Services Admin:  For full access to all ERS methods (GET, POST, DELETE, PUT).
 -   External RESTful Services Operator:  For read-only access (GET requests only).
@@ -1189,7 +1189,7 @@ group/00000000-1111-2222-3333-444444444444`
 
 &nbsp;
 
-The API `https://ise.devnetsandbox.com:9060/ers/config/endpoint` posts the data to create a new endpoint.  It uses the POSt method.  the following shows the payload that is needed to create an Endpoint called 'DevNet Endpoint' with a specified groupId.
+The API `https://ise.devnetsandbox.com:9060/ers/config/endpoint` posts the data to create a new endpoint.  It uses the POST method.  the following shows the payload that is needed to create an Endpoint called 'DevNet Endpoint' with a specified groupId.
 
 &nbsp;
 
@@ -1290,7 +1290,7 @@ Figure 11-12 shows the Cisco Threat Grid solution architecture.
 
 &nbsp;
 
-Figure 11-12 Threat Grid Solution Architecture
+**Figure 11-12** *Threat Grid Solution Architecture*
 
 ![Figure 11-12 Threat Grid Solution Architecture](assets/images/Figure%2011-12%20Threat%20Grid%20Solution%20Architecture.jpeg)
 
@@ -1405,11 +1405,11 @@ Example 11-19 shows the JSON response to the request in Example 11-18
 
 &nbsp;
 
-## The Data, SAmple, and IOC APIs
+## The Data, Sample, and IOC APIs
 
 &nbsp;
 
-The DATA API allows developers to search observables by specific criteria.  You can do an entity search by using the /search/ endpoint.  You can pivot the Threat Grid data by using the entity lookups /domains/, /urls/, /paths/, and so on.
+The Data API allows developers to search observables by specific criteria.  You can do an entity search by using the /search/ endpoint.  You can pivot the Threat Grid data by using the entity lookups /domains/, /urls/, /paths/, and so on.
 
 &nbsp;
 
